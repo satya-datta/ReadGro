@@ -6,15 +6,15 @@ import ItemsDashboard from "./ItemsDashboard";
 const SidebarDashboard = () => {
   const pathname = usePathname();
   const partOfPathNaem = pathname.split("/")[2].split("-")[0];
-  const isAdmin = partOfPathNaem === "admin" ? true : false;
+  const isAdmin = partOfPathNaem === "Gnaneswar" ? true : false;
   const isInstructor = partOfPathNaem === "instructor" ? true : false;
   const adminItems = [
     {
-      title: " WELCOME, MICLE OBEMA",
+      title: " WELCOME, GNANESWAR",
       items: [
         {
           name: "Dashboard",
-          path: "/dashboards/admin-dashboard",
+          path: "/admin/Gnaneswar/admin-dashboard",
           icon: (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +35,7 @@ const SidebarDashboard = () => {
         },
         {
           name: "My Profile",
-          path: "/dashboards/admin-profile",
+          path: "/admin/Gnaneswar/admin-profile",
           icon: (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +56,7 @@ const SidebarDashboard = () => {
         },
         {
           name: "Message",
-          path: "/dashboards/admin-message",
+          path: "/admin/Gnaneswar/admin-message",
           tag: 12,
           icon: (
             <svg
@@ -78,7 +78,7 @@ const SidebarDashboard = () => {
         },
         {
           name: "Courses",
-          path: "/dashboards/admin-course",
+          path: "/admin/Gnaneswar/admin-course",
           icon: (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +98,7 @@ const SidebarDashboard = () => {
         },
         {
           name: "Reviews",
-          path: "/dashboards/admin-reviews",
+          path: "/admin/Gnaneswar/admin-reviews",
           icon: (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +118,7 @@ const SidebarDashboard = () => {
         },
         {
           name: "Quiz Attempts",
-          path: "/dashboards/admin-quiz-attempts",
+          path: "/admin/Gnaneswar/admin-quiz-attempts",
           icon: (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -145,7 +145,7 @@ const SidebarDashboard = () => {
       items: [
         {
           name: "Settings",
-          path: "/dashboards/admin-settings",
+          path: "/admin/Gnaneswar/admin-settings",
           icon: (
             <svg
               xmlns="http://www.w3.org/2000/svg"
