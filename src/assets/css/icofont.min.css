@@ -5553,6 +5553,7 @@
 .icofont-flash-light:before {
   content: "\ef31";
 }
+
 .icofont-flash:before {
   content: "\ef32";
 }
@@ -6464,6 +6465,9 @@
   position: absolute;
   width: 1px;
 }
+/* Dropdown Styling */
+
+
 .sr-only-focusable:active,
 .sr-only-focusable:focus {
   clip: auto;

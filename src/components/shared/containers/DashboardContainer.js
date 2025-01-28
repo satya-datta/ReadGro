@@ -1,6 +1,7 @@
 import SidebarDashboard from "../dashboards/SidebarDashboard";
 
-const DashboardContainer = ({ children }) => {
+const 
+DashboardContainer = ({ children }) => {
   return (
     <section>
       <div className="container-fluid-2">

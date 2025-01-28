@@ -9,6 +9,19 @@
   z-index: 9999;
   cursor: zoom-out;
 }
+/* Dropdown Styling */
+.pl-5 {
+  padding-left: 1.25rem; /* Adjust padding for nested sub-items */
+}
+
+.mt-2 {
+  margin-top: 0.5rem; /* Adjust spacing between dropdown and parent */
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
 
 .slider-container {
   position: absolute;
