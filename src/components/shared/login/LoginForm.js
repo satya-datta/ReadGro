@@ -65,7 +65,7 @@ const LoginForm = () => {
 
   // Handle redirection after successful login
   useEffect(() => {
-    if (redirecting) {
+    if (redirecting) { 
       // Delay redirection to allow UI updates (e.g., seeing the data)
       const timer = setTimeout(() => {
         window.location.href = "/admin/Gnaneswar/admin-profile";
