@@ -128,7 +128,7 @@ const getSortedCourses = (courses, sortInput) => {
       return courses?.sort((a, b) => b?.price - a?.price);
   }
 };
-const Courses = ({ isNotSidebar, isList, card }) => {
+const CoursesPrimary = ({ isNotSidebar, isList, card }) => {
   const category = useSearchParams().get("category");
   const [currentCategories, setCurrentCategories] = useState([]);
   const [currentTags, setCurrentTags] = useState([]);
@@ -295,7 +295,7 @@ const Courses = ({ isNotSidebar, isList, card }) => {
                 />
               ))}
             </div>
-            {/* <div className="pl-50px sm:pl-20 pr-10px">
+            <div className="pl-50px sm:pl-20 pr-10px">
               <select
                 className="text-blackColor bg-whiteColor py-2 pr-2 pl-3 rounded-md outline-none border-4 border-transparent focus:border-blue-light box-border"
                 onChange={(e) => setSortInput(e.target.value)}
@@ -306,7 +306,7 @@ const Courses = ({ isNotSidebar, isList, card }) => {
                   </option>
                 ))}
               </select>
-            </div> */}
+            </div>
           </div>
         </div>
         <div
@@ -400,7 +400,7 @@ const Courses = ({ isNotSidebar, isList, card }) => {
                   </form>
                 </div>
                 {/* categories  */}
-                {/* {filterIputs?.map(({ name, inputs }, idx) => (
+                {filterIputs?.map(({ name, inputs }, idx) => (
                   <div
                     key={idx}
                     className="pt-30px pr-15px pl-10px pb-23px 2xl:pt-10 2xl:pr-25px 2xl:pl-5 2xl:pb-33px mb-30px border border-borderColor dark:border-borderColor-dark"
@@ -487,7 +487,7 @@ const Courses = ({ isNotSidebar, isList, card }) => {
                           ))}
                     </ul>
                   </div>
-                ))} */}
+                ))}
               </div>
             </div>
           ) : (
@@ -538,4 +538,4 @@ const Courses = ({ isNotSidebar, isList, card }) => {
   );
 };
 
-export default Courses;
+export default CoursesPrimary;

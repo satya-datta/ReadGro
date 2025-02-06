@@ -6,6 +6,7 @@ import DropdownCourses from "./DropdownCourses";
 import DropdownWrapper from "@/components/shared/wrappers/DropdownWrapper";
 import DropdownDashboard from "./DropdownDashboard";
 import DropdownEcommerce from "./DropdownEcommerce";
+import PackagesDropdown from "./PackagesDropdown";
 
 const NavItems = () => {
   const navItems = [
@@ -33,12 +34,19 @@ const NavItems = () => {
     {
       id: 4,
       name: "Plan",
+      path: "/packages",
+      dropdown: <PackagesDropdown />,
+      isRelative: true,
+    },
+    {
+      id: 5,
+      name: "Dashboards",
       path: "/dashboards/instructor-dashboard",
       dropdown: <DropdownDashboard />,
       isRelative: true,
     },
     {
-      id: 5,
+      id: 6,
       name: "Contact Us",
       path: "/ecommerce/shop",
       // dropdown: <DropdownEcommerce />,

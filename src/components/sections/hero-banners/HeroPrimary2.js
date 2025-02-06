@@ -35,7 +35,7 @@ const HeroPrimary2 = ({ type }) => {
               </li>
               <li>
                 <span className="text-lg text-blackColor2 dark:text-blackColor2-dark">
-                  Course-Details
+                  Package-Details
                 </span>
               </li>
             </ul>
