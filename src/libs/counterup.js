@@ -63,8 +63,11 @@ const counterUp = () => {
     }
 
     countDecimals(val) {
-      if (Math.floor(val) === val) return 0;
-      return val.toString().split(".")[1].length || 0;
+      if (!val || isNaN(val)) return 0; // Handle undefined, null, NaN
+      if (Math.floor(val) === val) return 0; // Check if val is an integer
+      return val.toString().includes(".")
+        ? val.toString().split(".")[1].length
+        : 0;
     }
 
     formatNumber(val, decimals) {

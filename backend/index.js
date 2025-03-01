@@ -2,7 +2,7 @@ const express = require('express');
 var connection=require("./backend");
 const adminRouter=require("./routers/adminrouter");
 const cookieParser = require("cookie-parser");
-
+const PaymentRouter = require("./routers/paymentrouter")
  const PackageRouter=require("./routers/packagerouter");
 const Userrouter=require("./routers/userrouter");
 const  UserBankrouter=require('./routers/userbankrouter');
@@ -29,8 +29,14 @@ app.use(express.json());
   app.use('/',Userrouter);
   app.use('/',UserBankrouter);
   app.use('/',WithDrawlrouter);
+app.use("/",PaymentRouter);
   app.use(express.urlencoded({ extended: true }));
-
+  app.use(
+    cors({
+      origin: "http://localhost:3000", // Replace with your frontend URL
+      credentials: true, // Allow credentials (cookies)
+    })
+  );
   app.use((req, res, next) => {
     console.log("Cookies middleware:", req.cookies); // Log parsed cookies
     next();

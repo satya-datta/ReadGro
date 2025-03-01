@@ -67,23 +67,37 @@ const AdmineditCourseMain = ({ course_id }) => {
       setNewTopics(updatedNewTopics);
     }
   };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
+  
     const courseData = {
       course_name,
       instructor,
       course_description,
       topics: [...topics, ...newTopics].map(({ topic_name, video_url }) => ({ topic_name, video_url })),
     };
-    
+  
     try {
+      // Update course details
       await fetch(`http://localhost:5000/updatecoursedetails/${course_id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(courseData),
       });
-
+  
+      // Update existing topics
+      for (const topic of topics) {
+        await fetch(`http://localhost:5000/updatetopic/${topic.topic_id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            topic_name: topic.topic_name,
+            video_url: topic.video_url,
+          }),
+        });
+      }
+  
+      // Create new topics
       for (const topic of newTopics) {
         await fetch("http://localhost:5000/create-topic", {
           method: "POST",
@@ -91,20 +105,24 @@ const AdmineditCourseMain = ({ course_id }) => {
           body: JSON.stringify({ ...topic, course_id }),
         });
       }
-
+  
+      // Delete removed topics
       for (const topicId of deletedTopics) {
         await fetch(`http://localhost:5000/delete-topic/${topicId}`, { method: "DELETE" });
       }
-      
+  
+      // Reset states after successful update
       setNewTopics([]);
       setDeletedTopics([]);
       localStorage.removeItem("newTopics");
       localStorage.removeItem("deletedTopics");
+  
       alert("Course and topics updated successfully");
     } catch (error) {
-      console.error("Error updating course:", error);
+      console.error("Error updating course and topics:", error);
     }
   };
+  
 
   return (
     <div className="p-10px md:px-10 md:py-50px mb-30px bg-whiteColor dark:bg-whiteColor-dark shadow-accordion dark:shadow-accordion-dark rounded-5">

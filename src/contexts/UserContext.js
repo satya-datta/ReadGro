@@ -1,0 +1,70 @@
+"use client";
+
+import { createContext, useContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation"; // Import useRouter
+import validateAuthToken from "@/libs/validateAuthToken"; // Import function
+import Cookies from "js-cookie"; // Import js-cookie
+
+const userContext = createContext(null);
+
+const UserContextProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
+  const router = useRouter(); // Initialize router
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const referralCode = urlParams.get("referralcode");
+    const packageType = urlParams.get("package");
+
+    if (referralCode) {
+      // Store referral code and package name in cookies with 2-hour expiry (7200 seconds)
+      Cookies.set("referralCode", referralCode, { expires: 1 / 12 }); // 1/12 of a day = 2 hours
+      if (packageType) {
+        Cookies.set("packageName", packageType, { expires: 1 / 12 }); // 2-hour expiry
+        router.push(`/checkout?referralcode=${referralCode}&package=${packageType}`);
+      } else {
+        router.push("/packages");
+      }
+    }
+
+    validateAuthToken()
+      .then(({ isValid, user }) => {
+        if (isValid) {
+          setUser(user);
+          setIsUserAuthenticated(true);
+
+          if (window.location.pathname === "/user/login") {
+            router.push("/user/user-dashboard");
+          }
+          if (window.location.pathname === "/user") {
+            router.push("/user/user-dashboard");
+          }
+        } else {
+          setIsUserAuthenticated(false);
+          setUser(null);
+
+          if (window.location.pathname.startsWith("/user")) {
+            router.push("/user/login");
+          }
+        }
+      })
+      .catch(() => {
+        setIsUserAuthenticated(false);
+        setUser(null);
+        router.push("/user/login");
+      });
+  }, []);
+
+  return (
+    <userContext.Provider value={{ user, isUserAuthenticated, setUser, setIsUserAuthenticated }}>
+      {children}
+    </userContext.Provider>
+  );
+};
+
+export const useUserContext = () => {
+  return useContext(userContext);
+};
+
+export default UserContextProvider;

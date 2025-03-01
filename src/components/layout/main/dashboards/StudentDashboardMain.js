@@ -6,7 +6,7 @@ const StudentDashboardMain = () => {
   return (
     <>
       <CounterStudent />
-      <AdminFeedbacks />
+      {/* <AdminFeedbacks /> */}
     </>
   );
 };

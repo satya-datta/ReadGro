@@ -1,7 +1,17 @@
+"use client"
+import { useEffect } from "react";
+import { useUserContext } from "@/contexts/UserContext"; // Import User Context
 import ButtonPrimary from "@/components/shared/buttons/ButtonPrimary";
 import LessonAccordion from "@/components/shared/lessons/LessonAccordion";
 
 const LessonAssignmetnPrimary = () => {
+  const { user, isUserAuthenticated } = useUserContext(); // Get user data
+
+  useEffect(() => {
+    console.log("User Data:", user); // Log user data
+    console.log("Is User Authenticated:", isUserAuthenticated); // Log authentication status
+  }, [user, isUserAuthenticated]);
+
   return (
     <section>
       <div className="container-fluid-2 py-100px">

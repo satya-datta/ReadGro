@@ -8,14 +8,14 @@ import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 
 const Checkout = () => {
   const searchParams = useSearchParams(); // ✅ Use inside the component
-  const packageId = searchParams.get("packageId");
+  const packagename = searchParams.get("package");
 
-  console.log("Package Name:", packageId); // ✅ Now it will display in console
+  console.log("Package Name:", packagename); // ✅ Now it will display in console
 
   return (
     <PageWrapper>
       <main>
-        <CheckoutMain packageId={packageId} />
+        <CheckoutMain packagename={packagename} />
         <ThemeController />
       </main>
     </PageWrapper>

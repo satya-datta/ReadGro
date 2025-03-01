@@ -1,32 +1,70 @@
-import counter1 from "@/assets/images/counter/counter__1.png";
-import counter2 from "@/assets/images/counter/counter__2.png";
-import counter3 from "@/assets/images/counter/counter__3.png";
+"use client";
+import { useEffect, useState } from "react";
+import earningsimage from "@/assets/images/icons8-cash-48.png";
 import CounterDashboard from "@/components/shared/dashboards/CounterDashboard";
 import HeadingDashboard from "@/components/shared/headings/HeadingDashboard";
+import axios from "axios";
+import { useUserContext } from "@/contexts/UserContext";
 
 const CounterStudent = () => {
+  const { user } = useUserContext();
+  const [earnings, setEarnings] = useState({
+    todayEarnings: 0,
+    last7DaysEarnings: 0,
+    last30DaysEarnings: 0,
+    overallEarnings: 0,
+  });
+
+  useEffect(() => {
+    const fetchEarnings = async () => {
+      if (!user?.userId) return; // Ensure userId is available before fetching
+
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/earnings/${user.userId}`
+        );
+        setEarnings(response.data);
+      } catch (error) {
+        console.error("Error fetching earnings:", error);
+      }
+    };
+
+    // Fetch initially
+    fetchEarnings();
+
+    // Poll every 10 seconds
+    const interval = setInterval(fetchEarnings, 10000);
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(interval);
+  }, [user?.userId]); // Refetch when userId changes
+
   const counts = [
     {
-      name: "Enrolled Courses",
-      image: counter1,
-      data: 27,
-      symbol: "+",
+      name: "Today’s Earnings",
+      image: earningsimage,
+      data: `₹${earnings.todayEarnings}`,
     },
     {
-      name: "Active Courses",
-      image: counter2,
-      data: 8,
-      symbol: "+",
+      name: "Last 7 Days Earnings",
+      image: earningsimage,
+      data: `₹${earnings.last7DaysEarnings}`,
     },
     {
-      name: "Complete Courses",
-      image: counter3,
-      data: 12,
+      name: "Last 30 Days Earnings",
+      image: earningsimage,
+      data: `₹${earnings.last30DaysEarnings}`,
+    },
+    {
+      name: "Total Earnings",
+      image: earningsimage,
+      data: `₹${earnings.overallEarnings}`,
     },
   ];
+
   return (
     <CounterDashboard counts={counts}>
-      <HeadingDashboard>Summery</HeadingDashboard>
+      <HeadingDashboard>Dashboard</HeadingDashboard>
     </CounterDashboard>
   );
 };

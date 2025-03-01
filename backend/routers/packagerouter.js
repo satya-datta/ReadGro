@@ -13,13 +13,17 @@ Packagerouter.get("/getallpackages", packageController.getAllPackages);
 
 // Route for mapping courses to a package
 Packagerouter.post('/course-mapping', packageController.mapCoursesToPackage);
+Packagerouter.post('/create-package_withcourses', packageController.createPackageWithCourses);
+
 
 
 // Route to get packages with courses
 // Define the route for fetching packages with courses
+Packagerouter.get("/getuserpackage/:userId",packageController.getPackageByUserId);
 Packagerouter.get("/packages-with-courses", packageController.getPackagesWithCourses);
 Packagerouter.get("/getcoursemappings/:package_id", packageController.getCourseMapping);
 Packagerouter.get("/getpackage/:package_id", packageController.getPackageDetailsById);
+Packagerouter.get("/getpackagebyname/:package_name", packageController.getPackageDetailsByName);
 // Route to fetch a single package by ID
 Packagerouter.get("/edit_package/:package_id", packageController.getPackageById);
 

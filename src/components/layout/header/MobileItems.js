@@ -6,6 +6,8 @@ import AccordionPages from "./AccordionPages";
 import AccordionCourses from "./AccordionCourses";
 import AccordionDashboard from "./AccordionDashboard";
 import AccordionEcommerce from "./AccordionEcommerce";
+import PackagesDropdown from "./PackagesDropdown";
+import DropdownDashboard from "./DropdownDashboard";
 
 const MobileMenuItems = () => {
   const items = [
@@ -13,36 +15,49 @@ const MobileMenuItems = () => {
       id: 1,
       name: "Home",
       path: "/",
-      accordion: "accordion",
-      children: <AccordionHome />,
+    
+      // dropdown: <DropdownDemoes />,
+     
     },
     {
       id: 2,
-      name: "Pages",
+      name: "About",
       path: "/about",
       accordion: "accordion",
-      children: <AccordionPages />,
+      // dropdown: <DropdownPages />,
+     
     },
     {
       id: 3,
       name: "Courses",
       path: "/courses",
       accordion: "accordion",
-      children: <AccordionCourses />,
+      // dropdown: <DropdownCourses />,
+     
     },
     {
       id: 4,
-      name: "Dashboard",
-      path: "/dashboards/instructor-dashboard",
+      name: "Plan",
+      path: "/packages",
       accordion: "accordion",
-      children: <AccordionDashboard />,
+      children: <PackagesDropdown />,
+     
     },
     {
       id: 5,
-      name: "Ecommerce",
+      name: "Dashboards",
+      path: "/dashboards/instructor-dashboard",
+      accordion: "accordion",
+      children: <DropdownDashboard />,
+     
+    },
+    {
+      id: 6,
+      name: "Contact Us",
       path: "/ecommerce/shop",
       accordion: "accordion",
-      children: <AccordionEcommerce />,
+      // dropdown: <DropdownEcommerce />,
+     
     },
   ];
 

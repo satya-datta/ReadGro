@@ -1,12 +1,12 @@
 "use client";
 import TabButtonSecondary from "@/components/shared/buttons/TabButtonPrimary";
 import useTab from "@/hooks/useTab";
-import WithDrawlRequest from "./WithDrawlRequest";
+import WithDrawlRequest from "./RGAdminWithDrawlRequest";
 import ProfileContent from "@/components/shared/dashboards/ProfileContent";
 import PasswordContent from "@/components/shared/dashboards/PasswordContent";
 import SocialIconContent from "@/components/shared/dashboards/SocialIconContent";
 import TabContentWrapper from "@/components/shared/wrappers/TabContentWrapper";
-import UserBankDetails from './UserBankDetails';
+import UserBankDetails from './ADMINUserBankDetails';
 const ManageUsers = ({userId}) => {
   const { currentIdx, handleTabClick } = useTab();
   const tabbuttons = [

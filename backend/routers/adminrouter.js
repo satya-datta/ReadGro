@@ -11,7 +11,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "AUTHENTICATED";
 router.put('/updatecoursedetails/:course_id', (req, res) => {
     const { course_id } = req.params;
     const { course_name, course_description, instructor } = req.body;
-   
+    
     // Validate input
     if (!course_id) {
       return res.status(400).json({ message: "Course ID is required" });
@@ -49,6 +49,8 @@ router.put('/updatecoursedetails/:course_id', (req, res) => {
       }
     );
   });
+  router.put("/updatetopic/:topic_id", admincontroller.updateTopic);
+
 router.post('/create-topic', admincontroller.createTopic);
 router.delete('/delete-topic/:topic_id',(req, res) => {
     const { topic_id } = req.params;

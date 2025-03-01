@@ -11,9 +11,7 @@ const Accordion = ({ children, isActive, accordion, idx }) => {
         </div>
       ) : accordion === "secondaryLg" ? (
         <div
-          className={`bg-whiteColor border border-borderAccordion dark:bg-whiteColor-dark dark:border-borderColor2-dark  ${
-            idx === 3 ? "" : "border-b-0"
-          }`}
+        
         >
           {children}
         </div>

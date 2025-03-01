@@ -1,7 +1,13 @@
 const multer = require('multer');
 const connection = require("../backend");
 const path = require("path");
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt'); 
+const sendEmail = require("../emailService"); // Import email service
 
+const saltRounds = 10; // Salt rounds for bcrypt
+
+const JWT_SECRET="USER AUTHENTICATION"
 // Set up file storage for avatar images using multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -19,7 +25,7 @@ const upload = multer({ storage: storage });
 // Function to calculate referral commission
 const returnCommissionMethod = (userPackageId, referrerPackageId, callback) => {
   const packageQuery = `
-    SELECT package_id, package_price FROM packages WHERE package_id IN (?, ?)
+    SELECT package_id, package_price,commission FROM packages WHERE package_id IN (?, ?)
   `;
   connection.query(packageQuery, [userPackageId, referrerPackageId], (err, results) => {
     if (err) {
@@ -38,8 +44,8 @@ const returnCommissionMethod = (userPackageId, referrerPackageId, callback) => {
 
     // Calculate commissions directly
     results.forEach(pkg => {
-       const commission = Math.floor(pkg.package_price - pkg.package_price * 0.2); // Commission = price - 20%, rounded down
-       
+     //  const commission = Math.floor(pkg.package_price - pkg.package_price * 0.2); // Commission = price - 20%, rounded down
+      const commission=pkg.commission; 
       console.log(userPackageId,"-",referrerPackageId);
     
 
@@ -73,130 +79,152 @@ const returnCommissionMethod = (userPackageId, referrerPackageId, callback) => {
 };
 
 
-exports.createUser = (req, res, next) => {
-  upload.single('avatar')(req, res, (err) => {
+// Function to generate referral code
+function generateReferralCode() {
+  const prefix = 'RDGW';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let randomPart = '';
+  for (let i = 0; i < 4; i++) {
+    randomPart += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return prefix + randomPart;
+}
+
+// Function to ensure the generated referral code is unique
+function getUniqueReferralCode(callback) {
+  const newReferralCode = generateReferralCode();
+  const checkQuery = `SELECT * FROM user WHERE GeneratedReferralCode = ?`;
+  connection.query(checkQuery, [newReferralCode], (err, result) => {
     if (err) {
-      return res.status(500).json({ message: 'Error uploading avatar image', error: err });
+      return callback(err, null);
+    }
+    if (result.length > 0) {
+      return getUniqueReferralCode(callback); // Generate a new one recursively
+    } else {
+      return callback(null, newReferralCode);
+    }
+  });
+}
+
+exports.createUser = (req, res, next) => {
+  upload.single('avatar')(req, res, async (err) => {
+    if (err) {
+      return res.json({ message: 'Error uploading avatar image', error: err });
     }
 
-    const { name, package_id, email, phone, gender, Address, Pincode, generatedReferralCode, referrerId, referrercode } = req.body;
-    const avatar = req.file ? req.file.filename : null; // Get the uploaded avatar filename
+    const { name, package_id, email, phone, gender, Address, Pincode, referrerId, referralCode, password } = req.body;
+    const avatar = req.file ? req.file.filename : null;
 
-    // Validate the data
-    if (!name || !package_id || !email || !phone || !gender) {
+    if (!name || !package_id || !email || !phone || !Address || !password) {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
-    // Prepare SQL query to insert user data
-    const userQuery = `
-      INSERT INTO user (Name, PackageId, Email, Phone, Gender, Avatar, Address, Pincode, GeneratedReferralCode, ReferrerId, reffercode)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
+    try {
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const userValues = [
-      name,
-      package_id,
-      email,
-      phone,
-      gender,
-      avatar, // Storing the filename of the avatar
-      Address || null,
-      Pincode || null,
-      generatedReferralCode || null,
-      referrerId || null,
-      referrercode || null,
-    ];
-
-    // Execute the query to insert user data
-    connection.query(userQuery, userValues, (err, result) => {
-      if (err) {
-        console.error('Error inserting data into users table:', err);
-        return res.status(500).json({ message: 'Error creating user', error: err });
-      }
-
-      const userId = result.insertId; // Get the newly created user ID
-
-      // Insert a record into the wallet table with default balance
-      const walletQuery = `
-        INSERT INTO wallet (user_id, balance) 
-        VALUES (?, ?)
-      `;
-      const walletValues = [userId, 0.00];
-
-      connection.query(walletQuery, walletValues, (err, walletResult) => {
+      getUniqueReferralCode((err, generatedReferralCode) => {
         if (err) {
-          console.error('Error inserting data into wallet table:', err);
-          return res.status(500).json({ message: 'Error creating user wallet', error: err });
+          return res.status(500).json({ message: 'Error generating referral code', error: err });
         }
 
-        // If a referral code is provided, process referral logic
-        if (referrercode) {
-          const referrerQuery = `
-            SELECT userid, PackageId FROM user WHERE GeneratedReferralCode = ?
-          `;
+        const userQuery = `
+          INSERT INTO user (Name, PackageId, Email, Phone, Avatar, Address, Pincode, Password, GeneratedReferralCode, ReferrerId, reffercode)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
 
-          connection.query(referrerQuery, [referrercode], (err, referrerResult) => {
+        const userValues = [
+          name, package_id, email, phone, avatar, Address, Pincode || null, hashedPassword,
+          generatedReferralCode, referrerId || null, referralCode || null,
+        ];
+
+        connection.query(userQuery, userValues, (err, result) => {
+          if (err) {
+            return res.json({ message: 'Error creating user', error: err });
+          }
+
+          const userId = result.insertId;
+          const token = jwt.sign({ userId, email, name,package_id,password}, JWT_SECRET, { expiresIn: '5h' });
+
+          res.cookie('UserauthToken', token, {
+            httpOnly: true,
+            sameSite: 'Strict',
+            maxAge: 2 * 60 * 60 * 1000,
+          });
+
+          const walletQuery = `INSERT INTO wallet (user_id, balance) VALUES (?, ?)`;
+          connection.query(walletQuery, [userId, 0.00], (err, walletResult) => {
             if (err) {
-              console.error('Error finding referrer:', err);
-              return res.status(500).json({ message: 'Error processing referral code', error: err });
+              return res.status(500).json({ message: 'Error creating user wallet', error: err });
             }
 
-            if (referrerResult.length > 0) {
-              const referrerId = referrerResult[0].userid;
-              const referrerPackageId = referrerResult[0].PackageId;
-              console.log(referrerId, "-", referrerPackageId);
-            
-              returnCommissionMethod(package_id, referrerPackageId, (err, referralCommission) => {
-                if (err) {
-                  return res.status(500).json({ message: 'Error calculating referral commission', error: err });
+            // ✅ Send email after successful signup
+            const signupEmailContent = `
+              <h2>Welcome to Our Platform, ${name}!</h2>
+              <p>You have successfully signed up. Your account is now active.</p>
+              <p>Enjoy our services.</p>
+            `;
+            sendEmail(email, "You are successfully signed up!", signupEmailContent);
+
+            if (referralCode) {
+              const referrerQuery = `SELECT userid, PackageId, Email FROM user WHERE GeneratedReferralCode = ?`;
+              connection.query(referrerQuery, [referralCode], (err, referrerResult) => {
+                if (err || referrerResult.length === 0) {
+                  return res.status(201).json({
+                    message: 'User and wallet created successfully (no referrer found)',
+                    userId,
+                    walletId: walletResult.insertId,
+                    success:true
+                  });
                 }
-                console.log(referralCommission);
-            
-                // Update referrer's wallet balance
-                const updateWalletQuery = `
-                  UPDATE wallet SET balance = balance + ? WHERE user_id = ?
-                `;
-                connection.query(updateWalletQuery, [referralCommission, referrerId], (err) => {
+
+                const referrerId = referrerResult[0].userid;
+                const referrerPackageId = referrerResult[0].PackageId;
+                const referrerEmail = referrerResult[0].Email;
+
+                returnCommissionMethod(package_id, referrerPackageId, (err, referralCommission) => {
                   if (err) {
-                    console.error('Error updating referrer wallet:', err);
-                    return res.status(500).json({ message: 'Error updating referrer wallet', error: err });
+                    return res.json({ message: 'Error calculating referral commission', error: err });
                   }
-            
-                  // Fetch referrer's wallet ID to use in transactions
-                  const fetchWalletIdQuery = `
-                    SELECT wallet_id FROM wallet WHERE user_id = ?
-                  `;
-                  connection.query(fetchWalletIdQuery, [referrerId], (err, walletRows) => {
-                    if (err || walletRows.length === 0) {
-                      console.error('Error fetching wallet ID:', err || 'No wallet found for referrer');
-                      return res.status(500).json({ message: 'Error fetching wallet ID', error: err });
+
+                  const updateWalletQuery = `UPDATE wallet SET balance = balance + ? WHERE user_id = ?`;
+                  connection.query(updateWalletQuery, [referralCommission, referrerId], (err) => {
+                    if (err) {
+                      return res.status(500).json({ message: 'Error updating referrer wallet', error: err });
                     }
-            
-                    const referrerWalletId = walletRows[0].wallet_id; // Ensure this matches your wallet table structure
-            
-                    // Record the transaction in wallettransactions table
-                    const transactionQuery = `
-                      INSERT INTO wallettransactions (user_id, wallet_id, amount, transaction_type, description) 
-                      VALUES (?, ?, ?, ?, ?)
-                    `;
-                    const transactionValues = [
-                      referrerId,
-                      referrerWalletId, // Pass the fetched wallet ID here
-                      referralCommission,
-                      'credit', // Transaction type
-                      `Referral commission for user ${referrerId}`,
-                    ];
-            
-                    connection.query(transactionQuery, transactionValues, (err) => {
-                      if (err) {
-                        console.error('Error recording wallet transaction:', err);
-                        return res.status(500).json({ message: 'Error recording wallet transaction', error: err });
+
+                    const fetchWalletIdQuery = `SELECT wallet_id FROM wallet WHERE user_id = ?`;
+                    connection.query(fetchWalletIdQuery, [referrerId], (err, walletRows) => {
+                      if (err || walletRows.length === 0) {
+                        return res.status(500).json({ message: 'Error fetching wallet ID', error: err });
                       }
-            
-                      res.status(201).json({
-                        message: 'User and wallet created successfully with referral bonus',
-                        userId: userId,
-                        walletId: walletResult.insertId,
+
+                      const referrerWalletId = walletRows[0].wallet_id;
+
+                      const transactionQuery = `
+                        INSERT INTO wallettransactions (user_id,reffer_id, wallet_id, amount, transaction_type, description) 
+                        VALUES (?,?, ?, ?, ?, ?)
+                      `;
+                      const transactionValues = [userId,referrerId, referrerWalletId, referralCommission, 'credit', `Referral commission for user ${referrerId}`];
+
+                      connection.query(transactionQuery, transactionValues, (err) => {
+                        if (err) {
+                          return res.status(500).json({ message: 'Error recording wallet transaction', error: err });
+                        }
+                       console.log(userId)
+                        // ✅ Send email when referral commission is credited
+                        const referralEmailContent = `
+                          <h2>Referral Bonus Credited!</h2>
+                          <p>Congratulations! You have earned a referral bonus of ₹${referralCommission}.</p>
+                          <p>Keep referring and earn more!</p>
+                        `;
+                        sendEmail(referrerEmail, "Referral Bonus Credited!", referralEmailContent);
+                        
+                        res.status(201).json({
+                          message: 'User and wallet created successfully with referral bonus',
+                          userId,
+                          walletId: walletResult.insertId,
+                          success :true,
+                        });
                       });
                     });
                   });
@@ -204,22 +232,113 @@ exports.createUser = (req, res, next) => {
               });
             } else {
               res.status(201).json({
-                message: 'User and wallet created successfully (no referrer found)',
-                userId: userId,
+                success: true,
+                message: 'User and wallet created successfully',
+                userId,
                 walletId: walletResult.insertId,
               });
             }
-          });            
-        } else {
-          res.status(201).json({
-            message: 'User and wallet created successfully',
-            userId: userId,
-            walletId: walletResult.insertId,
           });
-        }
+        });
       });
+    } catch (hashError) {
+      res.json({ message: 'Error securing password', error: hashError });
+    }
+  });
+};
+
+exports.loginUser = (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+      return res.status(400).json({ message: "Email and password are required" });
+  }
+
+  // Fetch user from the database
+  const userQuery = `SELECT userid, Name, Email, Password,PackageId FROM user WHERE Email = ?`;
+
+  connection.query(userQuery, [email], async (err, results) => {
+      if (err) {
+          return res.status(500).json({ message: "Database error", error: err });
+      }
+
+      if (results.length === 0) {
+          return res.status(401).json({ message: "Invalid email or password" });
+      }
+
+      const user = results[0];
+
+      // Compare the password with the hashed password
+      const isMatch = await bcrypt.compare(password, user.Password);
+      if (!isMatch) {
+          return res.status(401).json({ message: "Invalid email or password" });
+      }
+
+      // Generate JWT token
+      const token = jwt.sign({ userId: user.userid, email: user.Email,name: user.Name,package_id:user.PackageId, password:password}, JWT_SECRET, {
+          expiresIn: "5h",
+      });
+
+      // Set token as an HTTP-only cookie
+      res.cookie("UserauthToken", token, {
+          httpOnly: true,
+          sameSite: "Strict",
+          maxAge: 2 * 60 * 60 * 1000, // 2 hours
+      });
+
+      // Send response with user_id and user name
+      res.status(200).json({
+          success: true,
+          message: "Login successful",
+          user_id: user.userid,
+          user_name: user.Name,
+        
+      });
+  });
+};
+exports.validateUserCookie = (req, res) => {
+  let token = req.cookies.UserauthToken; // Check if token is in cookies
+  if (!token) {
+    // If no token in cookies, check the Authorization header
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith("Bearer ")) {
+      token = authHeader.split(" ")[1]; // Extract token after "Bearer "
+    }
+  }
+  console.log("Received token:", token);
+
+  // Check if token exists
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized: No token provided" });
+  }
+
+  // Verify the token
+  jwt.verify(token, JWT_SECRET, (err, decoded) => {
+    console.log(decoded);
+    if (err) {
+      console.error("Token verification failed:", err);
+      return res.status(403).json({ message: "Forbidden: Invalid token" });
+    }
+
+    // If token verification is successful
+    console.log("Token verified successfully:", decoded);
+    return res.status(200).json({
+      message: "Token verified successfully",
+      user: decoded, // { userId, email }
     });
   });
+};
+
+
+exports.logoutUser = (req, res) => {
+  // Clear the UserauthToken cookie
+  res.clearCookie("UserauthToken", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production", // Secure in production
+    sameSite: "strict",
+  });
+
+  res.status(200).json({ message: "Logout successful" });
 };
 exports.getUserById = (req, res) => {
   const userId = req.params.user_id; // Assume user ID is provided as a URL parameter
@@ -236,7 +355,6 @@ exports.getUserById = (req, res) => {
       PackageId AS packageId,
       Email AS email,
       Phone AS phone,
-      Gender AS gender,
       Avatar AS avatar,
       Address AS Address,
       Pincode AS Pincode,
@@ -267,7 +385,7 @@ exports.getUserById = (req, res) => {
         packageId: userDetails.packageId,
         email: userDetails.email,
         phone: userDetails.phone,
-        gender: userDetails.gender,
+   
         avatar: userDetails.avatar,
         Address: userDetails.Address,
         Pincode: userDetails.Pincode,
@@ -330,7 +448,7 @@ exports.updateUser = (req, res, next) => {
       Pincode,
       generatedReferralCode,
       referrerId,
-      referrercode,
+      referralCode,
     } = req.body;
 
     const avatar = req.file ? req.file.filename : null; // Get the new avatar filename if provided
@@ -369,7 +487,7 @@ exports.updateUser = (req, res, next) => {
       Pincode || null,
       generatedReferralCode || null,
       referrerId || null,
-      referrercode || null,
+      referralCode || null,
       userId,
     ];
 
@@ -385,12 +503,12 @@ exports.updateUser = (req, res, next) => {
       }
 
       // Handle referral code logic if provided
-      if (referrercode) {
+      if (referralCode) {
         const referrerQuery = `
           SELECT userid, PackageId FROM user WHERE GeneratedReferralCode = ?
         `;
 
-        connection.query(referrerQuery, [referrercode], (err, referrerResult) => {
+        connection.query(referrerQuery, [referralCode], (err, referrerResult) => {
           if (err) {
             console.error('Error finding referrer:', err);
             return res.status(500).json({ message: 'Error processing referral code', error: err });
@@ -453,4 +571,95 @@ exports.updateUser = (req, res, next) => {
       }
     });
   });
+};
+
+
+exports.validateUser = async (req, res) => {
+  const { email, phone } = req.body;
+
+  try {
+    const query = `SELECT Email, phone FROM user WHERE Email = ? OR phone = ?`;
+    connection.query(query, [email, phone], (err, results) => {
+      if (err) {
+        console.error("Database error:", err);
+        return res.status(500).json({ verified: false, message: "Server error" });
+      }
+
+      if (results.length > 0) {
+        let message = "";
+        const existingUser = results[0];
+
+        if (existingUser.Email === email && existingUser.phone === phone) {
+          message = "Email and phone number already registered.";
+        } else if (existingUser.Email === email) {
+          message = "Email already registered.";
+        } else if (existingUser.phone === phone) {
+          message = "Phone number already registered.";
+        }
+
+        return res.json({ verified: false, message });
+      }
+
+      return res.json({ verified: true });
+    });
+  } catch (error) {
+    console.error("Error validating user:", error);
+    res.status(500).json({ verified: false, message: "Internal server error" });
+  }
+};
+exports.upgradeUserPackage = (req, res) => {
+  // const userId = req.params.user_id;
+  const { userId,package_id } = req.body;
+
+  if (!userId || !package_id) {
+      return res.status(400).json({ message: 'User ID and new package ID are required' });
+  }
+
+  const updatePackageQuery = `
+      UPDATE user SET PackageId = ? WHERE UserId = ?
+  `;
+
+  connection.query(updatePackageQuery, [package_id, userId], (err, result) => {
+      if (err) {
+          console.error('Error upgrading user package:', err);
+          return res.status(500).json({ message: 'Error upgrading user package', error: err });
+      }
+
+      if (result.affectedRows === 0) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+      res.status(200).json({ message: 'User package upgraded successfully' });
+  });
+};
+
+
+exports.updatePassword = async (req, res) => {
+  const { user_id } = req.params;
+  const { password } = req.body;
+
+  if (!password) {
+    return res.status(400).json({ message: "New password is required" });
+  }
+
+  try {
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Update password in the database
+    const updateQuery = "UPDATE user SET Password = ? WHERE userid = ?";
+    connection.query(updateQuery, [hashedPassword, user_id], (err, result) => {
+      if (err) {
+        return res.status(500).json({ message: "Error updating password", error: err });
+      }
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      res.status(200).json({ success: true, message: "Password updated successfully" });
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error securing password", error });
+  }
 };

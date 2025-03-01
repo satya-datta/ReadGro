@@ -1,94 +1,137 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
+import { useUserContext } from "@/contexts/UserContext";
 
 const ProfileDetails = () => {
+  const { user } = useUserContext();
+  const [userData, setUserData] = useState(null);
+  const [editableData, setEditableData] = useState({});
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  useEffect(() => {
+    if (user?.userId) {
+      fetchUserData(user.userId);
+    }
+  }, [user?.userId]);
+
+  const fetchUserData = async (userId) => {
+    try {
+      const response = await fetch(`http://localhost:5000/getuser_details/${userId}`, {
+        method: "GET",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setUserData(data.user);
+        setEditableData({
+          name: data.user.name,
+          email: data.user.email,
+          phone: data.user.phone,
+          address: data.user.Address,
+          pincode: data.user.Pincode,
+          avatar: data.user.avatar, // Store current profile image URL
+        });
+      } else {
+        console.error("Failed to fetch user data");
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    setEditableData({ ...editableData, [e.target.name]: e.target.value });
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedImage(file);
+  };
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleSaveChanges = async () => {
+    const formData = new FormData();
+    Object.keys(editableData).forEach((key) => {
+      formData.append(key, editableData[key]);
+    });
+    if (selectedImage) {
+      formData.append("avatar", selectedImage);
+    }
+ 
+    try {
+      const response = await fetch(`http://localhost:5000/update_user/${user?.userId}`, {
+        method: "PUT",
+        body: formData,
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        alert("Profile updated successfully");
+        setIsEditing(false);
+        fetchUserData(user.userId);
+      } else {
+        console.error("Failed to update user data");
+      }
+    } catch (error) {
+      console.error("Error updating user data:", error);
+    }
+  };
+
   return (
-    <div className="p-10px md:px-10 md:py-50px mb-30px bg-whiteColor dark:bg-whiteColor-dark shadow-accordion dark:shadow-accordion-dark rounded-5">
-      <div className="mb-6 pb-5 border-b-2 border-borderColor dark:border-borderColor-dark">
-        <h2 className="text-2xl font-bold text-blackColor dark:text-blackColor-dark">
-          My Profile
-        </h2>
+    <div className="p-5 bg-white shadow rounded-md">
+      <h2 className="text-2xl font-bold mb-4">My Profile</h2>
+
+      {/* Profile Image Upload */}
+      <div className="mb-4">
+        <label className="font-semibold">Profile Picture</label>
+        <input type="file" accept="image/*" onChange={handleImageChange} className="block mt-2" />
+        <div className="mt-2">
+          <img
+            src={selectedImage ? URL.createObjectURL(selectedImage) : editableData.avatar}
+            alt="Profile"
+            className="w-20 h-20 rounded-full object-cover"
+          />
+        </div>
       </div>
 
-      <div>
-        <ul>
-          <li className="text-lg text-contentColor dark:text-contentColor-dark leading-1.67 grid grid-cols-1 md:grid-cols-12 gap-x-30px">
-            <div className="md:col-start-1 md:col-span-4">
-              <span className="inline-block">Registration Date</span>
-            </div>
-            <div className="md:col-start-5 md:col-span-8">
-              <span className="inline-block">20, January 2024 9:00 PM</span>
-            </div>
-          </li>
+      {userData ? (
+        <div>
+          <ul>
+            {["name", "email", "phone", "address", "pincode"].map((field) => (
+              <li key={field} className="mb-3">
+                <label className="font-semibold capitalize">{field.replace("_", " ")}</label>
+                <input
+                  type="text"
+                  name={field}
+                  value={editableData[field] || ""}
+                  onChange={handleInputChange}
+                  disabled={!isEditing}
+                  className="w-full p-2 border rounded mt-1"
+                />
+              </li>
+            ))} 
+          </ul>
 
-          <li className="text-lg text-contentColor dark:text-contentColor-dark leading-1.67 grid grid-cols-1 md:grid-cols-12 gap-x-30px mt-15px">
-            <div className="md:col-start-1 md:col-span-4">
-              <span className="inline-block">First Name</span>
-            </div>
-            <div className="md:col-start-5 md:col-span-8">
-              <span className="inline-block">Michle</span>
-            </div>
-          </li>
-          <li className="text-lg text-contentColor dark:text-contentColor-dark leading-1.67 grid grid-cols-1 md:grid-cols-12 gap-x-30px mt-15px">
-            <div className="md:col-start-1 md:col-span-4">
-              <span className="inline-block">Last Name</span>
-            </div>
-            <div className="md:col-start-5 md:col-span-8">
-              <span className="inline-block">Obema</span>
-            </div>
-          </li>
-
-          <li className="text-lg text-contentColor dark:text-contentColor-dark leading-1.67 grid grid-cols-1 md:grid-cols-12 gap-x-30px mt-15px">
-            <div className="md:col-start-1 md:col-span-4">
-              <span className="inline-block">Username</span>
-            </div>
-            <div className="md:col-start-5 md:col-span-8">
-              <span className="inline-block"> obema007</span>
-            </div>
-          </li>
-
-          <li className="text-lg text-contentColor dark:text-contentColor-dark leading-1.67 grid grid-cols-1 md:grid-cols-12 gap-x-30px mt-15px">
-            <div className="md:col-start-1 md:col-span-4">
-              <span className="inline-block">Email</span>
-            </div>
-            <div className="md:col-start-5 md:col-span-8">
-              <span className="inline-block"> obema@example.com</span>
-            </div>
-          </li>
-
-          <li className="text-lg text-contentColor dark:text-contentColor-dark leading-1.67 grid grid-cols-1 md:grid-cols-12 gap-x-30px mt-15px">
-            <div className="md:col-start-1 md:col-span-4">
-              <span className="inline-block">Phone Number</span>
-            </div>
-            <div className="md:col-start-5 md:col-span-8">
-              <span className="inline-block">+55 669 4456 25987</span>
-            </div>
-          </li>
-
-          <li className="text-lg text-contentColor dark:text-contentColor-dark leading-1.67 grid grid-cols-1 md:grid-cols-12 gap-x-30px mt-15px">
-            <div className="md:col-start-1 md:col-span-4">
-              <span className="inline-block">Expert</span>
-            </div>
-            <div className="md:col-start-5 md:col-span-8">
-              <span className="inline-block">Graphics Design</span>
-            </div>
-          </li>
-
-          <li className="text-lg text-contentColor dark:text-contentColor-dark leading-1.67 grid grid-cols-1 md:grid-cols-12 gap-x-30px mt-15px">
-            <div className="md:col-start-1 md:col-span-4">
-              <span className="inline-block">Biography</span>
-            </div>
-            <div className="md:col-start-5 md:col-span-8">
-              <span className="inline-block">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Maiores veniam, delectus accusamus nesciunt laborum repellat
-                laboriosam, deserunt possimus itaque iusto perferendis
-                voluptatum quaerat cupiditate vitae. Esse aut illum perferendis
-                nulla, corporis impedit quasi alias est!
-              </span>
-            </div>
-          </li>
-        </ul>
-      </div>
+          {/* Edit / Save Button */}
+          {!isEditing ? (
+            <button onClick={handleEditClick} className="mt-4 p-2 bg-green-500 text-white rounded">
+              Want To Edit
+            </button>
+          ) : (
+            <button onClick={handleSaveChanges} className="mt-4 p-2 bg-green-500 text-white rounded">
+              Save Changes
+            </button>
+          )}
+        </div>
+      ) : (
+        <p>Loading user details...</p>
+      )}
     </div>
   );
 };

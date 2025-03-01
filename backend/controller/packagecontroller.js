@@ -13,6 +13,22 @@ const safelyDeleteFile = (filePath) => {
     console.error('Error deleting file:', err.message);
   }
 };
+const multer = require("multer");
+
+
+// Configure multer storage
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/"); // Ensure this folder exists
+  },
+  filename: (req, file, cb) => {
+    const fileExtension = path.extname(file.originalname);
+    const filename = Date.now() + fileExtension; // Unique filename
+    cb(null, filename);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 
 // Create Package with image upload
@@ -462,6 +478,34 @@ exports.getPackageDetailsById = (req, res) => {
 
 
 
+
+exports.getPackageDetailsByName = (req, res) => {
+  const { package_name } = req.params;
+
+  if (!package_name) {
+    return res.status(400).json({ message: "Package Name is required" });
+  }
+
+  const getPackageQuery = `SELECT * FROM packages WHERE package_name = ?`;
+
+  connection.query(getPackageQuery, [package_name], (err, results) => {
+    if (err) {
+      console.error("Error fetching package details:", err);
+      return res.status(500).json({
+        message: "An error occurred while fetching package details.",
+        error: err,
+      });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ message: "Package not found" });
+    }
+
+    res.status(200).json(results[0]); // Return the first (and only) package
+  });
+};
+
+
 // Function to map selected courses to a package (add courses)
 exports.addCoursesToPackage = (req, res, next) => {
   const { packageId, courses } = req.body;
@@ -527,7 +571,31 @@ exports.addCoursesToPackage = (req, res, next) => {
   });
 };
 
+exports.getPackageByUserId= (req, res, next) => {
+const userId = req.params.userId;
 
+const query = `
+    SELECT 
+        p.package_id, p.package_name, p.description, p.package_price, 
+        p.created_time, p.package_image, p.commission 
+    FROM user u
+    INNER JOIN packages p ON u.PackageId = p.package_id
+    WHERE u.UserId = ?;
+`;
+
+connection.query(query, [userId], (err, results) => {
+    if (err) {
+        console.error("Error retrieving user package details:", err);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+
+    if (results.length === 0) {
+        return res.status(404).json({ error: "No package found for this user" });
+    }
+
+    res.json(results[0]); // Sending first package as response
+});
+};
 
 // Fetching a single package by ID with associated courses
 exports.getPackageById = (req, res, next) => {
@@ -631,3 +699,71 @@ exports.getAllCourses = (req, res, next) => {
     res.status(200).json(results); // Send back the list of courses
   });
 };
+exports.createPackageWithCourses = (req, res, next) => {
+  upload.single("packageImage")(req, res, async (err) => {
+    if (err) {
+      return res.status(500).json({ message: "Error uploading package image", error: err });
+    }
+
+    const { packageName, price, description, commission } = req.body;
+    const courses = JSON.parse(req.body.courses);
+
+    const imageFile = req.file; // Uploaded image file
+
+    if (!imageFile) {
+      return res.status(400).json({ message: "Image is required." });
+    }
+
+    if (!packageName || !price || !description || !commission || !courses || courses.length === 0) {
+      return res.status(400).json({ message: "All fields, including selected courses, are required." });
+    }
+
+    const imageName = imageFile.filename; // Store only the image name in the database
+
+    // Insert package details into the database
+    const packageQuery = `
+      INSERT INTO packages (package_name, package_price, description, package_image, created_time, commission)
+      VALUES (?, ?, ?, ?, NOW(), ?)
+    `;
+
+    connection.query(packageQuery, [packageName, price, description, imageName, commission], (err, result) => {
+      if (err) {
+        console.error("Error creating package:", err);
+        return res.status(500).json({ message: "An error occurred while creating the package.", error: err });
+      }
+
+      const packageId = result.insertId; // Get the newly created package ID
+
+      // Check if all provided courses exist in the database
+      const checkCoursesQuery = `SELECT course_id FROM course WHERE course_id IN (?)`;
+      connection.query(checkCoursesQuery, [courses], (err, result) => {
+        if (err) {
+          console.error("Error checking courses:", err);
+          return res.status(500).json({ message: "An error occurred while checking courses.", error: err });
+        }
+
+        if (result.length !== courses.length) {
+          return res.status(404).json({ message: "One or more courses not found." });
+        }
+
+        // Prepare the mapping of package with courses
+        const mapCoursesQuery = `INSERT INTO package_courses (package_id, course_id) VALUES ?`;
+        const courseValues = courses.map((courseId) => [packageId, courseId]);
+
+        connection.query(mapCoursesQuery, [courseValues], (err) => {
+          if (err) {
+            console.error("Error mapping courses:", err);
+            return res.status(500).json({ message: "An error occurred while mapping courses.", error: err });
+          }
+
+          res.status(201).json({
+            message: "Package created and courses mapped successfully.",
+            package_id: packageId,
+            imageName: imageName, // Return only the image name
+          });
+        });
+      });
+    });
+  });
+};
+

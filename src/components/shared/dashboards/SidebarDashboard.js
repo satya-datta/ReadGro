@@ -2,12 +2,15 @@
 
 import { usePathname } from "next/navigation";
 import ItemsDashboard from "./ItemsDashboard";
+import { useUserContext } from "@/contexts/UserContext";
 
 const SidebarDashboard = () => {
   const pathname = usePathname();
   const partOfPathNaem = pathname.split("/")[2].split("-")[0];
   const isAdmin = partOfPathNaem === "Gnaneswar" ? true : false;
   const isInstructor = partOfPathNaem === "instructor" ? true : false;
+  const { user, isUserAuthenticated } = useUserContext();
+
   const adminItems = [
     {
       title: " WELCOME, GNANESWAR",
@@ -78,7 +81,7 @@ const SidebarDashboard = () => {
         // },
         {
           name: "Courses",
-          path: "/admin/Gnaneswar/admin-course",
+          path: "/admin/Gnaneswar/admin-course/addCourse",
           icon: (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -97,8 +100,14 @@ const SidebarDashboard = () => {
             </svg>
           ),
           subItems: [
-            { name: "Add Course", path: "/admin/Gnaneswar/admin-course/addCourse" },
-            { name: "Edit Course", path: "/admin/Gnaneswar/admin-course/editCourse" },
+            {
+              name: "Add Course",
+              path: "/admin/Gnaneswar/admin-course/addCourse",
+            },
+            {
+              name: "Edit Course",
+              path: "/admin/Gnaneswar/admin-course/editCourse",
+            },
           ],
         },
         {
@@ -122,26 +131,36 @@ const SidebarDashboard = () => {
             </svg>
           ),
         },
-        // {
-        //   name: "Reviews",
-        //   path: "/admin/Gnaneswar/admin-reviews",
-        //   icon: (
-        //     <svg
-        //       xmlns="http://www.w3.org/2000/svg"
-        //       width="16"
-        //       height="24"
-        //       viewBox="0 0 24 24"
-        //       fill="none"
-        //       stroke="currentColor"
-        //       strokeWidth="2"
-        //       strokeLinecap="round"
-        //       strokeLinejoin="round"
-        //       className="feather feather-star"
-        //     >
-        //       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-        //     </svg>
-        //   ),
-        // },
+        {
+          name: "Packages",
+          path: "/admin/Gnaneswar/admin-package",
+          icon: (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="feather feather-star"
+            >
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          ),
+          subItems: [
+            {
+              name: "Create Package",
+              path: "/admin/Gnaneswar/admin-package/createPackage",
+            },
+            {
+              name: "Manage Package",
+              path: "/admin/Gnaneswar/admin-package/managePackage",
+            },
+          ],
+        },
         {
           name: "Quiz Attempts",
           path: "/admin/Gnaneswar/admin-quiz-attempts",
@@ -509,11 +528,11 @@ const SidebarDashboard = () => {
 
   const studentItems = [
     {
-      title: "WELCOME, DOND TOND",
+      title: `WELCOME , ${user?.name}`,
       items: [
         {
           name: "Dashboard",
-          path: "/dashboards/student-dashboard",
+          path: "/user/user-dashboard",
           icon: (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -533,8 +552,28 @@ const SidebarDashboard = () => {
           ),
         },
         {
+          name: "Enrolled Courses",
+          path: "/user/user-enrolled-courses",
+          icon: (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="feather feather-bookmark"
+            >
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+            </svg>
+          ),
+        },
+        {
           name: "My Profile",
-          path: "/dashboards/student-profile",
+          path: "/user/user-profile",
           icon: (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -554,30 +593,25 @@ const SidebarDashboard = () => {
           ),
         },
         {
-          name: "Message",
-          path: "/dashboards/student-message",
+          name: "KYC",
+          path: "/user/KYC",
           tag: 12,
           icon: (
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="24"
               viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="feather feather-book-open"
+              fill="currentColor"
+              width="24"
+              height="24"
             >
-              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+              <path d="M12 2L2 7v2h20V7l-10-5zm0 2.18L18.6 8H5.4L12 4.18zM4 12v7h16v-7H4zm2 2h12v3H6v-3zM1 22h22v-2H1v2z" />
             </svg>
           ),
         },
+
         {
-          name: "Enrolled Courses",
-          path: "/dashboards/student-enrolled-courses",
+          name: "Withdrawal Request",
+          path: "/user/user-withdrawal-request",
           icon: (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -596,28 +630,8 @@ const SidebarDashboard = () => {
           ),
         },
         {
-          name: "Wishlist",
-          path: "/dashboards/student-wishlist",
-          icon: (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="feather feather-bookmark"
-            >
-              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-            </svg>
-          ),
-        },
-        {
-          name: "Reviews",
-          path: "/dashboards/student-reviews",
+          name: "Affiliate Link",
+          path: "/user/affiliate-link",
           icon: (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -636,51 +650,8 @@ const SidebarDashboard = () => {
           ),
         },
         {
-          name: "My Quiz Attempts",
-          path: "/dashboards/student-my-quiz-attempts",
-          icon: (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="feather feather-help-circle"
-            >
-              <circle cx="12" cy="12" r="10"></circle>
-              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-              <line x1="12" y1="17" x2="12.01" y2="17"></line>
-            </svg>
-          ),
-        },
-        {
-          name: "Assignments",
-          path: "/dashboards/student-assignments",
-          icon: (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="feather feather-volume-1"
-            >
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-            </svg>
-          ),
-        },
-        {
-          name: " Settings",
-          path: "/dashboards/student-settings",
+          name: "My Team",
+          path: "/user/team",
           icon: (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -700,8 +671,8 @@ const SidebarDashboard = () => {
           ),
         },
         {
-          name: "Logout",
-          path: "#",
+          name: "My Plan",
+          path: "/user/plan",
           icon: (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -713,10 +684,74 @@ const SidebarDashboard = () => {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="feather feather-volume-1"
+              className="feather feather-help-circle"
             >
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+          ),
+        },
+        // {
+        //   name: "Upgrade Request",
+        //   path: "/user/upgrade-request",
+        //   icon: (
+        //     <svg
+        //       xmlns="http://www.w3.org/2000/svg"
+        //       width="16"
+        //       height="24"
+        //       viewBox="0 0 24 24"
+        //       fill="none"
+        //       stroke="currentColor"
+        //       strokeWidth="2"
+        //       strokeLinecap="round"
+        //       strokeLinejoin="round"
+        //       className="feather feather-volume-1"
+        //     >
+        //       <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+        //       <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        //     </svg>
+        //   ),
+        // },
+        {
+          name: "Wallet Transactions",
+          path: "/user/wallet-transactions",
+          icon: (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="feather feather-settings"
+            >
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+          ),
+        },
+        {
+          name: "Change Password",
+          path: "/user/settings",
+          icon: (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="feather feather-settings"
+            >
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
             </svg>
           ),
         },

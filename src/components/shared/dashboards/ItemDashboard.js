@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-
+import { ChevronRight } from "lucide-react";
 const ItemDashboard = ({ item }) => {
   const currentPath = usePathname();
   const { name, path, icon, tag, subItems } = item;
@@ -33,7 +33,7 @@ const ItemDashboard = ({ item }) => {
             onClick={toggleDropdown}
             className="text-contentColor dark:text-contentColor-dark hover:text-primaryColor ml-auto"
           >
-            ▼
+            <ChevronRight size={16} />
           </button>
         )}
       </div>

@@ -136,6 +136,6 @@ const CartContextProvider = ({ children }) => {
 };
 export const useCartContext = () => {
   const value = useContext(cartContext);
-  return value;
+  return value; 
 };
 export default CartContextProvider;

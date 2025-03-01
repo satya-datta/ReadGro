@@ -174,6 +174,38 @@ exports.createTopic = (req, res, next) => {
     });
   });
 };
+// Update Topic (Only topic_name and video_url)
+exports.updateTopic = (req, res, next) => {
+  const { topic_name, video_url } = req.body;
+  const { topic_id } = req.params; // Get topic ID from URL params
+
+  // Validation checks
+  if (!topic_name || !video_url) {
+    return res.status(400).json({ message: "Both topic_name and video_url are required" });
+  }
+
+  // Update query
+  const query = "UPDATE topics SET topic_name = ?, video_url = ? WHERE topic_id = ?";
+
+  connection.query(query, [topic_name, video_url, topic_id], (err, result) => {
+    if (err) {
+      console.error("Error updating topic:", err);
+      return res.status(500).json({
+        message: "An error occurred while updating the topic",
+        error: err,
+      });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Topic not found" });
+    }
+
+    res.status(200).json({
+      message: "Topic updated successfully",
+    });
+  });
+};
+
  exports.getAllCourses = (req, res) => {
   const query = "SELECT * FROM course";
   

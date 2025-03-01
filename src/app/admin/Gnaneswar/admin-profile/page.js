@@ -14,7 +14,7 @@ const Admin_Profile = () => {
       <main>
         <DsahboardWrapper>
           <DashboardContainer>
-            <AdminProfileMain />
+            {/* <AdminProfileMain /> */}
           </DashboardContainer>
         </DsahboardWrapper>
         <ThemeController />
