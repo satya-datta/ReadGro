@@ -13,6 +13,7 @@ const Contact = async () => {
     <PageWrapper>
       <main>
         <ContactMain />
+        hi
         <ThemeController />
       </main>
     </PageWrapper>
