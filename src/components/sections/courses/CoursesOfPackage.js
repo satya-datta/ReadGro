@@ -12,7 +12,7 @@ const CoursesOfPackage = ({ id }) => {
 
   // Fetch course IDs mapped to the package
   useEffect(() => {
-    fetch(`http://localhost:5000/getcoursemappings/${id}`)
+    fetch(`https://readgro-backend.onrender.com/getcoursemappings/${id}`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
@@ -22,16 +22,18 @@ const CoursesOfPackage = ({ id }) => {
           console.error(`Courses data for package ${id} is not an array`, data);
         }
       })
-      .catch((error) => console.error(`Error fetching courses for package ${id}:`, error));
+      .catch((error) =>
+        console.error(`Error fetching courses for package ${id}:`, error)
+      );
   }, [id]);
- console.log(id);
+  console.log(id);
   // Fetch course details using the stored course IDs
   useEffect(() => {
     if (courseIds.length === 0) return;
-  
+
     console.log("Course IDs being sent to the API:", courseIds);
-  
-    fetch("http://localhost:5000/getcoursedetails", {
+
+    fetch("https://readgro-backend.onrender.com/getcoursedetails", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,8 +43,9 @@ const CoursesOfPackage = ({ id }) => {
       .then((res) => res.json())
       .then((data) => {
         console.log("Received course details:", data);
-  
-        if (data && Array.isArray(data.courses)) { // ✅ Extract `courses` array
+
+        if (data && Array.isArray(data.courses)) {
+          // ✅ Extract `courses` array
           setCourses(data.courses);
         } else {
           console.error("Courses details response is not an array", data);
@@ -50,10 +53,12 @@ const CoursesOfPackage = ({ id }) => {
       })
       .catch((error) => console.error("Error fetching course details:", error));
   }, [courseIds]);
-  
+
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6 text-center">🎓 Explore Our Courses</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">
+        🎓 Explore Our Courses
+      </h1>
       {courses.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-10">
           {courses.map((course) => (
@@ -64,7 +69,7 @@ const CoursesOfPackage = ({ id }) => {
             >
               {/* Category Label */}
               {/* {course.id && (
-                <span className="absolute top-2 left-2 bg-blue-500 text-white px-3 py-1 text-xs rounded">
+                <span className="absolute top-2 left-2 bg-yellow-500 text-white px-3 py-1 text-xs rounded">
                   {course.id}
                 </span>
               )} */}
@@ -72,7 +77,7 @@ const CoursesOfPackage = ({ id }) => {
               {/* Course Image */}
               {course.image && (
                 <img
-                  src={`http://localhost:5000/uploads/${course.image}`}
+                  src={`https://readgro-backend.onrender.com/uploads/${course.image}`}
                   alt={course.course_name}
                   className="w-full h-48 object-cover rounded-lg"
                 />
@@ -86,12 +91,16 @@ const CoursesOfPackage = ({ id }) => {
                 {/* Star Ratings */}
                 <div className="flex items-center mt-2">
                   {[...Array(5)].map((_, index) => (
-                    <FaStar key={index} size={18} className="text-orange-500" fill="orange" />
+                    <FaStar
+                      key={index}
+                      size={18}
+                      className="text-orange-500"
+                      fill="orange"
+                    />
                   ))}
                 </div>
 
                 {/* Lessons Count */}
-                
               </div>
             </div>
           ))}

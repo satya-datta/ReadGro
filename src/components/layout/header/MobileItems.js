@@ -1,73 +1,61 @@
-import React from "react";
-import AccordionHome from "./AccordionHome";
-import AccordionContainer from "@/components/shared/containers/AccordionContainer";
+import React, { useState } from "react";
 import MobileMenuItem from "./MobileItem";
-import AccordionPages from "./AccordionPages";
-import AccordionCourses from "./AccordionCourses";
-import AccordionDashboard from "./AccordionDashboard";
-import AccordionEcommerce from "./AccordionEcommerce";
 import PackagesDropdown from "./PackagesDropdown";
 import DropdownDashboard from "./DropdownDashboard";
 
 const MobileMenuItems = () => {
+  const [openDropdown, setOpenDropdown] = useState(null);
+
+  const toggleDropdown = (id) => {
+    setOpenDropdown(openDropdown === id ? null : id);
+  };
+
   const items = [
-    {
-      id: 1,
-      name: "Home",
-      path: "/",
-    
-      // dropdown: <DropdownDemoes />,
-     
-    },
-    {
-      id: 2,
-      name: "About",
-      path: "/about",
-      accordion: "accordion",
-      // dropdown: <DropdownPages />,
-     
-    },
-    {
-      id: 3,
-      name: "Courses",
-      path: "/courses",
-      accordion: "accordion",
-      // dropdown: <DropdownCourses />,
-     
-    },
+    { id: 1, name: "Home", path: "/" },
+    { id: 2, name: "About", path: "/about" },
+    { id: 3, name: "Courses", path: "/courses" },
     {
       id: 4,
       name: "Plan",
       path: "/packages",
-      accordion: "accordion",
+      hasDropdown: true,
       children: <PackagesDropdown />,
-     
     },
-    {
-      id: 5,
-      name: "Dashboards",
-      path: "/dashboards/instructor-dashboard",
-      accordion: "accordion",
-      children: <DropdownDashboard />,
-     
-    },
-    {
-      id: 6,
-      name: "Contact Us",
-      path: "/ecommerce/shop",
-      accordion: "accordion",
-      // dropdown: <DropdownEcommerce />,
-     
-    },
+
+    { id: 5, name: "Contact Us", path: "/contact" },
   ];
 
   return (
     <div className="pt-8 pb-6 border-b border-borderColor dark:border-borderColor-dark">
-      <AccordionContainer>
-        {items.map((item, idx) => (
-          <MobileMenuItem key={idx} item={item} />
+      <nav className="flex flex-col gap-4">
+        {items.map((item) => (
+          <div key={item.id} className="relative">
+            <div
+              className="flex justify-between items-center cursor-pointer"
+              onClick={() => item.hasDropdown && toggleDropdown(item.id)}
+            >
+              <a href={item.path} className="text-base">
+                {item.name}
+              </a>
+              {item.hasDropdown && (
+                <span
+                  className={`ml-2 transition-transform duration-300 ${
+                    openDropdown === item.id ? "rotate-90" : "rotate-0"
+                  }`}
+                >
+                  ❯
+                </span>
+              )}
+            </div>
+
+            {item.hasDropdown && openDropdown === item.id && (
+              <div className="mt-2 bg-gray-100 dark:bg-gray-800 p-2 rounded">
+                {item.children}
+              </div>
+            )}
+          </div>
         ))}
-      </AccordionContainer>
+      </nav>
     </div>
   );
 };

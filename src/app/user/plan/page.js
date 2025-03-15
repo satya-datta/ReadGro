@@ -13,16 +13,16 @@ export const metadata = {
 };
 const Student_My_Quiz_Attempts = () => {
   return (
-    <PlainWrapper>
+    <PageWrapper>
       <main>
-      <UserDashboardWrapper>
+        <UserDashboardWrapper>
           <DashboardContainer>
-            <UserPackagePlan/>
+            <UserPackagePlan />
           </DashboardContainer>
         </UserDashboardWrapper>
         <ThemeController />
       </main>
-    </PlainWrapper>
+    </PageWrapper>
   );
 };
 

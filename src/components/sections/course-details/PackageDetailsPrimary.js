@@ -1,9 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/navigation";
 import CoursesOfPackage from "../courses/CoursesOfPackage";
+import { useUserContext } from "@/contexts/UserContext"; // Import User Context
 
 const PackageDetailsPrimary = ({ type, id }) => {
+  const { user } = useUserContext(); // Get user context
   const [packageDetails, setPackageDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -12,7 +14,7 @@ const PackageDetailsPrimary = ({ type, id }) => {
   useEffect(() => {
     if (!id) return;
 
-    fetch(`http://localhost:5000/getpackage/${id}`)
+    fetch(`https://readgro-backend.onrender.com/getpackage/${id}`)
       .then((res) => res.json())
       .then((data) => {
         if (data) {
@@ -25,11 +27,17 @@ const PackageDetailsPrimary = ({ type, id }) => {
       .finally(() => setLoading(false));
   }, [id]);
 
-  const handleBuyNow = () => {
-    if (packageDetails) {
+  const handleButtonClick = () => {
+    if (user?.userId) {
+      // If user is logged in, navigate to enrolled courses
+      router.push("/user/user-enrolled-courses");
+    } else {
+      // If user is not logged in, go to checkout
       window.location.href = `/checkout?package=${packageDetails.package_name}`;
     }
   };
+
+  const isUserLoggedIn = Boolean(user?.userId); // Check if user is logged in
 
   if (loading) return <p className="text-center">Loading package details...</p>;
   if (error) return <p className="text-center text-red-500">{error}</p>;
@@ -40,12 +48,17 @@ const PackageDetailsPrimary = ({ type, id }) => {
         <div className="container">
           <ul className="flex gap-1">
             <li>
-              <a href="/" className="text-lg text-blackColor2 dark:text-blackColor2-dark">
+              <a
+                href="/"
+                className="text-lg text-blackColor2 dark:text-blackColor2-dark"
+              >
                 Home <i className="icofont-simple-right"></i>
               </a>
             </li>
             <li>
-              <span className="text-lg text-blackColor2 dark:text-blackColor2-dark">Package Details</span>
+              <span className="text-lg text-blackColor2 dark:text-blackColor2-dark">
+                Package Details
+              </span>
             </li>
           </ul>
           <div className="pt-70px">
@@ -56,28 +69,32 @@ const PackageDetailsPrimary = ({ type, id }) => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
             {type === 3 && packageDetails?.package_image && (
               <img
-                src={`http://localhost:5000/uploads/${packageDetails.package_image}`}
+                src={`https://readgro-backend.onrender.com/uploads/${packageDetails.package_image}`}
                 alt={packageDetails.package_name}
                 className="w-full h-[450px] object-cover rounded-md"
               />
             )}
             <div className="py-5 px-6 shadow-lg bg-white dark:bg-gray-800 rounded-md">
-              <div className="flex justify-between items-center mb-5">
-                <div className="text-xl font-bold text-primaryColor">
-                  ₹{packageDetails?.package_price}
-                  <del className="text-sm text-gray-400 ml-2">
-                    /{(packageDetails?.package_price / (1 - 0.68)).toFixed(2)}
-                  </del>
+              {/* Show price & discount only if user is not logged in */}
+              {!isUserLoggedIn && (
+                <div className="flex justify-between items-center mb-5">
+                  <div className="text-xl font-bold text-primaryColor">
+                    ₹{packageDetails?.package_price}
+                    <del className="text-sm text-gray-400 ml-2">
+                      /{(packageDetails?.package_price / (1 - 0.68)).toFixed(2)}
+                    </del>
+                  </div>
+                  <span className="text-sm font-semibold text-red-500 bg-gray-100 px-2 rounded">
+                    68% OFF
+                  </span>
                 </div>
-                <span className="text-sm font-semibold text-red-500 bg-gray-100 px-2 rounded">
-                  68% OFF
-                </span>
-              </div>
+              )}
+              {/* Buy Now or Explore Button */}
               <button
                 className="w-full text-lg text-white bg-secondaryColor px-6 py-3 rounded hover:bg-secondaryColor-dark"
-                onClick={handleBuyNow}
+                onClick={handleButtonClick}
               >
-                Buy Now
+                {isUserLoggedIn ? "Explore" : "Buy Now"}
               </button>
             </div>
           </div>

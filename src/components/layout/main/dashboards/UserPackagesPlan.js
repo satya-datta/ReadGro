@@ -7,28 +7,30 @@ import PlanCard from "@/components/shared/courses/PlanCard";
 const UserPackagePlan = () => {
   const { currentIdx, handleTabClick } = useTab();
   const { user } = useUserContext();
-  
+
   const [packages, setPackages] = useState([]);
   const [userPackage, setUserPackage] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   useEffect(() => {
     if (!user?.userId) return;
-  
+
     const fetchPackages = async () => {
       try {
         const [packageRes, userPackageRes] = await Promise.all([
-          fetch("http://localhost:5000/getallpackages"),
-          fetch(`http://localhost:5000/getuserpackage/${user.userId}`)
+          fetch("https://readgro-backend.onrender.com/getallpackages"),
+          fetch(
+            `https://readgro-backend.onrender.com/getuserpackage/${user.userId}`
+          ),
         ]);
-  
+
         if (!packageRes.ok || !userPackageRes.ok) {
           throw new Error("Failed to fetch package details");
         }
-  
+
         const packagesData = await packageRes.json();
         const userPackageData = await userPackageRes.json();
-  
+
         setPackages(packagesData);
         setUserPackage(userPackageData);
       } catch (err) {
@@ -37,15 +39,15 @@ const UserPackagePlan = () => {
         setLoading(false);
       }
     };
-  
+
     fetchPackages();
-    
+
     // Poll every 10 seconds to check for updates
     const interval = setInterval(fetchPackages, 10000);
-  
+
     return () => clearInterval(interval); // Cleanup interval on unmount
   }, [user?.userId]);
-  
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div className="text-red-500">{error}</div>;
 
@@ -60,7 +62,11 @@ const UserPackagePlan = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 sm:mx-4 sm:px-6 sm:-mx-15px">
         {packages.map((pkg, idx) => (
-          <PlanCard key={idx} package_id={pkg.package_id} userCurrentPackage={userPackage} />
+          <PlanCard
+            key={idx}
+            package_id={pkg.package_id}
+            userCurrentPackage={userPackage}
+          />
         ))}
       </div>
     </div>

@@ -1,4 +1,3 @@
-
 import CourseDetailsMainUser from "@/components/layout/main/CourseDeailsMainUser";
 import CourseDetailsMain from "@/components/layout/main/CourseDetailsMain";
 import StudentEnrolledCoursesMain from "@/components/layout/main/dashboards/StudentEnrolledCoursesMain";
@@ -13,19 +12,19 @@ export const metadata = {
   title: "Student Enrolled Courses | Edurock - Education LMS Template",
   description: "Student Enrolled Courses | Edurock - Education LMS Template",
 };
-const Student_Enrolled_Courses = ({params}) => {
-    const { id } = params;
+const Student_Enrolled_Courses = ({ params }) => {
+  const { id } = params;
   return (
-    <PlainWrapper>
+    <PageWrapper>
       <main>
-      <UserDashboardWrapper>
+        <UserDashboardWrapper>
           <DashboardContainer>
-          <CourseDetailsMainUser id={id}/>
+            <CourseDetailsMainUser id={id} />
           </DashboardContainer>
-     </UserDashboardWrapper>
+        </UserDashboardWrapper>
         <ThemeController />
       </main>
-    </PlainWrapper>
+    </PageWrapper>
   );
 };
 

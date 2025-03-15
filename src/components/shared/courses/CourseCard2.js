@@ -27,7 +27,7 @@ const CourseCard2 = ({ course, card, isList, isNotSidebar }) => {
 
     {
       category: "Development",
-      bg: "bg-blue",
+      bg: "bg-yellow",
     },
 
     {
@@ -56,7 +56,7 @@ const CourseCard2 = ({ course, card, isList, isNotSidebar }) => {
 
     {
       category: "Marketing",
-      bg: "bg-blue",
+      bg: "bg-yellow",
     },
 
     {

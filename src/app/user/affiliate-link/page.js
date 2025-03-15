@@ -13,7 +13,7 @@ export const metadata = {
 };
 const Student_Reviews = () => {
   return (
-    <PlainWrapper>
+    <PageWrapper>
       <main>
         <UserDashboardWrapper>
           <DashboardContainer>
@@ -22,7 +22,7 @@ const Student_Reviews = () => {
         </UserDashboardWrapper>
         <ThemeController />
       </main>
-    </PlainWrapper>
+    </PageWrapper>
   );
 };
 

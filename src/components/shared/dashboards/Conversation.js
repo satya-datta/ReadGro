@@ -110,7 +110,7 @@ const Conversation = () => {
             <div className="h-[150%] block">
               <label
                 htmlFor="attachment"
-                className="text-darkdeep4 text-xl pr-5 border-r border-darkdeep4 border-opacity-20 dark:border-blue-light2 h-full block py-9px"
+                className="text-darkdeep4 text-xl pr-5 border-r border-darkdeep4 border-opacity-20 dark:border-yellow-light2 h-full block py-9px"
               >
                 <i
                   className="icofont-attachment attachment"

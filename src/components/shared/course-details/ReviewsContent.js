@@ -288,7 +288,7 @@ const ReviewsContent = () => {
 
           <div>
             <input type="checkbox" />{" "}
-            <span className="text-size-15 text-darkBlue dark:text-darkBlue-dark">
+            <span className="text-size-15 text-darkyellow dark:text-darkyellow-dark">
               Save my name, email, and website in this browser for the next time
               I comment.
             </span>

@@ -8,12 +8,13 @@ const AdminGetPackages = () => {
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const response = await fetch("http://localhost:5000/getallpackages");
+        const response = await fetch(
+          "https://readgro-backend.onrender.com/getallpackages"
+        );
         const data = await response.json();
         console.log(data);
         if (response.ok) {
           setPackages(data);
-        
         } else {
           console.error("Failed to fetch packages:", data.message);
         }
@@ -26,15 +27,21 @@ const AdminGetPackages = () => {
   }, []);
 
   const handleDelete = async (packageId) => {
-    if (!window.confirm("Are you sure you want to delete this package?")) return;
+    if (!window.confirm("Are you sure you want to delete this package?"))
+      return;
 
     try {
-      const response = await fetch(`http://localhost:5000/delete-package/${packageId}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `https://readgro-backend.onrender.com/delete-package/${packageId}`,
+        {
+          method: "DELETE",
+        }
+      );
       const data = await response.json();
       if (response.ok) {
-        setPackages((prev) => prev.filter((pkg) => pkg.package_id !== packageId));
+        setPackages((prev) =>
+          prev.filter((pkg) => pkg.package_id !== packageId)
+        );
         alert("Package deleted successfully.");
       } else {
         console.error("Failed to delete package:", data.message);
@@ -52,7 +59,7 @@ const AdminGetPackages = () => {
           <thead className="text-sm md:text-base bg-gray-100">
             <tr>
               <th className="px-5 py-2">Package Name</th>
-           
+
               <th className="px-5 py-2">Price</th>
               <th className="px-5 py-2">Created At</th>
               <th className="px-5 py-2">Commission</th>
@@ -63,13 +70,13 @@ const AdminGetPackages = () => {
             {packages.map((pkg) => (
               <tr key={pkg.package_id} className="border-b">
                 <td className="px-5 py-2">{pkg.package_name}</td>
-           
+
                 <td className="px-5 py-2">{pkg.package_price}</td>
                 <td className="px-5 py-2">{pkg.created_time}</td>
                 <td className="px-5 py-2">{pkg.commission || "N/A"}</td>
                 <td className="px-5 py-2 flex space-x-3">
                   {/* <Link href={`/admin-package/edit/${pkg.package_id}`}>
-                    <button className="text-blue-500 hover:underline">Edit</button>
+                    <button className="text-yellow-500 hover:underline">Edit</button>
                   </Link> */}
                   <button
                     className="text-red-500 hover:underline"

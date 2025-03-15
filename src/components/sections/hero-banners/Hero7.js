@@ -12,13 +12,7 @@ const Hero7 = () => {
       {/* banner section  */}
       <div>
         {/* animated icons  */}
-        <div>
-          <BookImage />
-          <GlobImage />
-          <BalbImage />
-          <AppleImage />
-          <TriangleImage />
-        </div>
+        
 
         {/* Swiper  */}
         <HeroSlider2 />

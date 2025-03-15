@@ -19,11 +19,13 @@ const StudentEnrolledCourses = () => {
 
     const fetchPackageId = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/getuser_details/${user.userId}`);
+        const res = await fetch(
+          `https://readgro-backend.onrender.com/getuser_details/${user.userId}`
+        );
         if (!res.ok) throw new Error("Failed to fetch package details");
 
         const data = await res.json();
-         console.log(data.user.packageId);
+        console.log(data.user.packageId);
         setPackageId(data.user.packageId);
       } catch (err) {
         setError(err.message);

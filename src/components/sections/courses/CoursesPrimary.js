@@ -297,7 +297,7 @@ const CoursesPrimary = ({ isNotSidebar, isList, card }) => {
             </div>
             <div className="pl-50px sm:pl-20 pr-10px">
               <select
-                className="text-blackColor bg-whiteColor py-2 pr-2 pl-3 rounded-md outline-none border-4 border-transparent focus:border-blue-light box-border"
+                className="text-blackColor bg-whiteColor py-2 pr-2 pl-3 rounded-md outline-none border-4 border-transparent focus:border-yellow-light box-border"
                 onChange={(e) => setSortInput(e.target.value)}
               >
                 {sortInputs.map((input, idx) => (

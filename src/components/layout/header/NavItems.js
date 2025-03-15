@@ -38,15 +38,9 @@ const NavItems = () => {
       dropdown: <PackagesDropdown />,
       isRelative: true,
     },
+
     {
       id: 5,
-      name: "Dashboards",
-      path: "/dashboards/instructor-dashboard",
-      dropdown: <DropdownDashboard />,
-      isRelative: true,
-    },
-    {
-      id: 6,
       name: "Contact Us",
       path: "/ecommerce/shop",
       // dropdown: <DropdownEcommerce />,

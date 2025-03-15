@@ -19,10 +19,14 @@ const AdmineditCourseMain = ({ course_id }) => {
   useEffect(() => {
     const fetchCourseDetails = async () => {
       try {
-        const courseResponse = await fetch(`http://localhost:5000/getspecific_course/${course_id}`);
+        const courseResponse = await fetch(
+          `https://readgro-backend.onrender.com/getspecific_course/${course_id}`
+        );
         const courseData = await courseResponse.json();
 
-        const topicsResponse = await fetch(`http://localhost:5000/gettopics/${course_id}`);
+        const topicsResponse = await fetch(
+          `https://readgro-backend.onrender.com/gettopics/${course_id}`
+        );
         const topicsData = await topicsResponse.json();
 
         setTopics(Array.isArray(topicsData.topics) ? topicsData.topics : []);
@@ -52,7 +56,7 @@ const AdmineditCourseMain = ({ course_id }) => {
       setDeletedTopics([...deletedTopics, topics[index].topic_id]);
       setTopics(topics.filter((_, i) => i !== index));
     } else {
-      setNewTopics(newTopics.filter((_, i) => i !== (index - topics.length)));
+      setNewTopics(newTopics.filter((_, i) => i !== index - topics.length));
     }
   };
 
@@ -69,68 +73,86 @@ const AdmineditCourseMain = ({ course_id }) => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+
     const courseData = {
       course_name,
       instructor,
       course_description,
-      topics: [...topics, ...newTopics].map(({ topic_name, video_url }) => ({ topic_name, video_url })),
+      topics: [...topics, ...newTopics].map(({ topic_name, video_url }) => ({
+        topic_name,
+        video_url,
+      })),
     };
-  
+
     try {
       // Update course details
-      await fetch(`http://localhost:5000/updatecoursedetails/${course_id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(courseData),
-      });
-  
-      // Update existing topics
-      for (const topic of topics) {
-        await fetch(`http://localhost:5000/updatetopic/${topic.topic_id}`, {
+      await fetch(
+        `https://readgro-backend.onrender.com/updatecoursedetails/${course_id}`,
+        {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            topic_name: topic.topic_name,
-            video_url: topic.video_url,
-          }),
-        });
+          body: JSON.stringify(courseData),
+        }
+      );
+
+      // Update existing topics
+      for (const topic of topics) {
+        await fetch(
+          `https://readgro-backend.onrender.com/updatetopic/${topic.topic_id}`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              topic_name: topic.topic_name,
+              video_url: topic.video_url,
+            }),
+          }
+        );
       }
-  
+
       // Create new topics
       for (const topic of newTopics) {
-        await fetch("http://localhost:5000/create-topic", {
+        await fetch("https://readgro-backend.onrender.com/create-topic", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ ...topic, course_id }),
         });
       }
-  
+
       // Delete removed topics
       for (const topicId of deletedTopics) {
-        await fetch(`http://localhost:5000/delete-topic/${topicId}`, { method: "DELETE" });
+        await fetch(
+          `https://readgro-backend.onrender.com/delete-topic/${topicId}`,
+          {
+            method: "DELETE",
+          }
+        );
       }
-  
+
       // Reset states after successful update
       setNewTopics([]);
       setDeletedTopics([]);
       localStorage.removeItem("newTopics");
       localStorage.removeItem("deletedTopics");
-  
+
       alert("Course and topics updated successfully");
     } catch (error) {
       console.error("Error updating course and topics:", error);
     }
   };
-  
 
   return (
     <div className="p-10px md:px-10 md:py-50px mb-30px bg-whiteColor dark:bg-whiteColor-dark shadow-accordion dark:shadow-accordion-dark rounded-5">
       <div className="mb-6 pb-5 border-b-2 border-borderColor dark:border-borderColor-dark">
-        <h2 className="text-2xl font-bold text-blackColor dark:text-blackColor-dark">Edit Course</h2>
+        <h2 className="text-2xl font-bold text-blackColor dark:text-blackColor-dark">
+          Edit Course
+        </h2>
       </div>
-   
-      <form onSubmit={handleSubmit} className="text-sm text-blackColor dark:text-blackColor-dark leading-1.8">
+
+      <form
+        onSubmit={handleSubmit}
+        className="text-sm text-blackColor dark:text-blackColor-dark leading-1.8"
+      >
         {/* Course Details */}
         <div className="grid grid-cols-1 mb-15px gap-y-15px gap-x-30px">
           <div>
@@ -167,8 +189,17 @@ const AdmineditCourseMain = ({ course_id }) => {
         {/* Course Image */}
         <div className="mb-15px">
           <label className="mb-3 block font-semibold">Course Image</label>
-          {existingImage && <img src={existingImage} alt="Course" className="w-32 h-32 mb-2" />}
-          <input type="file" className="w-full py-10px px-5 text-sm focus:outline-none" />
+          {course_image && (
+            <img
+              src={`https://readgro-backend.onrender.com/uploads/${course_image}`}
+              alt="Course"
+              className="w-32 h-32 mb-2"
+            />
+          )}
+          <input
+            type="file"
+            className="w-full py-10px px-5 text-sm focus:outline-none"
+          />
         </div>
 
         {/* Topics Section */}
@@ -179,13 +210,17 @@ const AdmineditCourseMain = ({ course_id }) => {
               <input
                 type="text"
                 value={topic.topic_name || ""}
-                onChange={(e) => handleTopicChange(index, "topic_name", e.target.value)}
+                onChange={(e) =>
+                  handleTopicChange(index, "topic_name", e.target.value)
+                }
                 className="flex-1 py-2 px-3 text-sm focus:outline-none border border-gray-300 rounded"
               />
               <input
                 type="text"
                 value={topic.video_url || ""}
-                onChange={(e) => handleTopicChange(index, "video_url", e.target.value)}
+                onChange={(e) =>
+                  handleTopicChange(index, "video_url", e.target.value)
+                }
                 className="flex-1 py-2 px-3 text-sm focus:outline-none border border-gray-300 rounded"
               />
               <button

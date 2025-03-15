@@ -39,28 +39,32 @@ const AdminAddCourseMain = () => {
     const newErrors = {};
 
     if (!course_name.trim()) newErrors.course_name = "Course name is required.";
-    if (!instructor.trim()) newErrors.instructor = "Instructor name is required.";
-    if (!course_description.trim()) newErrors.course_description = "Course description is required.";
+    if (!instructor.trim())
+      newErrors.instructor = "Instructor name is required.";
+    if (!course_description.trim())
+      newErrors.course_description = "Course description is required.";
     if (!course_image) newErrors.course_image = "Course image is required.";
 
     if (topics.length === 0) {
-        newErrors.topics = "At least one topic is required.";
+      newErrors.topics = "At least one topic is required.";
     } else {
-        const invalidTopics = topics.some(topic => !topic.topicName.trim() || !topic.videoUrl.trim());
-        if (invalidTopics) newErrors.topics = "All topics must have a name and a video URL.";
+      const invalidTopics = topics.some(
+        (topic) => !topic.topicName.trim() || !topic.videoUrl.trim()
+      );
+      if (invalidTopics)
+        newErrors.topics = "All topics must have a name and a video URL.";
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-};
-
+  };
 
   // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("Into Submit");
     if (!validateForm()) return;
-console.log("form Validated");
+    console.log("form Validated");
     try {
       const formData = new FormData();
       formData.append("course_name", course_name);
@@ -70,15 +74,18 @@ console.log("form Validated");
         formData.append("course_image", course_image);
       }
 
-      const courseResponse = await fetch('http://localhost:5000/create-course', {
-        method: 'POST',
-        body: formData,
-      });
+      const courseResponse = await fetch(
+        "https://readgro-backend.onrender.com/create-course",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
-      if (!courseResponse.ok) throw new Error('Error creating course');
+      if (!courseResponse.ok) throw new Error("Error creating course");
 
       const courseResult = await courseResponse.json();
-      console.log('Course created successfully:', courseResult);
+      console.log("Course created successfully:", courseResult);
       const course_id = courseResult.course_id;
 
       for (const topic of topics) {
@@ -88,18 +95,21 @@ console.log("form Validated");
           course_id,
         };
 
-        const topicResponse = await fetch('http://localhost:5000/create-topic', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(topicData),
-        });
+        const topicResponse = await fetch(
+          "https://readgro-backend.onrender.com/create-topic",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(topicData),
+          }
+        );
 
         if (!topicResponse.ok) {
-          console.error('Error submitting topic:', topicData);
+          console.error("Error submitting topic:", topicData);
           continue;
         }
 
-        console.log('Topic created successfully:', await topicResponse.json());
+        console.log("Topic created successfully:", await topicResponse.json());
       }
 
       // Reset form after successful submission
@@ -109,9 +119,9 @@ console.log("form Validated");
       setCourseImage(null);
       setTopics([]);
       setErrors({});
-      alert('Course and topics created successfully!');
+      alert("Course and topics created successfully!");
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
@@ -119,7 +129,6 @@ console.log("form Validated");
     <div className="p-10px md:px-10 md:py-50px mb-30px bg-white shadow rounded-5">
       <h2 className="text-2xl font-bold mb-6">Add New Course</h2>
       <form onSubmit={handleSubmit} className="text-sm">
-        
         {/* Course Name */}
         <div className="mb-4">
           <label className="block font-semibold">Course Name</label>
@@ -130,7 +139,9 @@ console.log("form Validated");
             placeholder="Enter course name"
             className="w-full py-2 px-3 border rounded"
           />
-          {errors.course_name && <p className="text-red-500">{errors.course_name}</p>}
+          {errors.course_name && (
+            <p className="text-red-500">{errors.course_name}</p>
+          )}
         </div>
 
         {/* Instructor */}
@@ -143,7 +154,9 @@ console.log("form Validated");
             placeholder="Enter instructor name"
             className="w-full py-2 px-3 border rounded"
           />
-          {errors.instructor && <p className="text-red-500">{errors.instructor}</p>}
+          {errors.instructor && (
+            <p className="text-red-500">{errors.instructor}</p>
+          )}
         </div>
 
         {/* Description */}
@@ -155,14 +168,18 @@ console.log("form Validated");
             className="w-full py-2 px-3 border rounded"
             placeholder="Enter course description"
           />
-          {errors.course_description && <p className="text-red-500">{errors.course_description}</p>}
+          {errors.course_description && (
+            <p className="text-red-500">{errors.course_description}</p>
+          )}
         </div>
 
         {/* Course Image */}
         <div className="mb-4">
           <label className="block font-semibold">Course Image</label>
           <input type="file" onChange={handleImageChange} className="w-full" />
-          {errors.course_image && <p className="text-red-500">{errors.course_image}</p>}
+          {errors.course_image && (
+            <p className="text-red-500">{errors.course_image}</p>
+          )}
         </div>
 
         {/* Topics Section */}
@@ -173,14 +190,18 @@ console.log("form Validated");
               <input
                 type="text"
                 value={topic.topicName}
-                onChange={(e) => handleTopicChange(index, "topicName", e.target.value)}
+                onChange={(e) =>
+                  handleTopicChange(index, "topicName", e.target.value)
+                }
                 placeholder="Topic Name"
                 className="flex-1 py-2 px-3 border rounded"
               />
               <input
                 type="text"
                 value={topic.videoUrl}
-                onChange={(e) => handleTopicChange(index, "videoUrl", e.target.value)}
+                onChange={(e) =>
+                  handleTopicChange(index, "videoUrl", e.target.value)
+                }
                 placeholder="Video URL"
                 className="flex-1 py-2 px-3 border rounded"
               />

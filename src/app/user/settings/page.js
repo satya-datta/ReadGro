@@ -12,7 +12,7 @@ export const metadata = {
 };
 const Student_Settings = () => {
   return (
-    <PlainWrapper>
+    <PageWrapper>
       <main>
         <UserDashboardWrapper>
           <DashboardContainer>
@@ -21,7 +21,7 @@ const Student_Settings = () => {
         </UserDashboardWrapper>
         <ThemeController />
       </main>
-    </PlainWrapper>
+    </PageWrapper>
   );
 };
 

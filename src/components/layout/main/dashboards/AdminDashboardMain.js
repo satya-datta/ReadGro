@@ -10,21 +10,21 @@ const AdminDashboardMain = () => {
   return (
     <>
       <CounterAdmin />
-      <ChartDashboard />
+      {/* <ChartDashboard />
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-30px">
-        {/* popular instructor */}
+     
         <PopularInstructors />
-        {/* Recent Course */}
+       
         <RecentCourses />
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-30px">
-        {/* Notice Board */}
+    
         <NoticeBoard />
-        {/* notifications */}
+    
         <Notifications />
-      </div>
-      <AdminFeedbacks />
+      </div> */}
+      {/* <AdminFeedbacks /> */}
     </>
   );
 };

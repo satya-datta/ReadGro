@@ -11,7 +11,7 @@ export const metadata = {
 };
 const Student_Profile = () => {
   return (
-    <PlainWrapper>
+    <PageWrapper>
       <main>
         <UserDashboardWrapper>
           <DashboardContainer>
@@ -20,7 +20,7 @@ const Student_Profile = () => {
         </UserDashboardWrapper>
         <ThemeController />
       </main>
-    </PlainWrapper>
+    </PageWrapper>
   );
 };
 

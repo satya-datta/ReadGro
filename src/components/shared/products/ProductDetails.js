@@ -19,7 +19,7 @@ const ProductDetails = ({ product, isModal }) => {
   const demoColors = [
     { name: "Violet" },
     { name: "Black" },
-    { name: "Blue" },
+    { name: "yellow" },
     { name: "Grey" },
     { name: "Pink" },
   ];
@@ -128,7 +128,7 @@ const ProductDetails = ({ product, isModal }) => {
                 Only 10 items in stock!
               </h6>
 
-              <div className="h-1 w-full bg-blue-x-light rounded-md relative mt-15px mb-15px">
+              <div className="h-1 w-full bg-yellow-x-light rounded-md relative mt-15px mb-15px">
                 <div className="text-center bg-primaryColor absolute top-0 left-0 w-1/2 h-full rounded-md leading-25px"></div>
               </div>
             </div>

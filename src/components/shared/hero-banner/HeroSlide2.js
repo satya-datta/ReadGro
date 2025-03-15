@@ -32,49 +32,7 @@ const HeroSlide2 = ({ slide, idx }) => {
                 </a>
               </div>
               <div className="mt-20 md:mt-50px">
-                <p className="text-whiteColor mb-15px">Followed by :</p>
-                <ul className="flex gap-3 items-center justify-center">
-                  <li>
-                    <a
-                      href="#"
-                      className="w-50px h-50px md:w-15 md:h-15 leading-50px md:leading-15 text-whiteColor bg-white bg-opacity-10 hover:bg-primaryColor text-sm md:text-xl rounded-100"
-                    >
-                      <i className="icofont-facebook"></i>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="w-50px h-50px md:w-15 md:h-15 leading-50px md:leading-15 text-whiteColor bg-white bg-opacity-10 hover:bg-primaryColor text-sm md:text-xl rounded-100"
-                    >
-                      <i className="icofont-twitter"></i>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="w-50px h-50px md:w-15 md:h-15 leading-50px md:leading-15 text-whiteColor bg-white bg-opacity-10 hover:bg-primaryColor text-sm md:text-xl rounded-100"
-                    >
-                      <i className="icofont-vimeo"></i>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="w-50px h-50px md:w-15 md:h-15 leading-50px md:leading-15 text-whiteColor bg-white bg-opacity-10 hover:bg-primaryColor text-sm md:text-xl rounded-100"
-                    >
-                      <i className="icofont-linkedin"></i>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="w-50px h-50px md:w-15 md:h-15 leading-50px md:leading-15 text-whiteColor bg-white bg-opacity-10 hover:bg-primaryColor text-sm md:text-xl rounded-100"
-                    >
-                      <i className="icofont-skype"></i>
-                    </a>
-                  </li>
-                </ul>
+                 
               </div>
             </div>
           </div>

@@ -1,24 +1,21 @@
-"use client"
+"use client";
 import Image from "next/image";
 import blogImag8 from "@/assets/images/blog/blog_8.png";
 import { useEffect, useState } from "react";
 import CurriculumContent from "@/components/shared/course-details/CurriculumContent";
 let cid = 0;
 const CourseDetailsUser = ({ id, type }) => {
- 
-
- 
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (id) {
-      fetch(`http://localhost:5000/getspecific_course/${id}`)
+      fetch(`https://readgro-backend.onrender.com/getspecific_course/${id}`)
         .then((res) => res.json())
         .then((data) => {
           if (data) {
             setCourse(data);
-            console.log(data)
+            console.log(data);
           }
           setLoading(false);
         })
@@ -34,21 +31,16 @@ const CourseDetailsUser = ({ id, type }) => {
 
   return (
     <section>
-<div className="container mx-auto max-w-[800px] py-10 md:py-[50px] lg:py-[60px] 2xl:py-[100px]">
-
+      <div className="container mx-auto max-w-[800px] py-10 md:py-[50px] lg:py-[60px] 2xl:py-[100px]">
         <div className=" grid-cols-1 lg:grid-cols-12 gap-30px">
           <div className=" lg:col-span-8 space-y-[35px]">
-            
             <div data-aos="fade-up">
-             
               {/* course content  */}
               <div>
                 {type === 2 || type === 3 ? (
                   ""
                 ) : (
                   <>
-                   
-
                     {/* titile  */}
                     <h4
                       className="text-size-32 md:text-4xl font-bold text-blackColor dark:text-blackColor-dark mb-15px leading-43px md:leading-14.5 uppercase"
@@ -61,8 +53,6 @@ const CourseDetailsUser = ({ id, type }) => {
                       className="flex gap-5 flex-wrap items-center mb-30px"
                       data-aos="fade-up"
                     >
-                      
-                    
                       <div className="text-start md:text-end">
                         <i className="icofont-star text-size-15 text-yellow"></i>{" "}
                         <i className="icofont-star text-size-15 text-yellow"></i>{" "}
@@ -78,24 +68,22 @@ const CourseDetailsUser = ({ id, type }) => {
                       className="text-sm md:text-lg text-contentColor dark:contentColor-dark mb-25px !leading-30px uppercase"
                       data-aos="fade-up"
                     >
-                     {course.course.description}
+                      {course.course.description}
                     </p>
                     {/* details  */}
                     <h6
                       className="text-sm md:text-lg text-contentColor dark:contentColor-dark mb-25px !leading-30px uppercase"
                       data-aos="fade-up"
                     >
-                    By {course.course.instructor}
+                      By {course.course.instructor}
                     </h6>
                   </>
                 )}
                 {/* course tab  */}
                 {/* <CourseDetailsTab id={cid} type={type} />
-                */}
+                 */}
                 <CurriculumContent id={course.course.id} />
                 {/* tag and share   */}
-
-              
               </div>
             </div>
           </div>

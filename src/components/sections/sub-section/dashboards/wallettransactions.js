@@ -16,7 +16,7 @@ const WalletTransactions = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/getwallettransaction/${user.userId}`,
+        `https://readgro-backend.onrender.com/getwallettransaction/${user.userId}`,
         {
           method: "GET",
           credentials: "include",

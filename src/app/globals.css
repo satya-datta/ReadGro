@@ -52,16 +52,16 @@
   --darkdeep1: #170f2f;
   --primaryColor: #5f2ded;
   --secondaryColor: #f2277e;
-  --blue: #0c63e4;
-  --blue2: rgba(13, 110, 253, 0.25);
-  --blueLight: #bdd4fa;
-  --blueLight1: #e7f1ff;
+  --yellow: #0c63e4;
+  --yellow2: rgba(13, 110, 253, 0.25);
+  --yellowLight: #bdd4fa;
+  --yellowLight1: #e7f1ff;
   --borderColor: #eeeeee;
   --lightGrey4: #a2a9b6;
   --borderColor2: #dddddd;
 }
 .dark {
-  --blueLight1: #0c0e2b;
+  --yellowLight1: #0c0e2b;
   --borderColor: #312a57;
   --borderColor2: #fff;
 }
@@ -124,6 +124,21 @@ h6 {
 /* swiper slider */
 .swiper {
   width: 100%;
+}
+/* Custom Swiper Pagination */
+.swiper-pagination {
+  position: relative;
+  margin-top: 20px; /* Space between cards and dots */
+}
+
+.swiper-pagination-bullet {
+  background-color: #666;
+  opacity: 0.6;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #333;
+  opacity: 1;
 }
 
 /* hero */
@@ -354,12 +369,12 @@ h6 {
 .fees .active .accordion-controller,
 .curriculum .active .accordion-controller {
   /* background-color: #e7f1ff; */
-  background-color: var(--blueLight1);
+  background-color: var(--yellowLight1);
 }
 .fees .active .accordion-controller svg,
 .curriculum .active .accordion-controller svg {
   transform: rotate(-179.999deg);
-  fill: var(--blue);
+  fill: var(--yellow);
 }
 /* create course */
 .create-course .active .accordion-controller {
@@ -368,16 +383,16 @@ h6 {
 }
 
 .create-course .active .accordion-controller:focus {
-  box-shadow: 0 0 0 0.25rem var(--blue2);
+  box-shadow: 0 0 0 0.25rem var(--yellow2);
   border-bottom: 1px solid transparent;
 }
 .create-course .accordion-controller:focus {
-  box-shadow: 0 0 0 0.25rem var(--blue2);
+  box-shadow: 0 0 0 0.25rem var(--yellow2);
 }
 /* faq */
 .faq .accordion-controller:focus {
   outline-style: solid;
-  outline-color: var(--blueLight);
+  outline-color: var(--yellowLight);
 }
 
 .faq .active .accordion-controller {

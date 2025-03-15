@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link"; // Import Link from next/link
 
@@ -9,7 +9,9 @@ const AdminGetCourseMain = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch("http://localhost:5000/getallcourses"); // API endpoint for fetching courses
+        const response = await fetch(
+          "https://readgro-backend.onrender.com/getallcourses"
+        ); // API endpoint for fetching courses
         const data = await response.json();
         if (response.ok) {
           setCourses(data.courses); // Update the state with fetched courses
@@ -37,7 +39,7 @@ const AdminGetCourseMain = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/delete-course/${courseId}`,
+        `https://readgro-backend.onrender.com/delete-course/${courseId}`,
         { method: "DELETE" }
       );
       const data = await response.json();
@@ -92,27 +94,25 @@ const AdminGetCourseMain = () => {
                   </td>
                   <td className="px-5px py-10px md:px-5 font-normal">
                     <div className="flex items-center space-x-3">
-                    <Link href={`../admin-course/edit-course/${course.course_id}`} className="hover:text-primary">
- 
-                      
-                    <button
+                      <Link
+                        href={`../admin-course/edit-course/${course.course_id}`}
                         className="hover:text-primary"
-                       
                       >
-                        {/* Edit Icon */}
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          x="0px"
-                          y="0px"
-                          width="15"
-                          height="15"
-                          viewBox="0 0 48 48"
-                        >
-                          <path d="M38.657 18.536l2.44-2.44c2.534-2.534 2.534-6.658 0-9.193-1.227-1.226-2.858-1.9-4.597-1.9s-3.371.675-4.597 1.901l-2.439 2.439L38.657 18.536zM27.343 11.464L9.274 29.533c-.385.385-.678.86-.848 1.375L5.076 41.029c-.179.538-.038 1.131.363 1.532C5.726 42.847 6.108 43 6.5 43c.158 0 .317-.025.472-.076l10.118-3.351c.517-.17.993-.463 1.378-.849l18.068-18.068L27.343 11.464z"></path>
-                        </svg>
-                      </button>
+                        <button className="hover:text-primary">
+                          {/* Edit Icon */}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            x="0px"
+                            y="0px"
+                            width="15"
+                            height="15"
+                            viewBox="0 0 48 48"
+                          >
+                            <path d="M38.657 18.536l2.44-2.44c2.534-2.534 2.534-6.658 0-9.193-1.227-1.226-2.858-1.9-4.597-1.9s-3.371.675-4.597 1.901l-2.439 2.439L38.657 18.536zM27.343 11.464L9.274 29.533c-.385.385-.678.86-.848 1.375L5.076 41.029c-.179.538-.038 1.131.363 1.532C5.726 42.847 6.108 43 6.5 43c.158 0 .317-.025.472-.076l10.118-3.351c.517-.17.993-.463 1.378-.849l18.068-18.068L27.343 11.464z"></path>
+                          </svg>
+                        </button>
                       </Link>
-               
+
                       <button
                         className="hover:text-primary"
                         onClick={() => handleDelete(course.course_id)}
@@ -138,10 +138,7 @@ const AdminGetCourseMain = () => {
               ))}
               {courses.length === 0 && (
                 <tr>
-                  <td
-                    colSpan={4}
-                    className="text-center text-gray-500 py-5"
-                  >
+                  <td colSpan={4} className="text-center text-gray-500 py-5">
                     No courses available.
                   </td>
                 </tr>

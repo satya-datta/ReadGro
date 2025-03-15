@@ -1,4 +1,3 @@
-
 import RGWithdrawlRequest from "@/components/layout/main/dashboards/RGWithdrawlRequest";
 import DashboardContainer from "@/components/shared/containers/DashboardContainer";
 import ThemeController from "@/components/shared/others/ThemeController";
@@ -12,16 +11,16 @@ export const metadata = {
 };
 const Instructor_Announcements = () => {
   return (
-    <PlainWrapper>
+    <PageWrapper>
       <main>
-      <UserDashboardWrapper>
+        <UserDashboardWrapper>
           <DashboardContainer>
             <RGWithdrawlRequest />
           </DashboardContainer>
-      </UserDashboardWrapper>
+        </UserDashboardWrapper>
         <ThemeController />
       </main>
-    </PlainWrapper>
+    </PageWrapper>
   );
 };
 

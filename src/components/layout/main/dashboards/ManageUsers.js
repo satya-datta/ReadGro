@@ -6,28 +6,20 @@ import ProfileContent from "@/components/shared/dashboards/ProfileContent";
 import PasswordContent from "@/components/shared/dashboards/PasswordContent";
 import SocialIconContent from "@/components/shared/dashboards/SocialIconContent";
 import TabContentWrapper from "@/components/shared/wrappers/TabContentWrapper";
-import UserBankDetails from './ADMINUserBankDetails';
-const ManageUsers = ({userId}) => {
+import UserBankDetails from "./ADMINUserBankDetails";
+const ManageUsers = ({ userId }) => {
   const { currentIdx, handleTabClick } = useTab();
   const tabbuttons = [
+    // {
+    //   name: "BANK DETAILS",
+    //   content: <UserBankDetails userId={userId}/>,
+    // },
     {
-      name: "BANK DETAILS",
-      content: <UserBankDetails userId={userId}/>,
-    },
-    {
-        name: "WITHDRAWL REQUEST",
-        content: <WithDrawlRequest userId={userId} />,
-      },
-    {
-      name: "PASSWORD",
-      content: <PasswordContent />,
-    },
-    {
-      name: "SOCIAL ICON",
-      content: <SocialIconContent />,
+      name: "WITHDRAWL REQUEST",
+      content: <WithDrawlRequest userId={userId} />,
     },
   ];
-  console.log(userId); 
+  console.log(userId);
   return (
     <div className="p-10px md:px-10 md:py-50px mb-30px bg-whiteColor dark:bg-whiteColor-dark shadow-accordion dark:shadow-accordion-dark rounded-5">
       {/* heading */}

@@ -26,7 +26,7 @@ const HeaderTop = () => {
       >
         <div className="flex justify-between items-center">
           <div>
-            <p>Call Us: +1 800 123 456 789 - Mail Us: Itcroc@mail.com</p>
+            <p>Call Us: +91 99896 53692 Mail Us: bunnyroyals@mail.com</p>
           </div>
           <div className="flex gap-37px items-center">
             <div>

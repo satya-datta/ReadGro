@@ -56,28 +56,7 @@ const HeroSlider2 = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <Swiper
-        modules={[Thumbs]}
-        watchSlidesProgress
-        onSwiper={setThumbsSwiper}
-        className="absolute bottom-5 left-1/2 -translate-x-1/2 w-auto"
-      >
-        {thumbsImages.map((image, idx) => (
-          <SwiperSlide
-            className={`swiper-slide cursor-pointer max-w-150px rounded-lg2 ${
-              idx === 2 ? "" : "mr-10px"
-            } `}
-            key={idx}
-          >
-            <Image
-              src={image}
-              alt=""
-              placeholder="blur"
-              className="w-full rounded-lg2"
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      
     </>
   );
 };

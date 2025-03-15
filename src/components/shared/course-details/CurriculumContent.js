@@ -8,7 +8,7 @@ const CurriculumContent = ({ id }) => {
 
   useEffect(() => {
     if (id) {
-      fetch(`http://localhost:5000/gettopics/${id}`)
+      fetch(`https://readgro-backend.onrender.com/gettopics/${id}`)
         .then((res) => res.json())
         .then((data) => {
           if (Array.isArray(data.topics)) {
@@ -17,14 +17,19 @@ const CurriculumContent = ({ id }) => {
             console.error(`Topics data for course ${id} is not an array`, data);
           }
         })
-        .catch((error) => console.error(`Error fetching topics for course ${id}:`, error));
+        .catch((error) =>
+          console.error(`Error fetching topics for course ${id}:`, error)
+        );
     }
   }, [id]);
 
   const getEmbedUrl = (url) => {
     try {
       const urlObj = new URL(url);
-      if (urlObj.hostname === "www.youtube.com" || urlObj.hostname === "youtube.com") {
+      if (
+        urlObj.hostname === "www.youtube.com" ||
+        urlObj.hostname === "youtube.com"
+      ) {
         return `https://www.youtube.com/embed/${urlObj.searchParams.get("v")}`;
       } else if (urlObj.hostname === "youtu.be") {
         return `https://www.youtube.com/embed/${urlObj.pathname.substring(1)}`;
@@ -59,7 +64,7 @@ const CurriculumContent = ({ id }) => {
             </div>
             <button
               onClick={() => handleVideoClick(topic.video_url)}
-              className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+              className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition"
             >
               <i className="icofont-play-alt-2"></i> Watch Video
             </button>

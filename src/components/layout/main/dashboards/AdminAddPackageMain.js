@@ -16,7 +16,9 @@ const AdminAddPackageMain = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch("http://localhost:5000/getallcourses");
+        const response = await fetch(
+          "https://readgro-backend.onrender.com/getallcourses"
+        );
         const data = await response.json();
         if (response.ok) {
           setCourses(data.courses);
@@ -47,12 +49,16 @@ const AdminAddPackageMain = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!packageName.trim()) newErrors.packageName = "Package name is required.";
-    if (!price.trim() || isNaN(price)) newErrors.price = "Valid price is required.";
+    if (!packageName.trim())
+      newErrors.packageName = "Package name is required.";
+    if (!price.trim() || isNaN(price))
+      newErrors.price = "Valid price is required.";
     if (!description.trim()) newErrors.description = "Description is required.";
-    if (!commission.trim() || isNaN(commission)) newErrors.commission = "Valid commission is required.";
+    if (!commission.trim() || isNaN(commission))
+      newErrors.commission = "Valid commission is required.";
     if (!packageImage) newErrors.packageImage = "Package image is required.";
-    if (selectedCourses.length === 0) newErrors.selectedCourses = "At least one course must be selected.";
+    if (selectedCourses.length === 0)
+      newErrors.selectedCourses = "At least one course must be selected.";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -60,7 +66,7 @@ const AdminAddPackageMain = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!validateForm()) return;
-  
+
     try {
       const formData = new FormData();
       formData.append("packageName", packageName);
@@ -69,21 +75,24 @@ const AdminAddPackageMain = () => {
       formData.append("commission", commission);
       formData.append("packageImage", packageImage); // Ensure file is appended
       formData.append("courses", JSON.stringify(selectedCourses)); // Convert courses to JSON
-   
-      const response = await fetch("http://localhost:5000/create-package_withcourses", {
-        method: "POST",
-        body: formData,
-        headers: {
-          // ❌ DO NOT set "Content-Type" manually, let the browser set it
-        },
-      });
-  
+
+      const response = await fetch(
+        "https://readgro-backend.onrender.com/create-package_withcourses",
+        {
+          method: "POST",
+          body: formData,
+          headers: {
+            // ❌ DO NOT set "Content-Type" manually, let the browser set it
+          },
+        }
+      );
+
       const data = await response.json();
       if (!response.ok) {
         alert(data.message);
         throw new Error(data.message);
       }
-  
+
       alert("Package created successfully!");
       setPackageName("");
       setPrice("");
@@ -96,12 +105,12 @@ const AdminAddPackageMain = () => {
       console.error("Error:", error);
     }
   };
-  
+
   return (
     <div className="p-10px md:px-10 md:py-50px mb-30px bg-white shadow rounded-5">
       <h2 className="text-2xl font-bold mb-6">Add New Package</h2>
       <form onSubmit={handleSubmit} className="text-sm">
-      <div className="mb-4">
+        <div className="mb-4">
           <label className="block font-semibold">Package Name</label>
           <input
             type="text"
@@ -110,7 +119,9 @@ const AdminAddPackageMain = () => {
             placeholder="Enter package name"
             className="w-full py-2 px-3 border rounded"
           />
-          {errors.packageName && <p className="text-red-500">{errors.packageName}</p>}
+          {errors.packageName && (
+            <p className="text-red-500">{errors.packageName}</p>
+          )}
         </div>
 
         {/* Price */}
@@ -135,7 +146,9 @@ const AdminAddPackageMain = () => {
             className="w-full py-2 px-3 border rounded"
             placeholder="Enter package description"
           />
-          {errors.description && <p className="text-red-500">{errors.description}</p>}
+          {errors.description && (
+            <p className="text-red-500">{errors.description}</p>
+          )}
         </div>
 
         {/* Commission */}
@@ -148,14 +161,18 @@ const AdminAddPackageMain = () => {
             placeholder="Enter commission"
             className="w-full py-2 px-3 border rounded"
           />
-          {errors.commission && <p className="text-red-500">{errors.commission}</p>}
+          {errors.commission && (
+            <p className="text-red-500">{errors.commission}</p>
+          )}
         </div>
 
         {/* Package Image */}
         <div className="mb-4">
           <label className="block font-semibold">Package Image</label>
           <input type="file" onChange={handleImageChange} className="w-full" />
-          {errors.packageImage && <p className="text-red-500">{errors.packageImage}</p>}
+          {errors.packageImage && (
+            <p className="text-red-500">{errors.packageImage}</p>
+          )}
         </div>
         <div className="overflow-auto">
           <table className="w-full text-left">
@@ -175,21 +192,35 @@ const AdminAddPackageMain = () => {
                   <td>{course.instructor}</td>
                   <td>
                     <button
-                      className={`px-3 py-1 rounded ${selectedCourses.includes(course.course_id) ? "bg-red-500" : "bg-green-500"} text-white`}
+                      className={`px-3 py-1 rounded ${
+                        selectedCourses.includes(course.course_id)
+                          ? "bg-red-500"
+                          : "bg-green-500"
+                      } text-white`}
                       onClick={() => toggleCourseSelection(course.course_id)}
                       type="button"
                     >
-                      {selectedCourses.includes(course.course_id) ? "REMOVE" : "ADD"}
+                      {selectedCourses.includes(course.course_id)
+                        ? "REMOVE"
+                        : "ADD"}
                     </button>
                   </td>
                 </tr>
               ))}
-              {courses.length === 0 && <tr><td colSpan={4} className="text-center">No courses available.</td></tr>}
+              {courses.length === 0 && (
+                <tr>
+                  <td colSpan={4} className="text-center">
+                    No courses available.
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
 
-        {errors.selectedCourses && <p className="text-red-500">{errors.selectedCourses}</p>}
+        {errors.selectedCourses && (
+          <p className="text-red-500">{errors.selectedCourses}</p>
+        )}
 
         <div className="mt-4">
           <ButtonPrimary type="submit">Submit Package</ButtonPrimary>

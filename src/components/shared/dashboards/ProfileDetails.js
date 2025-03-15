@@ -17,11 +17,14 @@ const ProfileDetails = () => {
 
   const fetchUserData = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:5000/getuser_details/${userId}`, {
-        method: "GET",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-      });
+      const response = await fetch(
+        `https://readgro-backend.onrender.com/getuser_details/${userId}`,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -63,13 +66,16 @@ const ProfileDetails = () => {
     if (selectedImage) {
       formData.append("avatar", selectedImage);
     }
- 
+
     try {
-      const response = await fetch(`http://localhost:5000/update_user/${user?.userId}`, {
-        method: "PUT",
-        body: formData,
-        credentials: "include",
-      });
+      const response = await fetch(
+        `https://readgro-backend.onrender.com/update_user/${user?.userId}`,
+        {
+          method: "PUT",
+          body: formData,
+          credentials: "include",
+        }
+      );
 
       if (response.ok) {
         alert("Profile updated successfully");
@@ -90,10 +96,19 @@ const ProfileDetails = () => {
       {/* Profile Image Upload */}
       <div className="mb-4">
         <label className="font-semibold">Profile Picture</label>
-        <input type="file" accept="image/*" onChange={handleImageChange} className="block mt-2" />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          className="block mt-2"
+        />
         <div className="mt-2">
           <img
-            src={selectedImage ? URL.createObjectURL(selectedImage) : editableData.avatar}
+            src={
+              selectedImage
+                ? URL.createObjectURL(selectedImage)
+                : editableData.avatar
+            }
             alt="Profile"
             className="w-20 h-20 rounded-full object-cover"
           />
@@ -105,7 +120,9 @@ const ProfileDetails = () => {
           <ul>
             {["name", "email", "phone", "address", "pincode"].map((field) => (
               <li key={field} className="mb-3">
-                <label className="font-semibold capitalize">{field.replace("_", " ")}</label>
+                <label className="font-semibold capitalize">
+                  {field.replace("_", " ")}
+                </label>
                 <input
                   type="text"
                   name={field}
@@ -115,16 +132,22 @@ const ProfileDetails = () => {
                   className="w-full p-2 border rounded mt-1"
                 />
               </li>
-            ))} 
+            ))}
           </ul>
 
           {/* Edit / Save Button */}
           {!isEditing ? (
-            <button onClick={handleEditClick} className="mt-4 p-2 bg-green-500 text-white rounded">
+            <button
+              onClick={handleEditClick}
+              className="mt-4 p-2 bg-green-500 text-white rounded"
+            >
               Want To Edit
             </button>
           ) : (
-            <button onClick={handleSaveChanges} className="mt-4 p-2 bg-green-500 text-white rounded">
+            <button
+              onClick={handleSaveChanges}
+              className="mt-4 p-2 bg-green-500 text-white rounded"
+            >
               Save Changes
             </button>
           )}

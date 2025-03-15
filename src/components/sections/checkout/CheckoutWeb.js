@@ -40,7 +40,9 @@ const CheckoutWeb = ({ packagename }) => {
   // Fetch package details when packagename is available
   useEffect(() => {
     if (packagename) {
-      fetch(`http://localhost:5000/getpackagebyname/${package_name}`)
+      fetch(
+        `https://readgro-backend.onrender.com/getpackagebyname/${package_name}`
+      )
         .then((res) => res.json())
         .then((data) => setPackageDetails(data))
         .catch((err) => console.error("Error fetching package:", err));
@@ -84,7 +86,7 @@ const CheckoutWeb = ({ packagename }) => {
     try {
       // Step 1: Validate user
       const validateResponse = await fetch(
-        "http://localhost:5000/validate_user",
+        "https://readgro-backend.onrender.com/validate_user",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -127,7 +129,7 @@ const CheckoutWeb = ({ packagename }) => {
 
       // Step 3: Register the User
       const registerResponse = await fetch(
-        "http://localhost:5000/create-user",
+        "https://readgro-backend.onrender.com/create-user",
         {
           method: "POST",
           credentials: "include",
@@ -157,55 +159,54 @@ const CheckoutWeb = ({ packagename }) => {
     }
   };
 
-  
-const handleRazorpayPayment = async (priceDifference) => {
-  try {
-    const orderData = await createOrder(priceDifference); // API call to get order ID from backend
-    if (!orderData) {
-      alert("Failed to create Razorpay order. Try again.");
-      return false; // Return failure
+  const handleRazorpayPayment = async (priceDifference) => {
+    try {
+      const orderData = await createOrder(priceDifference); // API call to get order ID from backend
+      if (!orderData) {
+        alert("Failed to create Razorpay order. Try again.");
+        return false; // Return failure
+      }
+
+      return new Promise((resolve) => {
+        const options = {
+          key: "rzp_test_D0wbfHHAyV89wY", // Replace with your Razorpay Key ID
+          amount: priceDifference * 100, // Convert to paisa (INR subunit)
+          currency: "INR",
+          name: "Read Gro",
+          description: "Payment for Upgrade",
+          order_id: orderData.order.id, // Order ID from backend
+          handler: async function (response) {
+            // Validate Payment after receiving response
+            const validationResponse = await validatePayment({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            });
+
+            if (validationResponse.success) {
+              alert("Payment Verified!");
+              resolve(true); // Payment successful
+            } else {
+              alert("Payment verification failed! Please try again.");
+              resolve(false); // Payment failed
+            }
+          },
+          prefill: {
+            name: formData.name || "User",
+            email: formData.email || "user@example.com",
+            contact: formData.phone || "0000000000",
+          },
+          theme: { color: "#3399cc" },
+        };
+
+        const rzp = new window.Razorpay(options);
+        rzp.open();
+      });
+    } catch (error) {
+      console.error("Error in payment:", error);
+      return false; // Return failure if there's an error
     }
-
-    return new Promise((resolve) => {
-      const options = {
-        key: "rzp_test_D0wbfHHAyV89wY", // Replace with your Razorpay Key ID
-        amount: priceDifference * 100, // Convert to paisa (INR subunit)
-        currency: "INR",
-        name: "Read Gro",
-        description: "Payment for Upgrade",
-        order_id: orderData.order.id, // Order ID from backend
-        handler: async function (response) {
-          // Validate Payment after receiving response
-          const validationResponse = await validatePayment({
-            razorpay_order_id: response.razorpay_order_id,
-            razorpay_payment_id: response.razorpay_payment_id,
-            razorpay_signature: response.razorpay_signature,
-          });
-
-          if (validationResponse.success) {
-            alert("Payment Verified!");
-            resolve(true); // Payment successful
-          } else {
-            alert("Payment verification failed! Please try again.");
-            resolve(false); // Payment failed
-          }
-        },
-        prefill: {
-          name: formData.name || "User",
-          email: formData.email || "user@example.com",
-          contact: formData.phone || "0000000000",
-        },
-        theme: { color: "#3399cc" },
-      };
-
-      const rzp = new window.Razorpay(options);
-      rzp.open();
-    });
-  } catch (error) {
-    console.error("Error in payment:", error);
-    return false; // Return failure if there's an error
-  }
-};
+  };
   return (
     <section>
       <div className="container py-50px lg:py-60px 2xl:py-20 3xl:py-100px">
@@ -352,7 +353,7 @@ const handleRazorpayPayment = async (priceDifference) => {
             {packageDetails?.package_image && (
               <div className="mt-5">
                 <img
-                  src={`http://localhost:5000/uploads/${packageDetails.package_image}`}
+                  src={`https://readgro-backend.onrender.com/uploads/${packageDetails.package_image}`}
                   alt={packageDetails?.package_name || "Package"}
                   className="w-full h-[400px] object-cover rounded-md border"
                 />
@@ -365,7 +366,7 @@ const handleRazorpayPayment = async (priceDifference) => {
                 onClick={handleNext}
                 type="submit"
                 width="full"
-                className="px-5 py-3 bg-blue-500 text-white font-bold rounded hover:bg-blue-600 w-3/4 lg:w-[300px]"
+                className="px-5 py-3 bg-yellow-500 text-white font-bold rounded hover:bg-yellow-600 w-3/4 lg:w-[300px]"
               >
                 Next
               </ButtonPrimary>

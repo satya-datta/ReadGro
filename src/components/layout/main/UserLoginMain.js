@@ -5,7 +5,7 @@ import UserLoginTab from "@/components/sections/login/UserLoginTab";
 const UserLoginMain = () => {
   return (
     <>
-       <UserLoginTab />
+      <UserLoginTab />
     </>
   );
 };

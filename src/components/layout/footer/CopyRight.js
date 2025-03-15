@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import logoImage from "@/assets/images/logo/logo_2.png";
+import logoImage from "@/assets/images/logo/RGFULL.png";
 import useIsSecondary from "@/hooks/useIsSecondary";
 const CopyRight = () => {
   const { isSecondary } = useIsSecondary();

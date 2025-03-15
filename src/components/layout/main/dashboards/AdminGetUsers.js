@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link"; // Import Link from next/link
 import ButtonPrimary from "@/components/shared/buttons/ButtonPrimary";
@@ -10,7 +10,9 @@ const AdminGetUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("http://localhost:5000/getallusers"); // API endpoint for fetching users
+        const response = await fetch(
+          "https://readgro-backend.onrender.com/getallusers"
+        ); // API endpoint for fetching users
         const data = await response.json();
         if (response.ok) {
           setUsers(data.users); // Update the state with fetched users
@@ -69,8 +71,11 @@ const AdminGetUsers = () => {
                   </td>
                   <td className="px-5px py-10px md:px-5 font-normal">
                     <div className="flex items-center space-x-3">
-                      <Link href={`../Gnaneswar/admin-users/manageuser/${user.userId}`} className="hover:text-primary">
-                      <ButtonPrimary type="submit">View</ButtonPrimary>
+                      <Link
+                        href={`../Gnaneswar/admin-users/manageuser/${user.userId}`}
+                        className="hover:text-primary"
+                      >
+                        <ButtonPrimary type="submit">View</ButtonPrimary>
                       </Link>
                     </div>
                   </td>
@@ -78,10 +83,7 @@ const AdminGetUsers = () => {
               ))}
               {users.length === 0 && (
                 <tr>
-                  <td
-                    colSpan={5}
-                    className="text-center text-gray-500 py-5"
-                  >
+                  <td colSpan={5} className="text-center text-gray-500 py-5">
                     No users available.
                   </td>
                 </tr>

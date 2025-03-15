@@ -22,17 +22,22 @@ const UserAffiliateForm = () => {
   // Fetch referral code from the API when the component loads
   const fetchReferralCode = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:5000/getuser_details/${userId}`, {
-        method: "GET",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-      });
+      const response = await fetch(
+        `https://readgro-backend.onrender.com/getuser_details/${userId}`,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
       if (response.ok) {
         const data = await response.json();
         console.log(data);
         if (data.user.generatedReferralCode) {
           setReferralCode(data.user.generatedReferralCode);
-          setReferralLink(`http://localhost:3000?referralcode=${data.user.generatedReferralCode}`);
+          setReferralLink(
+            `http://localhost:3000?referralcode=${data.user.generatedReferralCode}`
+          );
         }
       } else {
         console.error("Failed to fetch user data");
@@ -60,11 +65,15 @@ const UserAffiliateForm = () => {
 
   return (
     <div className="p-5 bg-white shadow rounded-md">
-      <h2 className="text-lg font-semibold text-purple-700 mb-4">Affiliate Links</h2>
+      <h2 className="text-lg font-semibold text-purple-700 mb-4">
+        Affiliate Links
+      </h2>
 
       {/* Referral Link */}
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-medium mb-1">My Referral Link</label>
+        <label className="block text-gray-700 text-sm font-medium mb-1">
+          My Referral Link
+        </label>
         <div className="flex border border-gray-300 rounded-md overflow-hidden">
           <input
             type="text"
@@ -83,7 +92,9 @@ const UserAffiliateForm = () => {
 
       {/* Referral Code */}
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-medium mb-1">My Referral Code</label>
+        <label className="block text-gray-700 text-sm font-medium mb-1">
+          My Referral Code
+        </label>
         <div className="flex border border-gray-300 rounded-md overflow-hidden">
           <input
             type="text"
@@ -104,7 +115,9 @@ const UserAffiliateForm = () => {
 
       {/* Generate Link For */}
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-medium mb-1">Generate Link For</label>
+        <label className="block text-gray-700 text-sm font-medium mb-1">
+          Generate Link For
+        </label>
         <div className="flex">
           <select
             value={selectedPackage}
@@ -130,7 +143,9 @@ const UserAffiliateForm = () => {
       {/* Generated Link */}
       {generatedLink && (
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-medium mb-1">Generated Package Link</label>
+          <label className="block text-gray-700 text-sm font-medium mb-1">
+            Generated Package Link
+          </label>
           <div className="flex border border-gray-300 rounded-md overflow-hidden">
             <input
               type="text"

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useEffect } from "react";
 import { useUserContext } from "@/contexts/UserContext"; // Import User Context
 import ButtonPrimary from "@/components/shared/buttons/ButtonPrimary";
@@ -196,7 +196,7 @@ const LessonAssignmetnPrimary = () => {
                 <form>
                   <div className="mb-4">
                     <label
-                      className="text-darkBlue dark:text-darkBlue-dark mb-2 block"
+                      className="text-darkyellow dark:text-darkyellow-dark mb-2 block"
                       htmlFor="email"
                     >
                       Email address
@@ -205,26 +205,26 @@ const LessonAssignmetnPrimary = () => {
                       type="text"
                       id="email"
                       placeholder="name@example.com"
-                      className="w-full px-3 py-1 bg-transparent focus:outline-none text-darkBlue bg-whiteColor border border-borderColor6 placeholder:opacity-80 focus:shadow-select rounded-md"
+                      className="w-full px-3 py-1 bg-transparent focus:outline-none text-darkyellow bg-whiteColor border border-borderColor6 placeholder:opacity-80 focus:shadow-select rounded-md"
                     />
                   </div>
                   <div className="mb-4">
                     <label
-                      className="text-darkBlue dark:text-darkBlue-dark mb-2 block"
+                      className="text-darkyellow dark:text-darkyellow-dark mb-2 block"
                       htmlFor="content"
                     >
                       Assignment Content
                     </label>
                     <textarea
                       id="content"
-                      className="w-full px-3 py-1 bg-transparent focus:outline-none text-darkBlue bg-whiteColor border border-borderColor6 placeholder:opacity-80 focus:shadow-select rounded-md"
+                      className="w-full px-3 py-1 bg-transparent focus:outline-none text-darkyellow bg-whiteColor border border-borderColor6 placeholder:opacity-80 focus:shadow-select rounded-md"
                       cols="30"
                       rows="3"
                     />
                   </div>
                   <div className="mb-4">
                     <label
-                      className="text-darkBlue dark:text-darkBlue-dark mb-2 block"
+                      className="text-darkyellow dark:text-darkyellow-dark mb-2 block"
                       htmlFor="file"
                     >
                       Drop file here
@@ -232,7 +232,7 @@ const LessonAssignmetnPrimary = () => {
                     <input
                       type="file"
                       id="file"
-                      className="w-full pr-3 pl-40 py-9px text-xl bg-transparent focus:outline-none text-darkBlue bg-whiteColor border border-borderColor6 placeholder:opacity-80 focus:shadow-select cursor-pointer relative rounded-md file:border-0 file:h-full file:absolute file:top-0 file:left-0 file:border-r file:border-borderColor6 file:border-opacity-30 f file:px-4 file:bg-blue-x-light"
+                      className="w-full pr-3 pl-40 py-9px text-xl bg-transparent focus:outline-none text-darkyellow bg-whiteColor border border-borderColor6 placeholder:opacity-80 focus:shadow-select cursor-pointer relative rounded-md file:border-0 file:h-full file:absolute file:top-0 file:left-0 file:border-r file:border-borderColor6 file:border-opacity-30 f file:px-4 file:bg-yellow-x-light"
                     />
                   </div>
 

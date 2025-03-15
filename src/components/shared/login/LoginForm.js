@@ -5,148 +5,200 @@ const LoginForm = () => {
   const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
-  const [redirecting, setRedirecting] = useState(false); // State to control redirection
+  const [redirecting, setRedirecting] = useState(false);
+  const [forgotPassword, setForgotPassword] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-    setLoading(true); // Start loading
-    setError(null); // Clear previous errors
+    setLoading(true);
+    setError(null);
     try {
-      const response = await fetch("http://localhost:5000/authadmin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include", // Include cookies in the request
-        body: JSON.stringify({ email, password }),
-      });
-
+      const response = await fetch(
+        "https://readgro-backend.onrender.com/authadmin",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ email, password }),
+        }
+      );
       const data = await response.json();
-
       if (response.ok) {
-        setIsAuthenticated(true); // User is authenticated
-        setError(null); // Clear any existing errors
-        setRedirecting(true); // Start redirection
+        setIsAuthenticated(true);
+        setError(null);
+        setRedirecting(true);
       } else {
-        setIsAuthenticated(false); // Not authenticated
+        setIsAuthenticated(false);
         setError(data.message || "Invalid credentials.");
       }
     } catch (err) {
       setIsAuthenticated(false);
       setError(err.message || "Something went wrong.");
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
     }
   };
 
-  const checkAuth = async () => {
-    console.log("Entering checkAuth...");
+  const handleSendOtp = async () => {
+    setLoading(true);
+    setError(null);
     try {
-      const response = await fetch("http://localhost:5000/auth/validate", {
-        credentials: "include", // Include cookies in the request
-      });
-
+      const response = await fetch(
+        "https://readgro-backend.onrender.com/sendadmin-otp",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        }
+      );
       const data = await response.json();
-      console.log("Validation response:", data);
-
       if (response.ok) {
-        setIsAuthenticated(true); // User is authenticated
+        setOtpSent(true);
+        setError(null);
       } else {
-        setIsAuthenticated(false); // Not authenticated
+        setError(data.message || "Failed to send OTP.");
       }
     } catch (err) {
-      console.error("Auth validation error:", err);
-      setIsAuthenticated(false);
+      setError(err.message || "Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleVerifyOtp = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(
+        "https://readgro-backend.onrender.com/verifyadmin-otp",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, otp }),
+          credentials: "include",
+        }
+      );
+      const data = await response.json();
+      if (response.ok) {
+        setRedirecting(true);
+      } else {
+        setError(data.message || "Invalid OTP.");
+      }
+    } catch (err) {
+      setError(err.message || "Something went wrong.");
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    checkAuth(); // Check authentication status on component mount
-  }, []);
-
-  // Handle redirection after successful login
-  useEffect(() => {
-    if (redirecting) { 
-      // Delay redirection to allow UI updates (e.g., seeing the data)
-      const timer = setTimeout(() => {
-        window.location.href = "/admin/Gnaneswar/admin-profile";
-      }, 1500); // Adjust delay time as needed (1.5 seconds here)
-
-      return () => clearTimeout(timer); // Clear timer on component unmount
+    if (redirecting) {
+      setTimeout(() => {
+        window.location.href = "/admin/Gnaneswar/admin-dashboard";
+      }, 1500);
     }
   }, [redirecting]);
 
-  // Show loading spinner while checking authentication
-  if (isAuthenticated === null) {
-    return <div>Loading...</div>;
-  }
-
-  // Render login form if not authenticated
   return (
     <div className="opacity-100 transition-opacity duration-150 ease-linear">
-      {/* Heading */}
       <div className="text-center">
         <h3 className="text-size-32 font-bold text-blackColor dark:text-blackColor-dark mb-2 leading-normal">
-          Login
+          {forgotPassword ? "Reset Password" : "Login"}
         </h3>
       </div>
 
-      {/* Error message */}
-      {error && (
-        <div className="mb-4 text-red-500 text-center">
-          {error}
-        </div>
-      )}
+      {error && <div className="mb-4 text-red-500 text-center">{error}</div>}
 
-      {/* Login Form */}
-      <form onSubmit={handleSignIn} className="pt-25px" data-aos="fade-up">
+      <form
+        onSubmit={forgotPassword ? handleVerifyOtp : handleSignIn}
+        className="pt-25px"
+      >
         <div className="mb-25px">
           <label className="text-contentColor dark:text-contentColor-dark mb-10px block">
-            Username or email
+            Email
           </label>
           <input
             type="email"
-            placeholder="Your username or email"
-            className="w-full h-52px leading-52px pl-5 bg-transparent text-sm focus:outline-none text-contentColor dark:text-contentColor-dark border border-borderColor dark:border-borderColor-dark placeholder:text-placeholder placeholder:opacity-80 font-medium rounded"
+            placeholder="Your email"
+            className="w-full h-52px pl-5 bg-transparent border border-borderColor rounded"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>
 
-        <div className="mb-25px">
-          <label className="text-contentColor dark:text-contentColor-dark mb-10px block">
-            Password
-          </label>
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-full h-52px leading-52px pl-5 bg-transparent text-sm focus:outline-none text-contentColor dark:text-contentColor-dark border border-borderColor dark:border-borderColor-dark placeholder:text-placeholder placeholder:opacity-80 font-medium rounded"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-
-        <div className="text-contentColor dark:text-contentColor-dark flex items-center justify-between">
-          <div className="flex items-center">
+        {!forgotPassword && (
+          <div className="mb-25px">
+            <label className="text-contentColor dark:text-contentColor-dark mb-10px block">
+              Password
+            </label>
             <input
-              type="checkbox"
-              id="remember"
-              className="w-18px h-18px mr-2 block box-content"
+              type="password"
+              placeholder="Password"
+              className="w-full h-52px pl-5 bg-transparent border border-borderColor rounded"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
             />
-            <label htmlFor="remember"> Remember me</label>
           </div>
-        </div>
+        )}
+
+        {forgotPassword && otpSent && (
+          <div className="mb-25px">
+            <label className="text-contentColor dark:text-contentColor-dark mb-10px block">
+              OTP
+            </label>
+            <input
+              type="text"
+              placeholder="Enter OTP"
+              className="w-full h-52px pl-5 bg-transparent border border-borderColor rounded"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              required
+            />
+          </div>
+        )}
 
         <div className="my-25px text-center">
-          <button
-            type="submit"
-            className="text-size-15 text-whiteColor bg-primaryColor px-25px py-10px w-full border border-primaryColor hover:text-primaryColor hover:bg-whiteColor inline-block rounded group dark:hover:text-whiteColor dark:hover:bg-whiteColor-dark"
-          >
-            {loading ? "Logging in..." : "Log in"}
-          </button>
+          {!forgotPassword && (
+            <button
+              type="submit"
+              className="text-size-15 text-whiteColor bg-primaryColor px-25px py-10px w-full border border-primaryColor rounded"
+            >
+              {loading ? "Logging in..." : "Log in"}
+            </button>
+          )}
+          {forgotPassword && !otpSent && (
+            <button
+              type="button"
+              onClick={handleSendOtp}
+              className="text-size-15 text-whiteColor bg-primaryColor px-25px py-10px w-full border border-primaryColor rounded"
+            >
+              {loading ? "Sending OTP..." : "Send OTP"}
+            </button>
+          )}
+          {forgotPassword && otpSent && (
+            <button
+              type="submit"
+              className="text-size-15 text-whiteColor bg-primaryColor px-25px py-10px w-full border border-primaryColor rounded"
+            >
+              {loading ? "Verifying OTP..." : "Verify OTP"}
+            </button>
+          )}
         </div>
       </form>
+      {!forgotPassword && (
+        <div
+          className="text-center text-primaryColor cursor-pointer"
+          onClick={() => setForgotPassword(true)}
+        >
+          Forgot Password?
+        </div>
+      )}
     </div>
   );
 };

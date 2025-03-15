@@ -13,7 +13,7 @@ export const metadata = {
 };
 const Student_My_Quiz_Attempts = () => {
   return (
-    <PlainWrapper>
+    <PageWrapper>
       <main>
       <UserDashboardWrapper>
           <DashboardContainer>
@@ -22,7 +22,7 @@ const Student_My_Quiz_Attempts = () => {
       </UserDashboardWrapper>
         <ThemeController />
       </main>
-    </PlainWrapper>
+    </PageWrapper>
   );
 };
 

@@ -1,48 +1,63 @@
-import counter1 from "@/assets/images/counter/counter__1.png";
+"use client";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import counter1 from "@/assets/images/counter/course.png";
 import counter2 from "@/assets/images/counter/counter__2.png";
 import counter3 from "@/assets/images/counter/counter__3.png";
 import counter4 from "@/assets/images/counter/counter__4.png";
 import CounterDashboard from "@/components/shared/dashboards/CounterDashboard";
 import HeadingDashboard from "@/components/shared/headings/HeadingDashboard";
+
 const CounterAdmin = () => {
+  const [dashboardData, setDashboardData] = useState({
+    totalUsers: 0,
+    totalCourses: 0,
+    totalPackages: 0,
+    razorpayBalance: 0,
+  });
+
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const response = await axios.get(
+          "https://readgro-backend.onrender.com/getadmindashboard"
+        ); // Backend API
+        setDashboardData(response.data.data);
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+      }
+    };
+
+    fetchDashboardData();
+  }, []);
+
   const counts = [
     {
-      name: "Enrolled Courses",
-      image: counter1,
-      data: 900,
-      symbol: "+",
+      name: "Users",
+      image: counter2,
+      data: dashboardData.totalUsers,
+      symbol: "",
     },
     {
       name: "Active Courses",
       image: counter2,
-      data: 500,
+      data: dashboardData.totalCourses,
       symbol: "+",
     },
     {
-      name: "Complete Courses",
+      name: "No of Packages",
       image: counter3,
-      data: 300,
-      symbol: "k",
+      data: dashboardData.totalPackages,
+      symbol: "",
     },
     {
-      name: "Total Courses",
+      name: "Admin Bank Account",
       image: counter4,
-      data: 1500,
-      symbol: "+",
-    },
-    {
-      name: "Total Students",
-      image: counter3,
-      data: 30,
-      symbol: "k",
-    },
-    {
-      name: "OVER THE WORLD",
-      image: counter4,
-      data: 90,
-      symbol: ",000k+",
+      data: dashboardData.razorpayBalance,
+      symbol: "₹",
     },
   ];
+
   return (
     <CounterDashboard counts={counts}>
       <HeadingDashboard>Dashboard</HeadingDashboard>

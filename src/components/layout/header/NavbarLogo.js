@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import logo1 from "@/assets/images/logo/logo_1.png";
+import logo1 from "@/assets/images/logo/RGFULL.png";
 import Link from "next/link";
 const NavbarLogo = () => {
   return (

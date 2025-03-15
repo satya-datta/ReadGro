@@ -8,7 +8,7 @@ const QuizFilter = () => {
           COURSES
         </p>
         <div className="bg-whiteColor rounded-md relative">
-          <select className="bg-transparent text-darkBlue w-full p-13px focus:outline-none block appearance-none leading-1.5 relative z-20 focus:shadow-select rounded-md">
+          <select className="bg-transparent text-darkyellow w-full p-13px focus:outline-none block appearance-none leading-1.5 relative z-20 focus:shadow-select rounded-md">
             <option defaultValue="All">All</option>
             <option defaultValue="Web Design">Web Design</option>
             <option defaultValue="Graphic">Graphic</option>
@@ -27,7 +27,7 @@ const QuizFilter = () => {
           SHORT BY
         </p>
         <div className="bg-whiteColor rounded-md relative">
-          <select className="bg-transparent text-darkBlue w-full p-13px focus:outline-none block appearance-none leading-1.5 relative z-20 focus:shadow-select rounded-md">
+          <select className="bg-transparent text-darkyellow w-full p-13px focus:outline-none block appearance-none leading-1.5 relative z-20 focus:shadow-select rounded-md">
             <option defaultValue="Default">Default</option>
             <option defaultValue="Trending">Trending</option>
             <option defaultValue="Price: low to high">
@@ -43,7 +43,7 @@ const QuizFilter = () => {
           SHORT BY OFFER
         </p>
         <div className="bg-whiteColor rounded-md relative">
-          <select className="bg-transparent text-darkBlue w-full p-13px focus:outline-none block appearance-none leading-1.5 relative z-20 focus:shadow-select rounded-md">
+          <select className="bg-transparent text-darkyellow w-full p-13px focus:outline-none block appearance-none leading-1.5 relative z-20 focus:shadow-select rounded-md">
             <option defaultValue="Free">Free</option>
             <option defaultValue="paid">paid</option>
             <option defaultValue="premimum">premimum</option>

@@ -12,27 +12,26 @@ const UserHeroDashboard = () => {
   useEffect(() => {
     console.log(user?.userId);
     if (user?.userId) {
-     
       fetchUserImage(user?.userId);
     }
   }, [user?.userId]);
   const fetchUserImage = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:5000/getuser_details/${userId}`, {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-     
+      const response = await fetch(
+        `https://readgro-backend.onrender.com/getuser_details/${userId}`,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
       if (response.ok) {
         const data = await response.json();
-          
-     
-          setUserImage(data.user.avatar);
-      
-       
+
+        setUserImage(data.user.avatar);
       } else {
         console.error("Failed to fetch user image");
       }
@@ -40,14 +39,16 @@ const UserHeroDashboard = () => {
       console.error("Error fetching user image:", error);
     }
   };
-  
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:5000/userlogout", {
-        method: "POST",
-        credentials: "include",
-      });
+      const response = await fetch(
+        "https://readgro-backend.onrender.com/userlogout",
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
 
       if (response.ok) {
         console.log("Logout successful");
@@ -67,30 +68,31 @@ const UserHeroDashboard = () => {
       <div className="container-fluid-2">
         <div className="bg-primaryColor p-5 md:p-10 rounded-5 flex justify-center md:justify-between items-center flex-wrap gap-2">
           <div className="flex items-center flex-wrap justify-center sm:justify-start">
-          <div className="mr-10px lg:mr-5">
-  {userImage ? (
-    <img
-      src={`http://localhost:5000/uploads/${userImage}`}
-      alt="User Profile"
-      width={100}
-      height={100}
-      className="w-27 h-27 md:w-22 md:h-22 lg:w-27 lg:h-27 rounded-full p-1 border-2 border-darkdeep7 box-content"
-    />
-  ) : (
-    <Image
-      src={dashboardImage2}
-      alt="Default Profile"
-      width={100}
-      height={100}
-      className="w-27 h-27 md:w-22 md:h-22 lg:w-27 lg:h-27 rounded-full p-1 border-2 border-darkdeep7 box-content"
-    />
-  )}
-</div>
+            <div className="mr-10px lg:mr-5">
+              {userImage ? (
+                <img
+                  src={`https://readgro-backend.onrender.com/uploads/${userImage}`}
+                  alt="User Profile"
+                  width={100}
+                  height={100}
+                  className="w-27 h-27 md:w-22 md:h-22 lg:w-27 lg:h-27 rounded-full p-1 border-2 border-darkdeep7 box-content"
+                />
+              ) : (
+                <Image
+                  src={dashboardImage2}
+                  alt="Default Profile"
+                  width={100}
+                  height={100}
+                  className="w-27 h-27 md:w-22 md:h-22 lg:w-27 lg:h-27 rounded-full p-1 border-2 border-darkdeep7 box-content"
+                />
+              )}
+            </div>
 
             <div className="text-whiteColor font-bold text-center sm:text-start">
               <h5 className="text-xl leading-1.2 mb-5px">HELLO</h5>
-              <h2 className="text-2xl leading-1.24">{user?.name?.toUpperCase()}</h2>
-
+              <h2 className="text-2xl leading-1.24">
+                {user?.name?.toUpperCase()}
+              </h2>
             </div>
           </div>
           <div>

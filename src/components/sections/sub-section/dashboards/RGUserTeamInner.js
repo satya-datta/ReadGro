@@ -13,11 +13,14 @@ const RGUserTeamInner = () => {
     if (!user || !user?.userId) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/getteam/${user.userId}`, {
-        method: "GET",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-      });
+      const response = await fetch(
+        `https://readgro-backend.onrender.com/getteam/${user.userId}`,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
       const data = await response.json();
       console.log(data.team);
@@ -51,7 +54,9 @@ const RGUserTeamInner = () => {
                   <th className="px-5px py-10px md:px-5">#</th>
                   <th className="px-5px py-10px md:px-5">Name</th>
                   <th className="px-5px py-10px md:px-5">Email</th>
-                  <th className="px-5px py-10px md:px-5">Enrollment Date & Time</th>
+                  <th className="px-5px py-10px md:px-5">
+                    Enrollment Date & Time
+                  </th>
                   <th className="px-5px py-10px md:px-5">Contact No</th>
                   <th className="px-5px py-10px md:px-5">Package Name</th>
                   <th className="px-5px py-10px md:px-5">Sponsor</th>
@@ -63,24 +68,39 @@ const RGUserTeamInner = () => {
                 {teamData.length > 0 ? (
                   teamData.map((member, index) => (
                     <tr key={member.id} className="leading-1.8 md:leading-1.8">
-                      <td className="px-5px py-10px md:px-5 font-normal">{index + 1}</td>
-                      <td className="px-5px py-10px md:px-5 font-normal">{member.name}</td>
-                      <td className="px-5px py-10px md:px-5 font-normal">{member.email}</td>
                       <td className="px-5px py-10px md:px-5 font-normal">
-  {new Date(member.enrollmentDate).toLocaleString("en-US", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false, // 24-hour format
-  })}
-</td>
+                        {index + 1}
+                      </td>
+                      <td className="px-5px py-10px md:px-5 font-normal">
+                        {member.name}
+                      </td>
+                      <td className="px-5px py-10px md:px-5 font-normal">
+                        {member.email}
+                      </td>
+                      <td className="px-5px py-10px md:px-5 font-normal">
+                        {new Date(member.enrollmentDate).toLocaleString(
+                          "en-US",
+                          {
+                            year: "numeric",
+                            month: "2-digit",
+                            day: "2-digit",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            second: "2-digit",
+                            hour12: false, // 24-hour format
+                          }
+                        )}
+                      </td>
 
-                      <td className="px-5px py-10px md:px-5 font-normal">{member.phone}</td>
-                      <td className="px-5px py-10px md:px-5 font-normal">{member.packageName}</td>
-                      <td className="px-5px py-10px md:px-5 font-normal">{user?.name}</td>
+                      <td className="px-5px py-10px md:px-5 font-normal">
+                        {member.phone}
+                      </td>
+                      <td className="px-5px py-10px md:px-5 font-normal">
+                        {member.packageName}
+                      </td>
+                      <td className="px-5px py-10px md:px-5 font-normal">
+                        {user?.name}
+                      </td>
                       {/* <td className="px-5px py-10px md:px-5 font-normal">{member.level}</td> */}
                       <td className="px-5px py-10px md:px-5 font-normal font-bold text-blackColor dark:text-blackColor-dark">
                         ₹{member.referralAmount ?? "N/A"}
