@@ -56,7 +56,7 @@ const EnrolledContent = ({ package_id }) => {
       .catch((error) => console.error("Error fetching course details:", error));
   }, [courseIds]);
 
-  return courses?.map((course, idx) => <CourseView course={course} />);
+  return courses?.map((course) => <CourseView course={course} />);
 };
 
 export default EnrolledContent;
