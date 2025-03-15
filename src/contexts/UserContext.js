@@ -22,7 +22,9 @@ const UserContextProvider = ({ children }) => {
       Cookies.set("referralCode", referralCode, { expires: 1 / 12 }); // 1/12 of a day = 2 hours
       if (packageType) {
         Cookies.set("packageName", packageType, { expires: 1 / 12 }); // 2-hour expiry
-        router.push(`/checkout?referralcode=${referralCode}&package=${packageType}`);
+        router.push(
+          `/checkout?referralcode=${referralCode}&package=${packageType}`
+        );
       } else {
         router.push("/packages");
       }
@@ -54,10 +56,12 @@ const UserContextProvider = ({ children }) => {
         setUser(null);
         router.push("/user/login");
       });
-  }, []);
+  }, [router]);
 
   return (
-    <userContext.Provider value={{ user, isUserAuthenticated, setUser, setIsUserAuthenticated }}>
+    <userContext.Provider
+      value={{ user, isUserAuthenticated, setUser, setIsUserAuthenticated }}
+    >
       {children}
     </userContext.Provider>
   );
