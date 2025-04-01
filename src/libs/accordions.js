@@ -11,7 +11,7 @@ const controllerStyle = (accordionController, isActive) => {
 };
 
 // accordion hide and show
-const toggleAccordion = (accordion, isActive, currentIndex, index) => {
+const toggleAccordion = (accordion, isActive) => {
   const parentContent = accordion.closest(".accordion-content");
   const content = accordion.querySelector(".accordion-content");
   const contentWrapper = accordion.querySelector(".content-wrapper");
@@ -69,7 +69,7 @@ const accordionController = (accordionContainer) => {
                 ".accordion-controller"
               );
               controllerStyle(accordionController, true);
-              toggleAccordion(accordion, true, idx, idx1);
+              toggleAccordion(accordion, true);
             }
           });
           if (!isActive) {

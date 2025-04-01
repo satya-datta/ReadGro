@@ -10,7 +10,6 @@ const handleOpen = (mobileMenu, closeMobileMenu) => {
 // close mobileMenu
 const handleClose = (mobileMenu, closeMobileMenu) => {
   closeMobileMenu.addEventListener("click", () => {
-    const currentScreenSize = innerWidth;
     mobileMenu.style = "right:-280px;";
     mobileMenu.style = "@media screen and (min-width:768px){right:-330px;}";
 
