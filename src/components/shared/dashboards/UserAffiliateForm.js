@@ -23,7 +23,7 @@ const UserAffiliateForm = () => {
   const fetchReferralCode = async (userId) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/getuser_details/${userId}`,
+        `https://readgro-backend.onrender.com/getuser_details/${userId}`,
         {
           method: "GET",
           credentials: "include",

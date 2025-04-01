@@ -18,7 +18,7 @@ const UserHeroDashboard = () => {
   const fetchUserImage = async (userId) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/getuser_details/${userId}`,
+        `https://readgro-backend.onrender.com/getuser_details/${userId}`,
         {
           method: "GET",
           credentials: "include",
@@ -42,10 +42,13 @@ const UserHeroDashboard = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:5000/userlogout", {
-        method: "POST",
-        credentials: "include",
-      });
+      const response = await fetch(
+        "https://readgro-backend.onrender.com/userlogout",
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
 
       if (response.ok) {
         console.log("Logout successful");
@@ -68,7 +71,7 @@ const UserHeroDashboard = () => {
             <div className="mr-10px lg:mr-5">
               {userImage ? (
                 <img
-                  src={`http://localhost:5000/uploads/${userImage}`}
+                  src={`https://readgro-backend.onrender.com/uploads/${userImage}`}
                   alt="User Profile"
                   width={100}
                   height={100}
