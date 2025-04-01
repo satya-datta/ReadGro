@@ -1,4 +1,4 @@
-import AdminAddCourseMain from "@/components/layout/main/dashboards/AdminAddCourseMain";
+// import AdminAddCourseMain from "@/components/layout/main/dashboards/AdminAddCourseMain";
 import AdminAddPackageMain from "@/components/layout/main/dashboards/AdminAddPackageMain";
 import DashboardContainer from "@/components/shared/containers/DashboardContainer";
 

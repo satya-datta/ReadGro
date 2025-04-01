@@ -1,8 +1,7 @@
 "use client";
-import Image from "next/image";
-import blogImag8 from "@/assets/images/blog/blog_8.png";
+
 import { useEffect, useState } from "react";
-import CurriculumContent from "@/components/shared/course-details/CurriculumContent";
+
 import CurriculumContentRestricted from "@/components/shared/course-details/CurriculamContentRestricted";
 let cid = 0;
 const CourseDetailsPrimary = ({ id, type }) => {
@@ -11,7 +10,7 @@ const CourseDetailsPrimary = ({ id, type }) => {
 
   useEffect(() => {
     if (id) {
-      fetch(`https://readgro-backend.onrender.com/getspecific_course/${id}`)
+      fetch(`http://localhost:5000/getspecific_course/${id}`)
         .then((res) => res.json())
         .then((data) => {
           if (data) {
@@ -43,9 +42,9 @@ const CourseDetailsPrimary = ({ id, type }) => {
               ) : (
                 <div className="overflow-hidden relative mb-5">
                   <img
-                    src={`https://readgro-backend.onrender.com/uploads/${course.course.image}`}
-                    alt=""
-                    className="w-[500px] h-[500px] object-cover"
+                    src={`http://localhost:5000/uploads/${course.course.image}`}
+                    alt="Course Thumbnail"
+                    className="w-full h-auto object-cover"
                   />
                 </div>
               )}
@@ -82,11 +81,11 @@ const CourseDetailsPrimary = ({ id, type }) => {
                       data-aos="fade-up"
                     >
                       <div className="text-start md:text-end">
-                        <i className="icofont-star text-size-15 text-yellow"></i>{" "}
-                        <i className="icofont-star text-size-15 text-yellow"></i>{" "}
-                        <i className="icofont-star text-size-15 text-yellow"></i>{" "}
-                        <i className="icofont-star text-size-15 text-yellow"></i>
-                        <i className="icofont-star text-size-15 text-yellow"></i>{" "}
+                        <i className="icofont-star text-size-15 text-green"></i>{" "}
+                        <i className="icofont-star text-size-15 text-green"></i>{" "}
+                        <i className="icofont-star text-size-15 text-green"></i>{" "}
+                        <i className="icofont-star text-size-15 text-green"></i>
+                        <i className="icofont-star text-size-15 text-green"></i>{" "}
                         <span className=" text-blackColor dark:text-blackColor-dark">
                           (44)
                         </span>
@@ -120,9 +119,7 @@ const CourseDetailsPrimary = ({ id, type }) => {
             className={`lg:col-start-9 lg:col-span-4 ${
               type === 2 || type === 3 ? "relative lg:top-[-340px]" : ""
             }`}
-          >
-            {/* <CourseDetailsSidebar type={type} course={course} /> */}
-          </div>
+          ></div>
         </div>
       </div>
     </section>

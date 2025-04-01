@@ -3,7 +3,7 @@ import { usePathname } from "next/navigation";
 import NavItems from "./NavItems";
 import NavbarLogo from "./NavbarLogo";
 import NavbarRight from "./NavbarRight";
-import NavItems2 from "./NavItems2";
+// import NavItems2 from "./NavItems2";
 import useIsTrue from "@/hooks/useIsTrue";
 import NavbarTop from "./NavbarTop";
 const Navbar = () => {
@@ -48,7 +48,7 @@ const Navbar = () => {
             {/* navbar left */}
             <NavbarLogo />
             {/* Main menu */}
-            {isHome2Dark ? <NavItems2 /> : <NavItems />}
+         <NavItems />
 
             {/* navbar right */}
             <NavbarRight isHome2Dark={isHome2Dark} />

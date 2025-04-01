@@ -25,7 +25,7 @@ const UserKycForm = () => {
   const fetchUserBankData = async (userId) => {
     try {
       const response = await fetch(
-        `https://readgro-backend.onrender.com/getuser_bank_details/${userId}`,
+        `http://localhost:5000/getuser_bank_details/${userId}`,
         {
           method: "GET",
           credentials: "include",
@@ -91,8 +91,8 @@ const UserKycForm = () => {
     if (!validateForm()) return;
 
     const url = isNewUser
-      ? `https://readgro-backend.onrender.com/insert_bank_detials`
-      : `https://readgro-backend.onrender.com/updateuser_bank_details/${user?.userId}`;
+      ? `http://localhost:5000/insert_bank_detials`
+      : `http://localhost:5000/updateuser_bank_details/${user?.userId}`;
 
     const method = isNewUser ? "POST" : "PUT";
 
@@ -151,7 +151,7 @@ const UserKycForm = () => {
       {/* Save Button */}
       <button
         onClick={handleSaveChanges}
-        className="mt-4 p-2 bg-green-500 text-white rounded"
+        className="mt-4 p-2 bg-green text-white rounded"
       >
         Save Changes
       </button>

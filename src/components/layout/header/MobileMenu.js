@@ -1,9 +1,6 @@
 "use client";
 import MobileMenuItems from "./MobileItems";
-import MobileItems2 from "./MobileItems2";
-import MobileMenuSearch from "./MobileMenuSearch";
-import MobileMyAccount from "./MobileMyAccount";
-import MobileSocial from "./MobileSocial";
+
 import MobileMenuClose from "@/components/shared/buttons/MobileMenuClose";
 import useIsTrue from "@/hooks/useIsTrue";
 

@@ -26,10 +26,10 @@ const TestimonialSlide = ({ testimonial }) => {
             </div>
           </div>
           <div className="space-x-1">
-            <i className="icofont-star text-xs md:text-lg text-yellow"></i>
-            <i className="icofont-star text-xs md:text-lg text-yellow"></i>
-            <i className="icofont-star text-xs md:text-lg text-yellow"></i>
-            <i className="icofont-star text-xs md:text-lg text-yellow"></i>
+            <i className="icofont-star text-xs md:text-lg text-green"></i>
+            <i className="icofont-star text-xs md:text-lg text-green"></i>
+            <i className="icofont-star text-xs md:text-lg text-green"></i>
+            <i className="icofont-star text-xs md:text-lg text-green"></i>
             <i className="icofont-star text-xs md:text-lg text-lightGrey6"></i>
           </div>
         </div>

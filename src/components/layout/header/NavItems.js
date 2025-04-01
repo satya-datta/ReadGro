@@ -1,11 +1,8 @@
 import React from "react";
 import Navitem from "./Navitem";
-import DropdownDemoes from "./DropdownDemoes";
-import DropdownPages from "./DropdownPages";
-import DropdownCourses from "./DropdownCourses";
+
 import DropdownWrapper from "@/components/shared/wrappers/DropdownWrapper";
-import DropdownDashboard from "./DropdownDashboard";
-import DropdownEcommerce from "./DropdownEcommerce";
+
 import PackagesDropdown from "./PackagesDropdown";
 
 const NavItems = () => {
@@ -41,8 +38,8 @@ const NavItems = () => {
 
     {
       id: 5,
-      name: "Contact Us",
-      path: "/ecommerce/shop",
+      name: "Contact Us", 
+      path: "/contact",
       // dropdown: <DropdownEcommerce />,
       isRelative: true,
     },

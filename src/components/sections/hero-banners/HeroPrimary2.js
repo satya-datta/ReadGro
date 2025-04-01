@@ -74,11 +74,11 @@ const HeroPrimary2 = ({ type }) => {
                   </div>
                 </div>
                 <div className="text-start md:text-end">
-                  <i className="icofont-star text-size-15 text-yellow"></i>{" "}
-                  <i className="icofont-star text-size-15 text-yellow"></i>{" "}
-                  <i className="icofont-star text-size-15 text-yellow"></i>{" "}
-                  <i className="icofont-star text-size-15 text-yellow"></i>{" "}
-                  <i className="icofont-star text-size-15 text-yellow"></i>{" "}
+                  <i className="icofont-star text-size-15 text-green"></i>{" "}
+                  <i className="icofont-star text-size-15 text-green"></i>{" "}
+                  <i className="icofont-star text-size-15 text-green"></i>{" "}
+                  <i className="icofont-star text-size-15 text-green"></i>{" "}
+                  <i className="icofont-star text-size-15 text-green"></i>{" "}
                   <span className="text-xs text-blackColor dark:text-blackColor-dark">
                     (44)
                   </span>

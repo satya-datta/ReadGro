@@ -24,13 +24,13 @@ const filterAccordions = [
     inputName: "color",
     checks: [
       "Black",
-      "yellow",
+      "green",
       "Grey",
       "Pink",
       "Red",
       "Violet",
       "White",
-      "Yellow",
+      "green",
     ],
   },
   {

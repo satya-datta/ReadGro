@@ -27,11 +27,16 @@ export const hind = Hind({
 export const metadata = {
   title: "Home 1 | Edurock - Education LMS Template",
   description: "Home description",
+  icons: { icon: "/favicon.ico" }, // Add this lineC:\Users\lenovo\Downloads\ReadGro_MAIN\READGRO\src\assets\images\favicon.ico
 };
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${hind.variable}`}>
+      <head>
+        <link rel="icon" href="/favicon.ico?v=2" type="image/x-icon" />
+        <link rel="shortcut icon" href="/favicon.ico?v=2" type="image/x-icon" />
+      </head>
+
       <body
         className={`relative leading-[1.8] bg-bodyBg dark:bg-bodyBg-dark z-0  ${inter.className}`}
       >

@@ -20,7 +20,7 @@ const RGWithdrawlRequestInner = () => {
 
     try {
       const response = await fetch(
-        `https://readgro-backend.onrender.com/getwithdrawlrequests/${user.userId}`,
+        `http://localhost:5000/getwithdrawlrequests/${user.userId}`,
         {
           method: "GET",
           credentials: "include",
@@ -49,7 +49,7 @@ const RGWithdrawlRequestInner = () => {
   const fetchUserBankData = async (userId) => {
     try {
       const response = await fetch(
-        `https://readgro-backend.onrender.com/getuser_bank_details/${userId}`,
+        `http://localhost:5000/getuser_bank_details/${userId}`,
         {
           method: "GET",
           credentials: "include",
@@ -90,7 +90,7 @@ const RGWithdrawlRequestInner = () => {
 
     try {
       const response = await fetch(
-        `https://readgro-backend.onrender.com/withdrawlrequests/${user.userId}`,
+        `http://localhost:5000/withdrawlrequests/${user.userId}`,
         {
           method: "POST",
           credentials: "include",
@@ -152,50 +152,56 @@ const RGWithdrawlRequestInner = () => {
       ) : error ? (
         <p className="text-center text-red-500">{error}</p>
       ) : (
-        <table className="w-full text-left">
-          <thead className="text-sm bg-gray-100">
-            <tr>
-              <th className="px-5 py-3">S/N</th>
-              <th className="px-5 py-3">Amount</th>
-              <th className="px-5 py-3">Status</th>
-              <th className="px-5 py-3">Date</th>
-            </tr>
-          </thead>
-          <tbody className="text-size-13 md:text-base text-contentColor dark:text-contentColor-dark font-normal">
-            {withdrawRequests.length > 0 ? (
-              withdrawRequests.map((request, index) => (
-                <tr key={request.id} className="leading-1.8 md:leading-1.8">
-                  <td className="px-5px py-10px md:px-5 font-normal">
-                    {index + 1}
-                  </td>
-                  <td className="px-5px py-10px md:px-5 font-normal font-bold text-blackColor dark:text-blackColor-dark">
-                    ₹{request.amount ?? "N/A"}
-                  </td>
-                  <td className="px-5px py-10px md:px-5">
-                    <span
-                      className={`${
-                        request.status === "approved"
-                          ? "bg-greencolor2"
-                          : "bg-secondaryColor"
-                      } h-22px inline-block px-7px leading-22px font-bold text-whiteColor rounded-md capitalize`}
-                    >
-                      {request.status}
-                    </span>
-                  </td>
-                  <td className="px-5px py-10px md:px-5 font-normal">
-                    {new Date(request.created_at).toLocaleDateString()}
+        <div className="overflow-x-auto">
+          {" "}
+          {/* ✅ Enables horizontal scrolling */}
+          <table className="w-full text-left min-w-[600px]">
+            {" "}
+            {/* ✅ Ensures min width */}
+            <thead className="text-sm bg-gray-100">
+              <tr>
+                <th className="px-5 py-3">S/N</th>
+                <th className="px-5 py-3">Amount</th>
+                <th className="px-5 py-3">Status</th>
+                <th className="px-5 py-3">Date</th>
+              </tr>
+            </thead>
+            <tbody className="text-size-13 md:text-base text-contentColor dark:text-contentColor-dark font-normal">
+              {withdrawRequests.length > 0 ? (
+                withdrawRequests.map((request, index) => (
+                  <tr key={request.id} className="leading-1.8 md:leading-1.8">
+                    <td className="px-5px py-10px md:px-5 font-normal">
+                      {index + 1}
+                    </td>
+                    <td className="px-5px py-10px md:px-5 font-normal font-bold text-blackColor dark:text-blackColor-dark">
+                      ₹{request.amount ?? "N/A"}
+                    </td>
+                    <td className="px-5px py-10px md:px-5">
+                      <span
+                        className={`${
+                          request.status === "approved"
+                            ? "bg-greencolor2"
+                            : "bg-secondaryColor"
+                        } h-22px inline-block px-7px leading-22px font-bold text-whiteColor rounded-md capitalize`}
+                      >
+                        {request.status}
+                      </span>
+                    </td>
+                    <td className="px-5px py-10px md:px-5 font-normal">
+                      {new Date(request.created_at).toLocaleDateString()}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="4" className="text-center py-10px">
+                    No withdrawal requests found.
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="4" className="text-center py-10px">
-                  No withdrawal requests found.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              )}
+            </tbody>
+          </table>
+        </div>
       )}
 
       {/* Popup Modal */}
@@ -220,7 +226,7 @@ const RGWithdrawlRequestInner = () => {
               </button>
               <button
                 onClick={handleAddRequest}
-                className="px-4 py-2 bg-green-500 text-white rounded-md"
+                className="px-4 py-2 bg-primaryColor text-white rounded-md"
               >
                 Add Request
               </button>

@@ -3,11 +3,11 @@ const Reviews5Star = ({ reviews, type }) => {
     <div
       className={` flex gap-1 text-size-15  items-center justify-start md:justify-end`}
     >
-      <i className="icofont-star  text-yellow"></i>
-      <i className="icofont-star  text-yellow"></i>
-      <i className="icofont-star  text-yellow"></i>
-      <i className="icofont-star  text-yellow"></i>
-      <i className="icofont-star  text-yellow"></i>
+      <i className="icofont-star  text-green"></i>
+      <i className="icofont-star  text-green"></i>
+      <i className="icofont-star  text-green"></i>
+      <i className="icofont-star  text-green"></i>
+      <i className="icofont-star  text-green"></i>
       <span
         className={
           type === "lg"

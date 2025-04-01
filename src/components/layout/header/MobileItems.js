@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import MobileMenuItem from "./MobileItem";
+
 import PackagesDropdown from "./PackagesDropdown";
-import DropdownDashboard from "./DropdownDashboard";
 
 const MobileMenuItems = () => {
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -49,7 +48,7 @@ const MobileMenuItems = () => {
             </div>
 
             {item.hasDropdown && openDropdown === item.id && (
-              <div className="mt-2 bg-gray-100 dark:bg-gray-800 p-2 rounded">
+              <div className="mt-2 bg-gray-100 dark:bg-gray-800 p-2 rounded text-black dark:text-white">
                 {item.children}
               </div>
             )}

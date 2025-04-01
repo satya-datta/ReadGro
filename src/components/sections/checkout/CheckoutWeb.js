@@ -30,6 +30,10 @@ const CheckoutWeb = ({ packagename }) => {
 
   const [errors, setErrors] = useState({});
   const [packageDetails, setPackageDetails] = useState(null);
+  const [isReferralValid, setIsReferralValid] = useState(null);
+  const [discountedPrice, setDiscountedPrice] = useState(
+    packageDetails?.discount_price
+  ); // Default price
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -40,18 +44,49 @@ const CheckoutWeb = ({ packagename }) => {
   // Fetch package details when packagename is available
   useEffect(() => {
     if (packagename) {
-      fetch(
-        `https://readgro-backend.onrender.com/getpackagebyname/${package_name}`
-      )
+      fetch(`http://localhost:5000/getpackagebyname/${package_name}`)
         .then((res) => res.json())
         .then((data) => setPackageDetails(data))
         .catch((err) => console.error("Error fetching package:", err));
     }
   }, [packagename]);
+  const validateReferralCode = async (referralCode) => {
+    if (!referralCode) {
+      setDiscountedPrice(packageDetails?.package_price); // Reset to original price if referral is empty
+      return;
+    }
 
-  // Handle Input Change
+    try {
+      const response = await fetch(
+        "http://localhost:5000/validate_refferalcode",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ referralCode }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.valid) {
+        setDiscountedPrice(
+          packageDetails?.discount_price || packageDetails?.package_price
+        ); // Apply discount
+      } else {
+        setDiscountedPrice(packageDetails?.package_price); // No discount
+      }
+    } catch (error) {
+      console.error("Error validating referral code:", error);
+      setDiscountedPrice(packageDetails?.package_price); // Default price on error
+    }
+  };
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    if (e.target.name === "referralCode") {
+      validateReferralCode(e.target.value);
+    }
   };
 
   // Validate Form
@@ -86,7 +121,7 @@ const CheckoutWeb = ({ packagename }) => {
     try {
       // Step 1: Validate user
       const validateResponse = await fetch(
-        "https://readgro-backend.onrender.com/validate_user",
+        "http://localhost:5000/validate_user",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -129,7 +164,7 @@ const CheckoutWeb = ({ packagename }) => {
 
       // Step 3: Register the User
       const registerResponse = await fetch(
-        "https://readgro-backend.onrender.com/create-user",
+        "http://localhost:5000/create-user",
         {
           method: "POST",
           credentials: "include",
@@ -159,9 +194,11 @@ const CheckoutWeb = ({ packagename }) => {
     }
   };
 
-  const handleRazorpayPayment = async (priceDifference) => {
+  const handleRazorpayPayment = async () => {
     try {
-      const orderData = await createOrder(priceDifference); // API call to get order ID from backend
+      const priceToPay = discountedPrice || packageDetails?.package_price; // Use discounted price if available
+
+      const orderData = await createOrder(priceToPay); // API call to get order ID from backend
       if (!orderData) {
         alert("Failed to create Razorpay order. Try again.");
         return false; // Return failure
@@ -170,7 +207,7 @@ const CheckoutWeb = ({ packagename }) => {
       return new Promise((resolve) => {
         const options = {
           key: "rzp_test_D0wbfHHAyV89wY", // Replace with your Razorpay Key ID
-          amount: priceDifference * 100, // Convert to paisa (INR subunit)
+          amount: priceToPay * 100, // Convert to paisa (INR subunit)
           currency: "INR",
           name: "Read Gro",
           description: "Payment for Upgrade",
@@ -207,6 +244,7 @@ const CheckoutWeb = ({ packagename }) => {
       return false; // Return failure if there's an error
     }
   };
+
   return (
     <section>
       <div className="container py-50px lg:py-60px 2xl:py-20 3xl:py-100px">
@@ -228,6 +266,9 @@ const CheckoutWeb = ({ packagename }) => {
                     onChange={handleChange}
                     className="w-full h-50px px-5 border placeholder-opacity-80"
                   />
+                  {isReferralValid === false && (
+                    <p className="text-red-500">Invalid referral code</p>
+                  )}
                 </div>
                 <div>
                   <label className="text-sm mb-5px block">Name*</label>
@@ -333,7 +374,8 @@ const CheckoutWeb = ({ packagename }) => {
                 <thead>
                   <tr className="border-b">
                     <td className="p-10px md:p-15px">Product</td>
-                    <td className="p-10px md:p-15px">Total</td>
+                    <td className="p-10px md:p-15px">Actual Price</td>
+                    <td className="p-10px md:p-15px">With Discount</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -343,6 +385,13 @@ const CheckoutWeb = ({ packagename }) => {
                     </td>
                     <td className="p-10px md:p-15px">
                       ₹{packageDetails?.package_price || "0.00"}
+                      {/* Strike-through original price */}
+                    </td>
+                    <td className="p-10px md:p-15px font-bold text-green-600">
+                      ₹
+                      {discountedPrice ||
+                        packageDetails?.package_price ||
+                        "0.00"}
                     </td>
                   </tr>
                 </tbody>
@@ -353,7 +402,7 @@ const CheckoutWeb = ({ packagename }) => {
             {packageDetails?.package_image && (
               <div className="mt-5">
                 <img
-                  src={`https://readgro-backend.onrender.com/uploads/${packageDetails.package_image}`}
+                  src={`http://localhost:5000/uploads/${packageDetails.package_image}`}
                   alt={packageDetails?.package_name || "Package"}
                   className="w-full h-[400px] object-cover rounded-md border"
                 />
@@ -366,7 +415,7 @@ const CheckoutWeb = ({ packagename }) => {
                 onClick={handleNext}
                 type="submit"
                 width="full"
-                className="px-5 py-3 bg-yellow-500 text-white font-bold rounded hover:bg-yellow-600 w-3/4 lg:w-[300px]"
+                className="px-5 py-3 bg-green-500 text-white font-bold rounded hover:bg-green-600 w-3/4 lg:w-[300px]"
               >
                 Next
               </ButtonPrimary>

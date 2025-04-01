@@ -23,7 +23,7 @@ const UserAffiliateForm = () => {
   const fetchReferralCode = async (userId) => {
     try {
       const response = await fetch(
-        `https://readgro-backend.onrender.com/getuser_details/${userId}`,
+        `http://localhost:5000/getuser_details/${userId}`,
         {
           method: "GET",
           credentials: "include",
@@ -65,9 +65,7 @@ const UserAffiliateForm = () => {
 
   return (
     <div className="p-5 bg-white shadow rounded-md">
-      <h2 className="text-lg font-semibold text-purple-700 mb-4">
-        Affiliate Links
-      </h2>
+      <h2 className="text-lg font-semibold  mb-4">AFFILIATE LINKS</h2>
 
       {/* Referral Link */}
       <div className="mb-4">
@@ -83,7 +81,7 @@ const UserAffiliateForm = () => {
           />
           <button
             onClick={() => copyToClipboard(referralLink)}
-            className="bg-purple-600 text-white px-4 py-2 text-sm font-medium hover:bg-purple-700"
+            className="bg-primaryColor text-white px-4 py-2 text-sm font-medium hover:bg-purple-700"
           >
             Copy Referral Link
           </button>
@@ -104,7 +102,7 @@ const UserAffiliateForm = () => {
           />
           <button
             onClick={() => copyToClipboard(referralCode)}
-            className="bg-purple-600 text-white px-4 py-2 text-sm font-medium hover:bg-purple-700"
+            className="bg-primaryColor text-white px-4 py-2 text-sm font-medium hover:bg-purple-700"
           >
             Copy Referral Code
           </button>
@@ -133,7 +131,7 @@ const UserAffiliateForm = () => {
           </select>
           <button
             onClick={generatePackageLink}
-            className="ml-2 px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-md hover:bg-purple-700"
+            className="ml-2 px-4 py-2 bg-primaryColor text-white text-sm font-medium rounded-md hover:bg-purple-700"
           >
             Generate Link
           </button>
@@ -155,7 +153,7 @@ const UserAffiliateForm = () => {
             />
             <button
               onClick={() => copyToClipboard(generatedLink)}
-              className="bg-purple-600 text-white px-4 py-2 text-sm font-medium hover:bg-purple-700"
+              className="bg-primaryColor text-white px-4 py-2 text-sm font-medium hover:bg-purple-700"
             >
               Copy Link
             </button>

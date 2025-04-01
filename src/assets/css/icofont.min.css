@@ -3297,7 +3297,7 @@
 .icofont-ui-block:before {
   content: "\ec41";
 }
-.icofont-ui-yellowtooth:before {
+.icofont-ui-greentooth:before {
   content: "\ec42";
 }
 .icofont-ui-brightness:before {
@@ -5205,7 +5205,7 @@
 .icofont-binoculars:before {
   content: "\eebd";
 }
-.icofont-yellowtooth:before {
+.icofont-greentooth:before {
   content: "\eebe";
 }
 .icofont-bomb:before {

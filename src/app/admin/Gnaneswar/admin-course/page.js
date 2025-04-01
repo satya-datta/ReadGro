@@ -1,4 +1,4 @@
-import AdminCourseMain from "@/components/layout/main/dashboards/AdminCourseMain";
+import AdminAddCourseMain from "@/components/layout/main/dashboards/AdminAddCourseMain";
 import DashboardContainer from "@/components/shared/containers/DashboardContainer";
 
 import ThemeController from "@/components/shared/others/ThemeController";
@@ -14,7 +14,7 @@ const Admin_Course = () => {
       <main>
         <DsahboardWrapper>
           <DashboardContainer>
-            <AdminCourseMain />
+            <AdminAddCourseMain />
           </DashboardContainer>
         </DsahboardWrapper>
         <ThemeController />

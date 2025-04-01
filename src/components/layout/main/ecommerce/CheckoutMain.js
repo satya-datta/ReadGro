@@ -1,4 +1,4 @@
-import CheckoutPrimary from "@/components/sections/checkout/CheckoutPrimary";
+
 import CheckoutWeb from "@/components/sections/checkout/CheckoutWeb";
 import HeroPrimary from "@/components/sections/hero-banners/HeroPrimary";
 import React from "react";

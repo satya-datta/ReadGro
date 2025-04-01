@@ -18,10 +18,8 @@ const UserPackagePlan = () => {
     const fetchPackages = async () => {
       try {
         const [packageRes, userPackageRes] = await Promise.all([
-          fetch("https://readgro-backend.onrender.com/getallpackages"),
-          fetch(
-            `https://readgro-backend.onrender.com/getuserpackage/${user.userId}`
-          ),
+          fetch("http://localhost:5000/getallpackages"),
+          fetch(`http://localhost:5000/getuserpackage/${user.userId}`),
         ]);
 
         if (!packageRes.ok || !userPackageRes.ok) {

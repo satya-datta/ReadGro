@@ -1,10 +1,6 @@
-import FilterController from "@/components/shared/courses/FilterController";
 import HeadingPrimary from "@/components/shared/headings/HeadingPrimary";
 import SectionName from "@/components/shared/section-names/SectionName";
-import FilterControllerWrapper from "@/components/shared/wrappers/FilterControllerWrapper";
-import FilterCards from "@/components/shared/courses/FilterCards";
-import HeadingPrimaryXl from "@/components/shared/headings/HeadingPrimaryXl ";
-import CoursesWeb from "./CoursesWeb";
+
 import CourseHome from "./CourseHome";
 const CoursesFilter = () => {
   return (

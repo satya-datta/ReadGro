@@ -23,9 +23,9 @@ const ProductCard = ({ product, handleCurrentProduct }) => {
   const { addProductToWishlist } = useWishlistContext();
   const depBgs = [
     "bg-secondaryColor",
-    "bg-yellow",
+    "bg-green",
     "bg-greencolor2",
-    "bg-yellow",
+    "bg-green",
   ];
 
   idx = (idx + 1) % depBgs.length;

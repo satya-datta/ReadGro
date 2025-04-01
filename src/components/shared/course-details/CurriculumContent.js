@@ -8,7 +8,7 @@ const CurriculumContent = ({ id }) => {
 
   useEffect(() => {
     if (id) {
-      fetch(`https://readgro-backend.onrender.com/gettopics/${id}`)
+      fetch(`http://localhost:5000/gettopics/${id}`)
         .then((res) => res.json())
         .then((data) => {
           if (Array.isArray(data.topics)) {
@@ -64,9 +64,10 @@ const CurriculumContent = ({ id }) => {
             </div>
             <button
               onClick={() => handleVideoClick(topic.video_url)}
-              className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition"
+              className="px-6 py-7 text-xs font-medium rounded-md flex items-center gap-2 transition bg-blue-600 hover:bg-blue-700 text-white"
             >
-              <i className="icofont-play-alt-2"></i> Watch Video
+              <i className="icofont-play-alt-2"></i>
+              <span className="hidden sm:inline ml-2">Watch Video</span>
             </button>
           </li>
         ))}

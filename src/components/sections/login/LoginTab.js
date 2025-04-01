@@ -1,7 +1,7 @@
 "use client";
-import TabButtonPrimary from "@/components/shared/buttons/TabButtonPrimary";
+
 import LoginForm from "@/components/shared/login/LoginForm";
-import SignUpForm from "@/components/shared/login/SignUpForm";
+
 import TabContentWrapper from "@/components/shared/wrappers/TabContentWrapper";
 import Image from "next/image";
 import shapImage2 from "@/assets/images/education/hero_shape2.png";
@@ -12,10 +12,7 @@ import useTab from "@/hooks/useTab";
 
 const LoginTab = () => {
   const { currentIdx, handleTabClick } = useTab();
-  const tabButtons = [
-    { name: "Login", content: <LoginForm /> },
-  
-  ];
+  const tabButtons = [{ name: "Login", content: <LoginForm /> }];
   return (
     <section className="relative">
       <div className="container py-100px">

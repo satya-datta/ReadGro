@@ -1,4 +1,4 @@
-import AdminProfileMain from "@/components/layout/main/dashboards/AdminProfileMain";
+
 import DashboardContainer from "@/components/shared/containers/DashboardContainer";
 
 import ThemeController from "@/components/shared/others/ThemeController";

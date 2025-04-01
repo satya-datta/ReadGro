@@ -30,7 +30,7 @@ const PlanCard = ({ package_id, userCurrentPackage }) => {
   }, [showPopup]);
 
   useEffect(() => {
-    fetch(`https://readgro-backend.onrender.com/getpackage/${package_id}`)
+    fetch(`http://localhost:5000/getpackage/${package_id}`)
       .then((res) => res.json())
       .then((data) => setPackageData(data))
       .catch((error) =>
@@ -39,16 +39,14 @@ const PlanCard = ({ package_id, userCurrentPackage }) => {
   }, [package_id]);
 
   useEffect(() => {
-    fetch(
-      `https://readgro-backend.onrender.com/getcoursemappings/${package_id}`
-    )
+    fetch(`http://localhost:5000/getcoursemappings/${package_id}`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
           const courseIds = data.map((course) => course.course_id);
           setTotalCourses(data.length);
 
-          fetch("https://readgro-backend.onrender.com/getcoursedetails", {
+          fetch("http://localhost:5000/getcoursedetails", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ course_ids: courseIds }),
@@ -71,7 +69,7 @@ const PlanCard = ({ package_id, userCurrentPackage }) => {
 
   useEffect(() => {
     if (package_id > 1) {
-      fetch(`https://readgro-backend.onrender.com/getpackage/${package_id - 1}`)
+      fetch(`http://localhost:5000/getpackage/${package_id - 1}`)
         .then((res) => res.json())
         .then((data) => setPreviousPackageName(data.package_name))
         .catch((error) =>
@@ -166,15 +164,12 @@ const PlanCard = ({ package_id, userCurrentPackage }) => {
   // Function to upgrade the user's package
   const upgradePackage = async (userId, newPackageId) => {
     try {
-      const response = await fetch(
-        `https://readgro-backend.onrender.com/upgrade_package`,
-        {
-          method: "PUT",
-          credentials: "include",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userId: userId, package_id: newPackageId }),
-        }
-      );
+      const response = await fetch(`http://localhost:5000/upgrade_package`, {
+        method: "PUT",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: userId, package_id: newPackageId }),
+      });
 
       const data = await response.json();
       console.log(data.message);
@@ -191,10 +186,10 @@ const PlanCard = ({ package_id, userCurrentPackage }) => {
 
   const headerColors = [
     "bg-red-600",
-    "bg-yellow",
+    "bg-green",
     "bg-green-600",
     "bg-purple-600",
-    "bg-yellow-500",
+    "bg-green-500",
   ];
   const headerColor = headerColors[package_id % headerColors.length];
 
@@ -206,7 +201,7 @@ const PlanCard = ({ package_id, userCurrentPackage }) => {
         className={`${headerColor} h-20 flex items-center justify-center relative`}
       >
         <img
-          src={`https://readgro-backend.onrender.com/uploads/${packageData.package_image}`}
+          src={`http://localhost:5000/uploads/${packageData.package_image}`}
           alt="Package Logo"
           className="w-20 h-20 rounded-full absolute top-10 border-4 border-white"
         />
@@ -239,7 +234,7 @@ const PlanCard = ({ package_id, userCurrentPackage }) => {
           </button>
         ) : (
           <button
-            className="w-full bg-yellow text-white font-semibold py-2 rounded-md hover:bg-light-yellow transition"
+            className="w-full bg-green text-white font-semibold py-2 rounded-md hover:bg-light-green transition"
             onClick={() => setShowPopup(true)}
           >
             Upgrade for ₹{priceDifference}
@@ -266,7 +261,7 @@ const PlanCard = ({ package_id, userCurrentPackage }) => {
             <button
               onClick={handleProceed}
               disabled={isProcessing}
-              className="w-full bg-green-600 text-white font-semibold py-2 rounded-md hover:bg-green-700 transition"
+              className="w-full bg-primaryColor text-white font-semibold py-2 rounded-md hover:bg-green-700 transition"
             >
               {isProcessing ? "Processing..." : "Proceed"}
             </button>

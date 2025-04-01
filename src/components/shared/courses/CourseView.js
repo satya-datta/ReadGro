@@ -14,7 +14,7 @@ const CourseView = ({ course }) => {
       {/* Course Image */}
       {course.image && (
         <img
-          src={`https://readgro-backend.onrender.com/uploads/${course.image}`}
+          src={`http://localhost:5000/uploads/${course.image}`}
           alt={course.course_name}
           className="w-full h-48 object-cover rounded-lg"
         />
@@ -34,7 +34,7 @@ const CourseView = ({ course }) => {
                 </div> */}
       </div>
       <button
-        className="mt-4 w-full bg-pink-300 text-white font-semibold py-2 rounded-lg hover:bg-yellow-700 transition duration-300"
+        className="mt-4 w-full bg-pink-300 text-white font-semibold py-2 rounded-lg hover:bg-green-700 transition duration-300"
         onClick={() => router.push(`./user-enrolled-courses/${course.id}`)}
       >
         Learn 📖

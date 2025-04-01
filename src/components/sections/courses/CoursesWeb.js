@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { BookOpen, Star } from "lucide-react"; // Icons
-import { FaStar } from "react-icons/fa"; // Import FontAwesome Star icon
 
 const CoursesWeb = () => {
   const [courses, setCourses] = useState([]);
@@ -10,7 +9,7 @@ const CoursesWeb = () => {
   const router = useRouter();
 
   useEffect(() => {
-    fetch("https://readgro-backend.onrender.com/getallcourses")
+    fetch("http://localhost:5000/getallcourses")
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data.courses)) {
@@ -26,7 +25,7 @@ const CoursesWeb = () => {
   }, []);
 
   const fetchTopicsCount = (courseId) => {
-    fetch(`https://readgro-backend.onrender.com/gettopics/${courseId}`)
+    fetch(`http://localhost:5000/gettopics/${courseId}`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data.topics)) {
@@ -64,7 +63,7 @@ const CoursesWeb = () => {
               {/* Course Image */}
               {course.course_image && (
                 <img
-                  src={`https://readgro-backend.onrender.com/uploads/${course.course_image}`}
+                  src={`http://localhost:5000/uploads/${course.course_image}`}
                   alt={course.course_name}
                   className="w-full h-48 object-cover rounded-lg"
                 />
@@ -81,7 +80,7 @@ const CoursesWeb = () => {
 
                 {/* Lessons Count */}
                 <div className="flex items-center text-gray-600 text-sm mt-3">
-                  <BookOpen size={18} className="text-yellow-500 mr-2" />
+                  <BookOpen size={18} className="text-green-500 mr-2" />
                   {topicsCount[course.course_id] !== undefined
                     ? `${topicsCount[course.course_id]} Lessons`
                     : "Loading lessons..."}

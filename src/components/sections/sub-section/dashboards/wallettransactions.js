@@ -16,7 +16,7 @@ const WalletTransactions = () => {
 
     try {
       const response = await fetch(
-        `https://readgro-backend.onrender.com/getwallettransaction/${user.userId}`,
+        `http://localhost:5000/getwallettransaction/${user.userId}`,
         {
           method: "GET",
           credentials: "include",
@@ -96,7 +96,7 @@ const WalletTransactions = () => {
                         <span
                           className={`${
                             transaction.transaction_type === "credit"
-                              ? "bg-green-500"
+                              ? "bg-primaryColor"
                               : "bg-red-500"
                           } h-22px inline-block px-7px leading-22px font-bold text-whiteColor rounded-md`}
                         >

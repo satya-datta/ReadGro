@@ -12,7 +12,7 @@ const WithDrawlRequest = ({ userId }) => {
     const fetchWithdrawRequests = async () => {
       try {
         const response = await fetch(
-          `https://readgro-backend.onrender.com/getwithdrawlrequests/${userId}`
+          `http://localhost:5000/getwithdrawlrequests/${userId}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch withdrawal requests");
@@ -42,14 +42,11 @@ const WithDrawlRequest = ({ userId }) => {
     setShowOtpModal(true);
 
     try {
-      const response = await fetch(
-        "https://readgro-backend.onrender.com/send-otp",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" }, // ✅ Ensure proper headers
-          body: JSON.stringify({}), // ✅ Even if empty, some servers require a body
-        }
-      );
+      const response = await fetch("http://localhost:5000/send-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }, // ✅ Ensure proper headers
+        body: JSON.stringify({}), // ✅ Even if empty, some servers require a body
+      });
       console.log(response.json());
       if (!response.ok) {
         throw new Error(`Failed to send OTP: ${response.statusText}`);
@@ -67,18 +64,16 @@ const WithDrawlRequest = ({ userId }) => {
     setLoading(true);
     console.log(selectedRequest);
     try {
-      const response = await fetch(
-        "https://readgro-backend.onrender.com/process-payout",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            userId: userId,
-            amount: selectedRequest.amount,
-            otp,
-          }),
-        }
-      );
+      const response = await fetch("http://localhost:5000/process-payout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: userId,
+          amount: selectedRequest.amount,
+          otp,
+          requestId: selectedRequest.id, // Include request ID
+        }),
+      });
 
       const data = await response.json();
       if (data.success) {
@@ -126,14 +121,21 @@ const WithDrawlRequest = ({ userId }) => {
                   {new Date(request.created_at).toLocaleString()}
                 </td>
                 <td className="px-5px py-10px">
-                  {request.status.toLowerCase() === "pending" && (
+                  {request.status.toLowerCase() === "pending" ? (
                     <button
                       className="bg-primaryColor text-white px-4 py-2 rounded"
                       onClick={() => handlePayClick(request)}
                     >
                       Pay
                     </button>
-                  )}
+                  ) : request.status.toLowerCase() === "approved" ? (
+                    <button
+                      className="bg-gray-400 text-white px-4 py-2 rounded"
+                      disabled
+                    >
+                      Paid
+                    </button>
+                  ) : null}
                 </td>
               </tr>
             ))
@@ -162,7 +164,7 @@ const WithDrawlRequest = ({ userId }) => {
             />
             <div className="mt-3 flex justify-center gap-3">
               <button
-                className="bg-green-500 text-white px-4 py-2 rounded"
+                className="bg-primaryColor text-white px-4 py-2 rounded"
                 onClick={handleOtpSubmit}
                 disabled={loading}
               >

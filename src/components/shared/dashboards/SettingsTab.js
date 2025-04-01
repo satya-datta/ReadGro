@@ -1,10 +1,10 @@
 "use client";
-import TabButtonSecondary from "../buttons/TabButtonSecondary";
-import useTab from "@/hooks/useTab";
-import ProfileContent from "./ProfileContent";
+// import TabButtonSecondary from "../buttons/TabButtonSecondary";
+// import useTab from "@/hooks/useTab";
+// import ProfileContent from "./ProfileContent";
 import PasswordContent from "./PasswordContent";
-import SocialIconContent from "./SocialIconContent";
-import TabContentWrapper from "../wrappers/TabContentWrapper";
+// import SocialIconContent from "./SocialIconContent";
+// import TabContentWrapper from "../wrappers/TabContentWrapper";
 
 const SettingsTab = () => {
   return (

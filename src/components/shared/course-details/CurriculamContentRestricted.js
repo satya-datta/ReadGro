@@ -1,15 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const CurriculumContentRestricted = ({ id, hasPurchased }) => {
   const [topics, setTopics] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
+  const [packageNames, setPackageNames] = useState([]); // Store package names
+  const router = useRouter();
 
   useEffect(() => {
     if (id) {
-      fetch(`https://readgro-backend.onrender.com/gettopics/${id}`)
+      // Fetch course topics
+      fetch(`http://localhost:5000/gettopics/${id}`)
         .then((res) => res.json())
         .then((data) => {
           if (Array.isArray(data.topics)) {
@@ -20,6 +24,23 @@ const CurriculumContentRestricted = ({ id, hasPurchased }) => {
         })
         .catch((error) =>
           console.error(`Error fetching topics for course ${id}:`, error)
+        );
+
+      // Fetch package names mapped to this course
+      fetch(`http://localhost:5000/getpackagebycourse/${id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (Array.isArray(data.packages)) {
+            setPackageNames(data.packages.map((pkg) => pkg.package_name));
+          } else {
+            console.error(
+              `Package data for course ${id} is not an array`,
+              data
+            );
+          }
+        })
+        .catch((error) =>
+          console.error(`Error fetching packages for course ${id}:`, error)
         );
     }
   }, [id]);
@@ -69,13 +90,15 @@ const CurriculumContentRestricted = ({ id, hasPurchased }) => {
             </div>
             <button
               onClick={() => handleVideoClick(index, topic.video_url)}
-              className={`px-4 py-2 rounded-lg transition ${
-                index === 0 || hasPurchased
-                  ? "bg-green-500 text-white hover:bg-yellow-600"
-                  : "bg-gray-400 text-white cursor-not-allowed"
-              }`}
+              className={`px-3 py-1 text-xs font-medium rounded-md flex items-center gap-2 transition 
+    ${
+      index === 0 || hasPurchased
+        ? "bg-blue-600 hover:bg-blue-700 text-white"
+        : "bg-gray-400 text-white cursor-not-allowed"
+    }`}
             >
-              <i className="icofont-play-alt-2"></i> Watch Video
+              <i className="icofont-play-alt-2 text-sm"></i>
+              <span className="whitespace-nowrap">Watch Video</span>
             </button>
           </li>
         ))}
@@ -101,15 +124,38 @@ const CurriculumContentRestricted = ({ id, hasPurchased }) => {
       {/* Popup Modal */}
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-            <p className="text-xl font-bold mb-4">
-              Buy package to get the course
-            </p>
+          <div className="bg-white p-6 rounded-lg shadow-lg text-center relative w-96">
+            {/* Close Icon */}
             <button
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
               onClick={() => setShowPopup(false)}
             >
-              Close
+              ✖
+            </button>
+
+            <h2 className="text-xl font-bold mb-4">BUY COURSE</h2>
+            <p className="text-md mb-2 text-gray-600">
+              This course is available in:
+            </p>
+
+            <ul className="list-disc text-left pl-6 mb-4 text-gray-800">
+              {packageNames.length > 0 ? (
+                packageNames.map((pkg, index) => (
+                  <li key={index} className="text-lg font-medium">
+                    {pkg}
+                  </li>
+                ))
+              ) : (
+                <li className="text-gray-500">No packages available</li>
+              )}
+            </ul>
+
+            {/* View Plans Button */}
+            <button
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 w-full"
+              onClick={() => router.push("/packages")}
+            >
+              View Plans
             </button>
           </div>
         </div>

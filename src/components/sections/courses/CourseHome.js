@@ -13,7 +13,7 @@ const CourseHome = () => {
   const router = useRouter();
 
   useEffect(() => {
-    fetch("https://readgro-backend.onrender.com/getallcourses")
+    fetch("http://localhost:5000/getallcourses")
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data.courses)) {
@@ -29,7 +29,7 @@ const CourseHome = () => {
   }, []);
 
   const fetchTopicsCount = (courseId) => {
-    fetch(`https://readgro-backend.onrender.com/gettopics/${courseId}`)
+    fetch(`http://localhost:5000/gettopics/${courseId}`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data.topics)) {
@@ -54,34 +54,35 @@ const CourseHome = () => {
       <Swiper
         breakpoints={{
           320: { slidesPerView: 1, spaceBetween: 10 }, // Mobile
-          640: { slidesPerView: 2, spaceBetween: 15 }, // Tablet
-          1024: { slidesPerView: 3, spaceBetween: 20 }, // Desktop (Max 3 cards)
+          640: { slidesPerView: 2, spaceBetween: 15 }, // Tablet (only one card)
+          1024: { slidesPerView: 3, spaceBetween: 20 }, // Desktop
         }}
         pagination={{ clickable: true }}
         modules={[Pagination]}
+        className="pb-10"
       >
         {courses.map((course) => (
           <SwiperSlide key={course.id}>
             <div
-              className="border p-5 rounded-xl shadow-lg bg-white relative cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+              className="border p-5 rounded-xl shadow-lg bg-white cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-2xl h-[350px] flex flex-col justify-between"
               onClick={() => router.push(`courses/${course.course_id}`)}
             >
               {course.course_image && (
                 <img
-                  src={`https://readgro-backend.onrender.com/uploads/${course.course_image}`}
+                  src={`http://localhost:5000/uploads/${course.course_image}`}
                   alt={course.course_name}
                   className="w-full h-48 object-cover rounded-lg"
                 />
               )}
-              <div className="mt-4">
-                <h3 className="text-xl font-semibold">
+              <div className="mt-4 flex flex-col justify-between flex-grow">
+                <h3 className="text-xl font-semibold text-left">
                   {course.course_name.toUpperCase()}
                 </h3>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600 text-sm text-left">
                   BY {course.instructor.toUpperCase()}
                 </p>
                 <div className="flex items-center text-gray-600 text-sm mt-3">
-                  <BookOpen size={18} className="text-yellow-500 mr-2" />
+                  <BookOpen size={18} className="text-green-500 mr-2" />
                   {topicsCount[course.course_id] !== undefined
                     ? `${topicsCount[course.course_id]} Lessons`
                     : "Loading lessons..."}
@@ -91,6 +92,9 @@ const CourseHome = () => {
           </SwiperSlide>
         ))}
       </Swiper>
+      <div className="mt-5 flex justify-center">
+        <div className="swiper-pagination"></div>
+      </div>
     </div>
   );
 };

@@ -1,13 +1,13 @@
 "use client";
 import TabButtonSecondary from "@/components/shared/buttons/TabButtonPrimary";
 import useTab from "@/hooks/useTab";
-import WithDrawlRequest from "./RGAdminWithDrawlRequest";
-import ProfileContent from "@/components/shared/dashboards/ProfileContent";
-import PasswordContent from "@/components/shared/dashboards/PasswordContent";
-import SocialIconContent from "@/components/shared/dashboards/SocialIconContent";
+// import WithDrawlRequest from "./RGAdminWithDrawlRequest";
+// import ProfileContent from "@/components/shared/dashboards/ProfileContent";
+// import PasswordContent from "@/components/shared/dashboards/PasswordContent";
+// import SocialIconContent from "@/components/shared/dashboards/SocialIconContent";
 import TabContentWrapper from "@/components/shared/wrappers/TabContentWrapper";
-import UserBankDetails from "./ADMINUserBankDetails";
-import AdminPayouts from "./AdminPayouts";
+// import UserBankDetails from "./ADMINUserBankDetails";
+// import AdminPayouts from "./AdminPayouts";
 import AdminCreditedPayments from "./AdminCreditedPayments";
 const AdminPayments = ({ userId }) => {
   const { currentIdx, handleTabClick } = useTab();
@@ -16,10 +16,10 @@ const AdminPayments = ({ userId }) => {
       name: "Credited Payments",
       content: <AdminCreditedPayments />,
     },
-    {
-      name: "Payouts",
-      content: <AdminPayouts />,
-    },
+    // {
+    //   name: "Payouts",
+    //   content: <AdminPayouts />,
+    // },
   ];
   console.log(userId);
   return (

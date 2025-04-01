@@ -1,11 +1,11 @@
 "use client";
 import ButtonPrimary from "@/components/shared/buttons/ButtonPrimary";
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
 
 const AdminAddPackageMain = () => {
   const [packageName, setPackageName] = useState("");
   const [price, setPrice] = useState("");
+  const [discountPrice, setDiscountPrice] = useState("");
   const [description, setDescription] = useState("");
   const [commission, setCommission] = useState("");
   const [packageImage, setPackageImage] = useState(null);
@@ -16,9 +16,7 @@ const AdminAddPackageMain = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch(
-          "https://readgro-backend.onrender.com/getallcourses"
-        );
+        const response = await fetch("http://localhost:5000/getallcourses");
         const data = await response.json();
         if (response.ok) {
           setCourses(data.courses);
@@ -53,6 +51,8 @@ const AdminAddPackageMain = () => {
       newErrors.packageName = "Package name is required.";
     if (!price.trim() || isNaN(price))
       newErrors.price = "Valid price is required.";
+    if (!discountPrice.trim() || isNaN(discountPrice))
+      newErrors.discountPrice = "Valid discount price is required.";
     if (!description.trim()) newErrors.description = "Description is required.";
     if (!commission.trim() || isNaN(commission))
       newErrors.commission = "Valid commission is required.";
@@ -63,6 +63,7 @@ const AdminAddPackageMain = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!validateForm()) return;
@@ -71,19 +72,17 @@ const AdminAddPackageMain = () => {
       const formData = new FormData();
       formData.append("packageName", packageName);
       formData.append("price", price);
+      formData.append("discountPrice", discountPrice);
       formData.append("description", description);
       formData.append("commission", commission);
-      formData.append("packageImage", packageImage); // Ensure file is appended
-      formData.append("courses", JSON.stringify(selectedCourses)); // Convert courses to JSON
+      formData.append("packageImage", packageImage);
+      formData.append("courses", JSON.stringify(selectedCourses));
 
       const response = await fetch(
-        "https://readgro-backend.onrender.com/create-package_withcourses",
+        "http://localhost:5000/create-package_withcourses",
         {
           method: "POST",
           body: formData,
-          headers: {
-            // ❌ DO NOT set "Content-Type" manually, let the browser set it
-          },
         }
       );
 
@@ -96,6 +95,7 @@ const AdminAddPackageMain = () => {
       alert("Package created successfully!");
       setPackageName("");
       setPrice("");
+      setDiscountPrice("");
       setDescription("");
       setCommission("");
       setPackageImage(null);
@@ -105,7 +105,6 @@ const AdminAddPackageMain = () => {
       console.error("Error:", error);
     }
   };
-
   return (
     <div className="p-10px md:px-10 md:py-50px mb-30px bg-white shadow rounded-5">
       <h2 className="text-2xl font-bold mb-6">Add New Package</h2>
@@ -135,6 +134,20 @@ const AdminAddPackageMain = () => {
             className="w-full py-2 px-3 border rounded"
           />
           {errors.price && <p className="text-red-500">{errors.price}</p>}
+        </div>
+
+        <div className="mb-4">
+          <label className="block font-semibold">Discount Price</label>
+          <input
+            type="text"
+            value={discountPrice}
+            onChange={(e) => setDiscountPrice(e.target.value)}
+            placeholder="Enter discount price"
+            className="w-full py-2 px-3 border rounded"
+          />
+          {errors.discountPrice && (
+            <p className="text-red-500">{errors.discountPrice}</p>
+          )}
         </div>
 
         {/* Description */}

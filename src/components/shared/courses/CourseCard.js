@@ -87,7 +87,7 @@ const CourseCard = ({ course, type }) => {
             {/* Progress bar */}
             {isCompleted || isActive ? (
               <div>
-                <div className="h-25px w-full bg-yellow-x-light rounded-md relative mt-5 mb-15px">
+                <div className="h-25px w-full bg-green-x-light rounded-md relative mt-5 mb-15px">
                   <div
                     className="text-center bg-primaryColor absolute top-0 left-0 rounded-md leading-25px"
                     style={{

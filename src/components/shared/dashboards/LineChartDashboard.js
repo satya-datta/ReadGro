@@ -32,8 +32,8 @@ const LineChartDashboard = () => {
                 148, 100, 205, 110, 165, 145, 180, 156, 148, 220, 180, 245,
               ],
               tension: 0.4,
-              backgroundColor: "#5F2DED",
-              borderColor: "#5F2DED",
+              backgroundColor: "#009743",
+              borderColor: "#009743",
               borderWidth: 2,
             },
           ],
@@ -66,7 +66,7 @@ const LineChartDashboard = () => {
             Dashboard
           </h2>
           <div className="bg-whiteColor rounded-md relative">
-            <select className="bg-transparent text-darkyellow w-42.5 px-3 py-6px focus:outline-none block appearance-none leading-1.5 relative z-20 focus:shadow-select border border-borderColor6 rounded-md">
+            <select className="bg-transparent text-darkgreen w-42.5 px-3 py-6px focus:outline-none block appearance-none leading-1.5 relative z-20 focus:shadow-select border border-borderColor6 rounded-md">
               <option defaultValue="HTML">HTML</option>
               <option defaultValue="CSS">CSS</option>
               <option defaultValue="Javascript">Javascript</option>

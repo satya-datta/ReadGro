@@ -9,11 +9,11 @@ const HeroSlide = ({ card, idx }) => {
   const { addProductToWishlist } = useWishlistContext();
   const depBgs = [
     "bg-secondaryColor",
-    "bg-yellow",
+    "bg-green",
     "bg-secondaryColor2",
     "bg-greencolor2",
     "bg-orange",
-    "bg-yellow",
+    "bg-green",
   ];
   return (
     <div>
@@ -119,11 +119,11 @@ const HeroSlide = ({ card, idx }) => {
               </Link>
             </div>
             <div className="text-start md:text-end">
-              <i className="icofont-star text-size-15 text-yellow"></i>
-              <i className="icofont-star text-size-15 text-yellow"></i>
-              <i className="icofont-star text-size-15 text-yellow"></i>
-              <i className="icofont-star text-size-15 text-yellow"></i>
-              <i className="icofont-star text-size-15 text-yellow"></i>
+              <i className="icofont-star text-size-15 text-green"></i>
+              <i className="icofont-star text-size-15 text-green"></i>
+              <i className="icofont-star text-size-15 text-green"></i>
+              <i className="icofont-star text-size-15 text-green"></i>
+              <i className="icofont-star text-size-15 text-green"></i>
               <span className="text-xs text-lightGrey6">(44)</span>
             </div>
           </div>

@@ -1,6 +1,5 @@
 "use client";
-import Image from "next/image";
-import blogImag8 from "@/assets/images/blog/blog_8.png";
+
 import { useEffect, useState } from "react";
 import CurriculumContent from "@/components/shared/course-details/CurriculumContent";
 let cid = 0;
@@ -10,7 +9,7 @@ const CourseDetailsUser = ({ id, type }) => {
 
   useEffect(() => {
     if (id) {
-      fetch(`https://readgro-backend.onrender.com/getspecific_course/${id}`)
+      fetch(`http://localhost:5000/getspecific_course/${id}`)
         .then((res) => res.json())
         .then((data) => {
           if (data) {
@@ -49,21 +48,7 @@ const CourseDetailsUser = ({ id, type }) => {
                       {course.course.name || "Making Music with Other People"}
                     </h4>
                     {/* price and rating  */}
-                    <div
-                      className="flex gap-5 flex-wrap items-center mb-30px"
-                      data-aos="fade-up"
-                    >
-                      <div className="text-start md:text-end">
-                        <i className="icofont-star text-size-15 text-yellow"></i>{" "}
-                        <i className="icofont-star text-size-15 text-yellow"></i>{" "}
-                        <i className="icofont-star text-size-15 text-yellow"></i>{" "}
-                        <i className="icofont-star text-size-15 text-yellow"></i>
-                        <i className="icofont-star text-size-15 text-yellow"></i>{" "}
-                        <span className=" text-blackColor dark:text-blackColor-dark">
-                          (44)
-                        </span>
-                      </div>
-                    </div>
+
                     <p
                       className="text-sm md:text-lg text-contentColor dark:contentColor-dark mb-25px !leading-30px uppercase"
                       data-aos="fade-up"

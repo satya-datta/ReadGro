@@ -27,7 +27,7 @@ const CourseCard2 = ({ course, card, isList, isNotSidebar }) => {
 
     {
       category: "Development",
-      bg: "bg-yellow",
+      bg: "bg-green",
     },
 
     {
@@ -47,7 +47,7 @@ const CourseCard2 = ({ course, card, isList, isNotSidebar }) => {
 
     {
       category: "Art & Design",
-      bg: "bg-yellow",
+      bg: "bg-green",
     },
     {
       category: "Personal Development",
@@ -56,7 +56,7 @@ const CourseCard2 = ({ course, card, isList, isNotSidebar }) => {
 
     {
       category: "Marketing",
-      bg: "bg-yellow",
+      bg: "bg-green",
     },
 
     {
@@ -76,7 +76,7 @@ const CourseCard2 = ({ course, card, isList, isNotSidebar }) => {
 
     {
       category: "Mobile Application",
-      bg: "bg-yellow",
+      bg: "bg-green",
     },
   ];
 
@@ -206,10 +206,10 @@ const CourseCard2 = ({ course, card, isList, isNotSidebar }) => {
                     </Link>
                   </div>
                   <div className="text-start md:text-end ml-35px">
-                    <i className="icofont-star text-size-15 text-yellow"></i>
-                    <i className="icofont-star text-size-15 text-yellow"></i>
-                    <i className="icofont-star text-size-15 text-yellow"></i>
-                    <i className="icofont-star text-size-15 text-yellow"></i>
+                    <i className="icofont-star text-size-15 text-green"></i>
+                    <i className="icofont-star text-size-15 text-green"></i>
+                    <i className="icofont-star text-size-15 text-green"></i>
+                    <i className="icofont-star text-size-15 text-green"></i>
 
                     <span className="text-xs text-lightGrey6">(44)</span>
                   </div>

@@ -28,7 +28,7 @@
     "type": "Coocking",
     "size": "M",
 
-    "color": "yellow",
+    "color": "green",
     "availability": "In stock",
     "productType": "Apparel & Accessories",
     "brand": "Amazon",
@@ -100,7 +100,7 @@
     "status": "New",
     "type": "Coocking",
     "size": "S",
-    "color": "yellow",
+    "color": "green",
     "availability": "In stock",
     "productType": "Apparel & Accessories",
     "brand": "Apple",
@@ -205,7 +205,7 @@
     "type": "Design",
     "size": "XL",
 
-    "color": "Yellow",
+    "color": "green",
     "availability": "Out of stock",
     "productType": "Apparel & Accessories",
     "brand": "Apple",
@@ -260,7 +260,7 @@
     "type": "Design",
     "size": "M",
 
-    "color": "Yellow",
+    "color": "green",
     "availability": "In stock",
     "productType": "Apparel & Accessories",
     "brand": "Amazon",
@@ -279,7 +279,7 @@
     "type": "Sports",
     "size": "M",
 
-    "color": "yellow",
+    "color": "green",
     "availability": "Out of stock",
     "productType": "Jacket",
     "brand": "Apple",
@@ -297,7 +297,7 @@
     "type": "Coocking",
     "size": "S",
 
-    "color": "yellow",
+    "color": "green",
     "availability": "Out of stock",
     "productType": "Apparel & Accessories",
     "brand": "Apple",
@@ -388,7 +388,7 @@
     "type": "Drama",
     "size": "M",
 
-    "color": "Yellow",
+    "color": "green",
     "availability": "Out of stock",
     "productType": "Apparel & Accessories",
     "brand": "Apple",
@@ -423,7 +423,7 @@
     "type": "Design",
     "size": "XL",
 
-    "color": "yellow",
+    "color": "green",
     "availability": "Out of stock",
     "productType": "Apparel & Accessories",
     "brand": "Amazon",

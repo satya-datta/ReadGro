@@ -14,7 +14,7 @@ const PackageDetailsPrimary = ({ type, id }) => {
   useEffect(() => {
     if (!id) return;
 
-    fetch(`https://readgro-backend.onrender.com/getpackage/${id}`)
+    fetch(`http://localhost:5000/getpackage/${id}`)
       .then((res) => res.json())
       .then((data) => {
         if (data) {
@@ -69,19 +69,40 @@ const PackageDetailsPrimary = ({ type, id }) => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
             {type === 3 && packageDetails?.package_image && (
               <img
-                src={`https://readgro-backend.onrender.com/uploads/${packageDetails.package_image}`}
+                src={`http://localhost:5000/uploads/${packageDetails.package_image}`}
                 alt={packageDetails.package_name}
                 className="w-full h-[450px] object-cover rounded-md"
               />
             )}
             <div className="py-5 px-6 shadow-lg bg-white dark:bg-gray-800 rounded-md">
+              {/* Package Name */}
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                {packageDetails?.package_name}
+              </h2>
+
+              {/* Package Description */}
+              <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                {packageDetails?.description}
+              </p>
+
+              {/* Referral Code (if exists) */}
+              <div className="mb-4 bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 p-3 rounded-md">
+                <p className="font-semibold">
+                  🔥 Buy this course for{" "}
+                  <span className="text-green-600">
+                    ₹{packageDetails.discount_price}
+                  </span>{" "}
+                  by using the referral code
+                </p>
+              </div>
+
               {/* Show price & discount only if user is not logged in */}
               {!isUserLoggedIn && (
                 <div className="flex justify-between items-center mb-5">
                   <div className="text-xl font-bold text-primaryColor">
                     ₹{packageDetails?.package_price}
                     <del className="text-sm text-gray-400 ml-2">
-                      /{(packageDetails?.package_price / (1 - 0.68)).toFixed(2)}
+                      ₹{(packageDetails?.package_price / (1 - 0.68)).toFixed(2)}
                     </del>
                   </div>
                   <span className="text-sm font-semibold text-red-500 bg-gray-100 px-2 rounded">
@@ -89,6 +110,7 @@ const PackageDetailsPrimary = ({ type, id }) => {
                   </span>
                 </div>
               )}
+
               {/* Buy Now or Explore Button */}
               <button
                 className="w-full text-lg text-white bg-secondaryColor px-6 py-3 rounded hover:bg-secondaryColor-dark"

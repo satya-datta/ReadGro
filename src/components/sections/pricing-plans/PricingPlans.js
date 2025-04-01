@@ -11,7 +11,7 @@ const PackageWeb = () => {
   const router = useRouter();
 
   useEffect(() => {
-    fetch("https://readgro-backend.onrender.com/getallpackages")
+    fetch("http://localhost:5000/getallpackages")
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
@@ -30,7 +30,7 @@ const PackageWeb = () => {
   }, []);
 
   const fetchCourseCount = (packageId) => {
-    fetch(`https://readgro-backend.onrender.com/getcoursemappings/${packageId}`)
+    fetch(`http://localhost:5000/getcoursemappings/${packageId}`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
@@ -51,7 +51,7 @@ const PackageWeb = () => {
   };
 
   const fetchPreviousPackage = (packageId) => {
-    fetch(`https://readgro-backend.onrender.com/getpackage/${packageId - 1}`)
+    fetch(`http://localhost:5000/getpackage/${packageId - 1}`)
       .then((res) => res.json())
       .then((data) => {
         setPreviousPackages((prev) => ({
@@ -81,7 +81,7 @@ const PackageWeb = () => {
               <img
                 src={
                   pkg.package_image
-                    ? `https://readgro-backend.onrender.com/uploads/${pkg.package_image}`
+                    ? `http://localhost:5000/uploads/${pkg.package_image}`
                     : freeImage
                 }
                 alt={pkg.package_name}
@@ -95,7 +95,7 @@ const PackageWeb = () => {
 
                 <div className="flex justify-between items-center text-gray-600 text-sm mb-2">
                   <span className="flex items-center gap-1 ml-3">
-                    <FaBook size={18} className="text-yellow-500" />
+                    <FaBook size={18} className="text-green-500" />
                     {courseCounts[pkg.package_id] || "Loading..."} Courses
                   </span>
                   <p className="text-lg font-bold text-black mr-8">

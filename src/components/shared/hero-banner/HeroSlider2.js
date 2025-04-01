@@ -23,8 +23,8 @@ const HeroSlider2 = () => {
     {
       title: (
         <>
-          Degree that’s right for your <br />
-          Bright future
+          ReadGro - Read And <br />
+          Grow Yourself
         </>
       ),
       tag: "Career Solution",
@@ -32,11 +32,11 @@ const HeroSlider2 = () => {
     {
       title: (
         <>
-          Let’s build your awesome <br />
-          Degree with Edurock
+          Let’s build your Career <br />
+          with ReadGro
         </>
       ),
-      tag: "Certificate Solution",
+      
     },
   ];
 
@@ -56,7 +56,6 @@ const HeroSlider2 = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-      
     </>
   );
 };

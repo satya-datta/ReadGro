@@ -38,7 +38,7 @@ const PricingPlan = ({ plan }) => {
                 ) : (
                   <i className="icofont-close text-whiteColor bg-lightGrey6 px-1 py-3px mr-15px rounded-full text-xs"></i>
                 )}
-                <span className="text-lg text-deepyellow font-medium dark:text-deepyellow-dark">
+                <span className="text-lg text-deepgreen font-medium dark:text-deepgreen-dark">
                   {name}
                 </span>
               </li>

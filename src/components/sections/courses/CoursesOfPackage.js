@@ -1,18 +1,18 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { BookOpen } from "lucide-react";
+
 import { FaStar } from "react-icons/fa";
 
 const CoursesOfPackage = ({ id }) => {
   const [courseIds, setCourseIds] = useState([]); // Stores course IDs
   const [courses, setCourses] = useState([]); // Stores course details
-  const [topicsCount, setTopicsCount] = useState({});
+  // const [topicsCount, setTopicsCount] = useState({});
   const router = useRouter();
 
   // Fetch course IDs mapped to the package
   useEffect(() => {
-    fetch(`https://readgro-backend.onrender.com/getcoursemappings/${id}`)
+    fetch(`http://localhost:5000/getcoursemappings/${id}`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
@@ -33,7 +33,7 @@ const CoursesOfPackage = ({ id }) => {
 
     console.log("Course IDs being sent to the API:", courseIds);
 
-    fetch("https://readgro-backend.onrender.com/getcoursedetails", {
+    fetch("http://localhost:5000/getcoursedetails", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -69,7 +69,7 @@ const CoursesOfPackage = ({ id }) => {
             >
               {/* Category Label */}
               {/* {course.id && (
-                <span className="absolute top-2 left-2 bg-yellow-500 text-white px-3 py-1 text-xs rounded">
+                <span className="absolute top-2 left-2 bg-green-500 text-white px-3 py-1 text-xs rounded">
                   {course.id}
                 </span>
               )} */}
@@ -77,7 +77,7 @@ const CoursesOfPackage = ({ id }) => {
               {/* Course Image */}
               {course.image && (
                 <img
-                  src={`https://readgro-backend.onrender.com/uploads/${course.image}`}
+                  src={`http://localhost:5000/uploads/${course.image}`}
                   alt={course.course_name}
                   className="w-full h-48 object-cover rounded-lg"
                 />

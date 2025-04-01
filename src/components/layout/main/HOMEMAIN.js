@@ -1,29 +1,26 @@
+import Faq from "@/components/sections/faq/Faq";
+import Counter2 from "@/components/sections/sub-section/Counter2";
 import React, { Suspense } from "react";
 
 // Lazy load components
 const Hero7 = React.lazy(() =>
   import("@/components/sections/hero-banners/Hero7")
 );
-const About1 = React.lazy(() => import("@/components/sections/abouts/About1"));
-// const PopularSubjects = React.lazy(() =>
-//   import("@/components/sections/popular-subjects/PopularSubjects")
-// );
+const About11 = React.lazy(() =>
+  import("@/components/sections/abouts/About11")
+);
+
 const CoursesFilter = React.lazy(() =>
   import("@/components/sections/courses/CoursesFilter")
 );
-const Registration = React.lazy(() =>
-  import("@/components/sections/registrations/Registration")
-);
+
 const PricingPlans = React.lazy(() =>
   import("@/components/sections/pricing-plans/PricingPlans")
 );
-const Instructors = React.lazy(() =>
-  import("@/components/sections/instructors/Instructors")
-);
+
 const Testimonials = React.lazy(() =>
   import("@/components/sections/testimonials/Testimonials")
 );
-const Blogs = React.lazy(() => import("@/components/sections/blogs/Blogs"));
 
 const HOMEMAIN = () => {
   return (
@@ -35,19 +32,15 @@ const HOMEMAIN = () => {
       </Suspense>
 
       <Suspense fallback={<div>Loading About Section...</div>}>
-        <About1 />
+        <About11 />
       </Suspense>
-      {/* 
-      <Suspense fallback={<div>Loading Popular Subjects...</div>}>
-        <PopularSubjects />
-      </Suspense> */}
+
+      <Suspense fallback={<div>Loading Counter2...</div>}>
+        <Counter2 type="lg" />
+      </Suspense>
 
       <Suspense fallback={<div>Loading Courses...</div>}>
         <CoursesFilter />
-      </Suspense>
-
-      <Suspense fallback={<div>Loading Registration Section...</div>}>
-        <Registration />
       </Suspense>
 
       <Suspense fallback={<div>Loading Pricing Plans...</div>}>
@@ -56,14 +49,11 @@ const HOMEMAIN = () => {
       <Suspense fallback={<div>Loading Testimonials...</div>}>
         <Testimonials />
       </Suspense>
-
-      {/* <Suspense fallback={<div>Loading Instructors...</div>}>
-        <Instructors />
+      <Suspense fallback={<div>Loading Counter2...</div>}>
+        <Faq />
       </Suspense>
 
-      <Suspense fallback={<div>Loading Blogs...</div>}>
-        <Blogs />
-      </Suspense> */}
+   
     </>
   );
 };
