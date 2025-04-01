@@ -8,7 +8,7 @@ const nextConfig = {
     port: process.env.PORT || 10000,
     host: "0.0.0.0", // Required for Render
   },
-  output: "standalone",
+  output: "export",
 };
 
 export default nextConfig;
