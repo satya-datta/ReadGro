@@ -1,3 +1,5 @@
+import { NextResponse } from "next/server";
+
 export function middleware(req) {
   const cookieHeader = req.headers.get("cookie"); // Get cookies from headers
   let token = null;
