@@ -1,40 +1,26 @@
-import { NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
+export function middleware(req) {
+  const cookieHeader = req.headers.get("cookie"); // Get cookies from headers
+  let token = null;
 
-const JWT_SECRET = process.env.JWT_SECRET; // Ensure this is correctly set in your environment variables
+  if (cookieHeader) {
+    const cookies = cookieHeader.split("; "); // Split cookies by "; "
+    const tokenCookie = cookies.find((row) => row.startsWith("adminToken="));
 
-export async function middleware(req) {
-  const token = req.cookies.get("adminToken")?.value; // Correctly read the token
-  const url = req.nextUrl.pathname;
-  console.log("admintoken", token);
-  console.log("Middleware Token:", token);
+    if (tokenCookie) {
+      token = tokenCookie.split("=")[1]; // Extract token value
+    }
+  }
 
-  // Allow access to the login page without authentication
+  console.log("Extracted admin token:", token);
+  const url = req.url;
+
   if (url.includes("/admin/Gnaneswar/login")) {
     return NextResponse.next();
   }
 
-  // Redirect if no token is found
-  if (!token) {
-    console.log("No token found. Redirecting to login.");
+  if (!token && url.includes("/admin/Gnaneswar")) {
     return NextResponse.redirect(new URL("/admin/Gnaneswar/login", req.url));
   }
 
-  try {
-    // Verify the token
-    const decoded = jwt.verify(token, JWT_SECRET);
-    console.log("Token verified successfully:", decoded);
-
-    // If token is valid, allow access
-    return NextResponse.next();
-  } catch (error) {
-    console.error("Token verification failed:", error);
-
-    // If the token is invalid or expired, redirect to login
-    return NextResponse.redirect(new URL("/admin/Gnaneswar/login", req.url));
-  }
+  return NextResponse.next();
 }
-
-export const config = {
-  matcher: ["/admin/Gnaneswar/:path*"],
-};
