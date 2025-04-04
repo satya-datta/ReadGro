@@ -8,14 +8,23 @@ export async function middleware(req) {
     return NextResponse.next();
   }
 
+  // Get cookies from the request
+  const cookieHeader = req.cookies
+    .getAll()
+    .map((cookie) => `${cookie.name}=${cookie.value}`)
+    .join("; ");
+
   // Call backend to validate token
-  const response = await fetch("https://readgro-backend.onrender.com/auth/validate", {
-    method: "GET",
-    headers: {
-      cookie: req.headers.get("cookie") || "", // forward cookies manually
-    },
-    credentials: "include",
-  });
+  const response = await fetch(
+    "https://readgro-backend.onrender.com/auth/validate",
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cookieHeader, // Manually forward cookies
+      },
+    }
+  );
 
   // If token is invalid, redirect to login
   if (!response.ok) {
