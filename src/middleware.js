@@ -8,17 +8,28 @@ export async function middleware(req) {
     return NextResponse.next();
   }
 
-  // Get token from cookies
-  const token = req.cookies.get("adminToken")?.value;
+  // NEW: Proper cookie extraction
+  const cookieHeader = req.headers.get("cookie") || "";
+  const cookies = Object.fromEntries(
+    cookieHeader.split("; ").map((c) => c.split("="))
+  );
+  const token = cookies.adminToken;
 
-  // Call backend with Authorization header
+  console.log("Extracted token:", token); // Debug log
+
+  if (!token) {
+    console.log("No token found, redirecting to login");
+    return NextResponse.redirect(new URL("/admin/Gnaneswar/login", req.url));
+  }
+
+  // Call backend
   const response = await fetch(
     "https://readgro-backend.onrender.com/auth/validate",
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // Send token in Authorization header
+        Cookie: `adminToken=${token}`, // Manually forward cookie
       },
     }
   );
