@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 
 export async function middleware(req) {
   const url = req.nextUrl.clone();
+  
+  
+  console.log("Incoming cookies:", req.cookies.getAll());
 
   // Allow access to login page without validation
   if (url.pathname.includes("/admin/Gnaneswar/login")) {
@@ -15,17 +18,13 @@ export async function middleware(req) {
     .join("; ");
 
   // Call backend to validate token
-  const response = await fetch(
-    "https://readgro-backend.onrender.com/auth/validate",
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Cookie: cookieHeader, // Manually forward cookies
-      },
-    }
-  );
-
+ // In your middleware fetch call, ensure you're sending cookies correctly:
+const response = await fetch("https://readgro-backend.onrender.com/auth/validate", {
+  headers: {
+    "Content-Type": "application/json",
+    "Cookie": `adminToken=${req.cookies.get('adminToken')?.value}`
+  }
+});
   // If token is invalid, redirect to login
   if (!response.ok) {
     console.log("Admin token invalid or expired");
