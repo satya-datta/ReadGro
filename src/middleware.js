@@ -1,28 +1,32 @@
 import { NextResponse } from "next/server";
 
-export function middleware(req) {
-  const cookieHeader = req.headers.get("cookie"); // Get cookies from headers
-  let token = null;
+export async function middleware(req) {
+  const url = req.nextUrl.clone();
 
-  if (cookieHeader) {
-    const cookies = cookieHeader.split("; "); // Split cookies by "; "
-    const tokenCookie = cookies.find((row) => row.startsWith("adminToken="));
-
-    if (tokenCookie) {
-      token = tokenCookie.split("=")[1]; // Extract token value
-    }
-  }
-
-  console.log("Extracted admin token:", token);
-  const url = req.url;
-
-  if (url.includes("/admin/Gnaneswar/login")) {
+  // Allow access to login page without validation
+  if (url.pathname.includes("/admin/Gnaneswar/login")) {
     return NextResponse.next();
   }
 
-  if (!token && url.includes("/admin/Gnaneswar")) {
+  // Call backend to validate token
+  const response = await fetch("https://readgro-backend.onrender.com/auth/validate", {
+    method: "GET",
+    headers: {
+      cookie: req.headers.get("cookie") || "", // forward cookies manually
+    },
+    credentials: "include",
+  });
+
+  // If token is invalid, redirect to login
+  if (!response.ok) {
+    console.log("Admin token invalid or expired");
     return NextResponse.redirect(new URL("/admin/Gnaneswar/login", req.url));
   }
 
+  // Token is valid — continue
   return NextResponse.next();
 }
+
+export const config = {
+  matcher: ["/admin/Gnaneswar/:path*"],
+};
