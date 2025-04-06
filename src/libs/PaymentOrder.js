@@ -1,11 +1,14 @@
 export const createOrder = async (priceDifference) => {
   try {
     console.log(priceDifference);
-    const response = await fetch("http://localhost:5000/create-order", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ currency: "INR", amount: priceDifference }),
-    });
+    const response = await fetch(
+      "https://readgro-backend.onrender.com/create-order",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ currency: "INR", amount: priceDifference }),
+      }
+    );
 
     const data = await response.json();
     console.log("Create Order Response:", data);
@@ -23,10 +26,13 @@ export const createOrder = async (priceDifference) => {
   }
 };
 export const validatePayment = async (paymentData) => {
-  const response = await fetch("http://localhost:5000/order/validate", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(paymentData),
-  });
+  const response = await fetch(
+    "https://readgro-backend.onrender.com/order/validate",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(paymentData),
+    }
+  );
   return response.json();
 };

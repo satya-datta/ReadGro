@@ -23,7 +23,7 @@ const UserAffiliateForm = () => {
   const fetchReferralCode = async (userId) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/getuser_details/${userId}`,
+        `https://readgro-backend.onrender.com/getuser_details/${userId}`,
         {
           method: "GET",
           credentials: "include",
@@ -36,7 +36,7 @@ const UserAffiliateForm = () => {
         if (data.user.generatedReferralCode) {
           setReferralCode(data.user.generatedReferralCode);
           setReferralLink(
-            `http://localhost:5000?referralcode=${data.user.generatedReferralCode}`
+            `https://readgro-backend.onrender.com?referralcode=${data.user.generatedReferralCode}`
           );
         }
       } else {

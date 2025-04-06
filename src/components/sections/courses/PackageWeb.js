@@ -9,7 +9,7 @@ const PackageWeb = () => {
   const [courseCounts, setCourseCounts] = useState({});
   const router = useRouter();
   useEffect(() => {
-    fetch("http://localhost:5000/getallpackages")
+    fetch("https://readgro-backend.onrender.com/getallpackages")
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -29,7 +29,7 @@ const PackageWeb = () => {
   }, []);
 
   const fetchCourseCount = (packageId) => {
-    fetch(`http://localhost:5000/getcoursemappings/${packageId}`)
+    fetch(`https://readgro-backend.onrender.com/getcoursemappings/${packageId}`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
@@ -65,7 +65,7 @@ const PackageWeb = () => {
               {/* Package Image */}
               {pkg.package_image && (
                 <img
-                  src={`http://localhost:5000/uploads/${pkg.package_image}`}
+                  src={`https://readgro-backend.onrender.com/uploads/${pkg.package_image}`}
                   alt={pkg.package_name}
                   className="w-full h-48 object-cover rounded-lg"
                 />

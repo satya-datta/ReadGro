@@ -28,7 +28,7 @@ const PasswordContentUser = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/updatepassword/${user.userId}`,
+        `https://readgro-backend.onrender.com/updatepassword/${user.userId}`,
         {
           method: "POST",
           headers: {
