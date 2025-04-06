@@ -19,7 +19,7 @@ const AdminEditPackageMain = ({ package_id }) => {
     const fetchPackageDetails = async () => {
       try {
         const response = await fetch(
-          `https://readgro-backend.onrender.com/getpackage/${package_id}`
+          `http://localhost:5000/getpackage/${package_id}`
         );
         const data = await response.json();
 
@@ -40,7 +40,7 @@ const AdminEditPackageMain = ({ package_id }) => {
     const fetchMappedCourses = async () => {
       try {
         const response = await fetch(
-          `https://readgro-backend.onrender.com/getcoursemappings/${package_id}`
+          `http://localhost:5000/getcoursemappings/${package_id}`
         );
         const data = await response.json();
         if (Array.isArray(data)) {
@@ -55,9 +55,7 @@ const AdminEditPackageMain = ({ package_id }) => {
     };
 
     const fetchAllCourses = async () => {
-      const response = await fetch(
-        `https://readgro-backend.onrender.com/getallcourses`
-      );
+      const response = await fetch(`http://localhost:5000/getallcourses`);
       const data = await response.json();
       console.log(data);
       if (Array.isArray(data.courses)) {
@@ -72,7 +70,7 @@ const AdminEditPackageMain = ({ package_id }) => {
   useEffect(() => {
     if (courseIds.length === 0) return;
 
-    fetch("https://readgro-backend.onrender.com/getcoursedetails", {
+    fetch("http://localhost:5000/getcoursedetails", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -154,7 +152,7 @@ const AdminEditPackageMain = ({ package_id }) => {
       }
 
       const response = await fetch(
-        `https://readgro-backend.onrender.com/edit_package/${package_id}`,
+        `http://localhost:5000/edit_package/${package_id}`,
         {
           method: "PUT",
           body: formData,
@@ -194,7 +192,7 @@ const AdminEditPackageMain = ({ package_id }) => {
     try {
       if (removedCourses.length > 0) {
         const removeResponse = await fetch(
-          `https://readgro-backend.onrender.com/remove_courses/${package_id}`,
+          `http://localhost:5000/remove_courses/${package_id}`,
           {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
@@ -207,17 +205,14 @@ const AdminEditPackageMain = ({ package_id }) => {
       }
 
       if (addedCourses.length > 0) {
-        const addResponse = await fetch(
-          "https://readgro-backend.onrender.com/add_courses",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              packageId: package_id,
-              courses: addedCourses,
-            }),
-          }
-        );
+        const addResponse = await fetch("http://localhost:5000/add_courses", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            packageId: package_id,
+            courses: addedCourses,
+          }),
+        });
 
         const addData = await addResponse.json();
         console.log("Add Courses Response:", addData);

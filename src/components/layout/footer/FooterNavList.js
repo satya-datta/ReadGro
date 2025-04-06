@@ -9,9 +9,7 @@ const FooterNavList = () => {
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const response = await fetch(
-          "https://readgro-backend.onrender.com/getallpackages"
-        );
+        const response = await fetch("http://localhost:5000/getallpackages");
         const data = await response.json();
 
         // Assuming each item has a "name" field

@@ -10,7 +10,7 @@ const CourseDetailsPrimary = ({ id, type }) => {
 
   useEffect(() => {
     if (id) {
-      fetch(`https://readgro-backend.onrender.com/getspecific_course/${id}`)
+      fetch(`http://localhost:5000/getspecific_course/${id}`)
         .then((res) => res.json())
         .then((data) => {
           if (data) {
@@ -42,7 +42,7 @@ const CourseDetailsPrimary = ({ id, type }) => {
               ) : (
                 <div className="overflow-hidden relative mb-5">
                   <img
-                    src={`https://readgro-backend.onrender.com/uploads/${course.course.image}`}
+                    src={`http://localhost:5000/uploads/${course.course.image}`}
                     alt="Course Thumbnail"
                     className="w-full h-auto object-cover"
                   />

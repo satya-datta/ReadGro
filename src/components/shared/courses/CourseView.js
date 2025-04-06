@@ -14,7 +14,7 @@ const CourseView = ({ course }) => {
       {/* Course Image */}
       {course.image && (
         <img
-          src={`https://readgro-backend.onrender.com/uploads/${course.image}`}
+          src={`http://localhost:5000/uploads/${course.image}`}
           alt={course.course_name}
           className="w-full h-48 object-cover rounded-lg"
         />

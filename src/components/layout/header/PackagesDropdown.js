@@ -4,9 +4,7 @@ import DropdownPrimary from "./DropdownPrimary";
 // Function to fetch packages
 export const fetchPackages = async () => {
   try {
-    const response = await fetch(
-      "https://readgro-backend.onrender.com/getallpackages"
-    );
+    const response = await fetch("http://localhost:5000/getallpackages");
     if (!response.ok) {
       throw new Error("Failed to fetch packages");
     }

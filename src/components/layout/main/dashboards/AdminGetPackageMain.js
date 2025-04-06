@@ -8,9 +8,7 @@ const AdminGetPackages = () => {
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const response = await fetch(
-          "https://readgro-backend.onrender.com/getallpackages"
-        );
+        const response = await fetch("http://localhost:5000/getallpackages");
         const data = await response.json();
         console.log(data);
         if (response.ok) {
@@ -49,7 +47,7 @@ const AdminGetPackages = () => {
                 <td className="px-5 py-2">{pkg.commission || "N/A"}</td>
                 <td className="px-5 py-2 flex space-x-3">
                   <Link
-                    href={`http://localhost:3000/admin/Gnaneswar/admin-package/editpackage/${pkg.package_id}`}
+                    href={`http://localhost:5000/admin/Gnaneswar/admin-package/editpackage/${pkg.package_id}`}
                   >
                     <button className="text-green-500 hover:underline">
                       Edit

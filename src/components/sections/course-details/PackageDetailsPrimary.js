@@ -14,7 +14,7 @@ const PackageDetailsPrimary = ({ type, id }) => {
   useEffect(() => {
     if (!id) return;
 
-    fetch(`https://readgro-backend.onrender.com/getpackage/${id}`)
+    fetch(`http://localhost:5000/getpackage/${id}`)
       .then((res) => res.json())
       .then((data) => {
         if (data) {
@@ -69,7 +69,7 @@ const PackageDetailsPrimary = ({ type, id }) => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
             {type === 3 && packageDetails?.package_image && (
               <img
-                src={`https://readgro-backend.onrender.com/uploads/${packageDetails.package_image}`}
+                src={`http://localhost:5000/uploads/${packageDetails.package_image}`}
                 alt={packageDetails.package_name}
                 className="w-full h-[450px] object-cover rounded-md"
               />
