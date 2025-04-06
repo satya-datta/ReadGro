@@ -1,9 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FooterNavItems from "./FooterNavItems";
 import FooterAbout from "./FooterAbout";
 import FooterRecentPosts from "./FooterRecentPosts";
 
 const FooterNavList = () => {
+  const [packages, setPackages] = useState([]);
+
+  useEffect(() => {
+    const fetchPackages = async () => {
+      try {
+        const response = await fetch(
+          "https://readgro-backend.onrender.com/getallpackages"
+        );
+        const data = await response.json();
+
+        // Assuming each item has a "name" field
+        const formatted = data.map((pkg) => ({
+          name: pkg.package_name,
+          path: `/packages/${pkg.package_id}`, // Customize path if needed
+        }));
+
+        setPackages(formatted);
+      } catch (error) {
+        console.error("Failed to fetch packages:", error);
+      }
+    };
+
+    fetchPackages();
+  }, []);
+
   const lists = [
     {
       heading: "Usefull Links",
@@ -13,47 +38,34 @@ const FooterNavList = () => {
           path: "/about",
         },
         {
-          name: "Teachers",
-          path: "/instructors",
+          name: "Courses",
+          path: "/courses",
         },
         {
-          name: "Partner",
-          path: "#",
+          name: "Select Plan & Register",
+          path: "/packages",
         },
         {
-          name: "Room-Details",
-          path: "#",
+          name: "User Login",
+          path: "/user/login",
         },
         {
-          name: "Gallery",
-          path: "#",
+          name: "Contact Us",
+          path: "/contact",
         },
       ],
     },
     {
-      heading: "Course",
-      items: [
-        {
-          name: "Ui Ux Design",
-          path: "#",
-        },
-        {
-          name: "Web Development",
-          path: "#",
-        },
-        {
-          name: "Business Strategy",
-          path: "#",
-        },
-        {
-          name: "Softwere Development",
-          path: "#",
-        },
-        {
-          name: "Business English",
-          path: "#",
-        },
-      ],
+      heading: "Plans",
+      items:
+        packages.length > 0
+          ? packages
+          : [
+              {
+                name: "Loading...",
+                path: "#",
+              },
+            ],
     },
   ];
 
@@ -69,7 +81,7 @@ const FooterNavList = () => {
         ))}
 
         {/* right */}
-        <FooterRecentPosts />
+        {/* <FooterRecentPosts /> */}
       </div>
     </section>
   );
