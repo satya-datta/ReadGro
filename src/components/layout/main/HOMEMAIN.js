@@ -52,8 +52,6 @@ const HOMEMAIN = () => {
       <Suspense fallback={<div>Loading Counter2...</div>}>
         <Faq />
       </Suspense>
-
-   
     </>
   );
 };

@@ -33,8 +33,18 @@ const UserContextProvider = ({ children }) => {
     validateAuthToken()
       .then(({ isValid, user }) => {
         if (isValid) {
-          setUser(user);
+          const avatarUrl = user?.avatar
+            ? `https://readgro-backend.onrender.com/uploads/${user.avatar}`
+            : null;
+
+          const enrichedUser = {
+            ...user,
+            avatarUrl,
+          };
+
+          setUser(enrichedUser);
           setIsUserAuthenticated(true);
+          console.log(enrichedUser);
 
           if (window.location.pathname === "/user/login") {
             router.push("/user/user-dashboard");
@@ -51,6 +61,7 @@ const UserContextProvider = ({ children }) => {
           }
         }
       })
+
       .catch(() => {
         setIsUserAuthenticated(false);
         setUser(null);

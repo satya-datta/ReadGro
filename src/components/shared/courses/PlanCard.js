@@ -189,14 +189,21 @@ const PlanCard = ({ package_id, userCurrentPackage }) => {
     }
   };
 
-  const headerColors = [
-    "bg-red-600",
-    "bg-green",
-    "bg-green-600",
-    "bg-purple-600",
-    "bg-green-500",
+  const headerGradients = [
+    "bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500",
+
+    "bg-gradient-to-r from-purple-500 via-purple-600 to-indigo-500",
+    "bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-600",
+    "bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500",
+    "bg-gradient-to-r from-teal-400 via-cyan-500 to-blue-500",
+    "bg-gradient-to-r from-rose-400 via-red-500 to-pink-500",
+    "bg-gradient-to-r from-emerald-400 via-emerald-500 to-teal-500",
+    "bg-gradient-to-r from-indigo-400 via-indigo-500 to-purple-600",
+    "bg-gradient-to-r from-orange-400 via-red-500 to-pink-600",
   ];
-  const headerColor = headerColors[package_id % headerColors.length];
+
+  // Example to pick gradient based on package_id
+  const headerColor = headerGradients[package_id % headerGradients.length];
 
   return (
     <div className="w-80 bg-white rounded-lg shadow-md overflow-hidden border flex flex-col mb-4">

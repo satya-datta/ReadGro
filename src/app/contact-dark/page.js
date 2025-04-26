@@ -12,7 +12,6 @@ const Contact_Dark = async () => {
     <PageWrapper>
       <main className="is-dark">
         <ContactMain />
-        <ThemeController />
       </main>
     </PageWrapper>
   );

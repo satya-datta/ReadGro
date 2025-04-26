@@ -19,7 +19,6 @@ const Admin_Quiz_Attempts = () => {
             <AdminPayments />
           </DashboardContainer>
         </DsahboardWrapper>
-        <ThemeController />
       </main>
     </PageWrapper>
   );

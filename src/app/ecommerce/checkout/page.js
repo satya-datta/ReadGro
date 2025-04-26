@@ -15,7 +15,6 @@ const Checkout = () => {
     <PageWrapper>
       <main>
         <CheckoutMain packageId={packageId} />
-        <ThemeController />
       </main>
     </PageWrapper>
   );

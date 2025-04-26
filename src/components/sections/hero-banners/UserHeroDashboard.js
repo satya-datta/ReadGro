@@ -1,44 +1,25 @@
 "use client";
 import dashboardImage2 from "@/assets/images/dashbord/dashbord__2.jpg";
-import Image from "next/image";
+import NextImage from "next/image";
 import { useState, useEffect } from "react";
 import { useUserContext } from "@/contexts/UserContext";
 
 const UserHeroDashboard = () => {
   const [showLogoutPopup, setShowLogoutPopup] = useState(false);
-  const { user, isUserAuthenticated } = useUserContext();
-  const [userImage, setUserImage] = useState(dashboardImage2); // Default profile image
+  const { user } = useUserContext();
+  const [loadedImageUrl, setLoadedImageUrl] = useState(null);
 
   useEffect(() => {
-    console.log(user?.userId);
-    if (user?.userId) {
-      fetchUserImage(user?.userId);
-    }
-  }, [user?.userId]);
-  const fetchUserImage = async (userId) => {
-    try {
-      const response = await fetch(
-        `https://readgro-backend.onrender.com/getuser_details/${userId}`,
-        {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+    if (user?.avatar) {
+      const fullImageUrl = `https://readgro-backend.onrender.com/uploads/${user.avatar}`;
 
-      if (response.ok) {
-        const data = await response.json();
-
-        setUserImage(data.user.avatar);
-      } else {
-        console.error("Failed to fetch user image");
-      }
-    } catch (error) {
-      console.error("Error fetching user image:", error);
+      // Preload image
+      const img = new window.Image();
+      img.src = fullImageUrl;
+      img.onload = () => setLoadedImageUrl(fullImageUrl);
+      img.onerror = () => setLoadedImageUrl(null); // fallback in case of failure
     }
-  };
+  }, [user?.avatar]);
 
   const handleLogout = async () => {
     try {
@@ -51,10 +32,7 @@ const UserHeroDashboard = () => {
       );
 
       if (response.ok) {
-        console.log("Logout successful");
-        window.location.href = "/"; // Redirect to the login page
-      } else {
-        console.error("Failed to logout");
+        window.location.href = "/";
       }
     } catch (err) {
       console.error("Error during logout:", err);
@@ -65,63 +43,61 @@ const UserHeroDashboard = () => {
 
   return (
     <section>
-      <div className="container-fluid-2">
-        <div className="bg-primaryColor p-5 md:p-10 rounded-5 flex justify-center md:justify-between items-center flex-wrap gap-2">
-          <div className="flex items-center flex-wrap justify-center sm:justify-start">
-            <div className="mr-10px lg:mr-5">
-              {userImage ? (
+      <div className="container-fluid-2 relative">
+        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-green-400 via-emerald-400 to-green-400 opacity-20 blur-3xl"></div>
+
+        <div className="relative bg-gradient-to-r from-green-500 to-emerald-500 bg-opacity-60 backdrop-blur-xl p-8 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl overflow-hidden">
+          <div className="flex items-center gap-6">
+            <div className="flex-shrink-0">
+              {loadedImageUrl ? (
                 <img
-                  src={`https://readgro-backend.onrender.com/uploads/${userImage}`}
+                  src={loadedImageUrl}
                   alt="User Profile"
-                  width={100}
-                  height={100}
-                  className="w-27 h-27 md:w-22 md:h-22 lg:w-27 lg:h-27 rounded-full p-1 border-2 border-darkdeep7 box-content"
+                  className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg"
                 />
               ) : (
-                <Image
+                <NextImage
                   src={dashboardImage2}
                   alt="Default Profile"
                   width={100}
                   height={100}
-                  className="w-27 h-27 md:w-22 md:h-22 lg:w-27 lg:h-27 rounded-full p-1 border-2 border-darkdeep7 box-content"
+                  className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg"
                 />
               )}
             </div>
-
-            <div className="text-whiteColor font-bold text-center sm:text-start">
-              <h5 className="text-xl leading-1.2 mb-5px">HELLO</h5>
-              <h2 className="text-2xl leading-1.24">
+            <div className="text-green-100">
+              <h5 className="text-lg font-semibold">HELLO</h5>
+              <h2 className="text-3xl font-bold">
                 {user?.name?.toUpperCase()}
               </h2>
             </div>
           </div>
-          <div>
-            <button
-              onClick={() => setShowLogoutPopup(true)}
-              className="text-size-15 border text-whiteColor bg-primaryColor border-whiteColor hover:text-primaryColor px-25px py-10px hover:bg-whiteColor rounded group text-nowrap flex gap-1 items-center"
-            >
-              Logout
-            </button>
-          </div>
+          <button
+            onClick={() => setShowLogoutPopup(true)}
+            className="px-6 py-2 bg-white text-green-600 font-semibold rounded-full shadow hover:bg-green-100 transition"
+          >
+            Logout
+          </button>
         </div>
       </div>
 
-      {/* Logout Confirmation Popup */}
       {showLogoutPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-5 rounded shadow-lg w-96 text-center">
+          <div className="bg-white p-6 rounded-xl shadow-xl w-80 text-center">
             <h3 className="text-lg font-bold mb-4">Confirm Logout</h3>
-            <p className="mb-4">Are you sure you want to logout?</p>
+            <p className="mb-4 text-gray-600">
+              Are you sure you want to logout?
+            </p>
             <div className="flex justify-center gap-4">
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
               >
                 Logout
               </button>
               <button
                 onClick={() => setShowLogoutPopup(false)}
-                className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 transition"
               >
                 Cancel
               </button>

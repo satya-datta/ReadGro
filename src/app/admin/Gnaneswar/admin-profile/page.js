@@ -1,4 +1,3 @@
-
 import DashboardContainer from "@/components/shared/containers/DashboardContainer";
 
 import ThemeController from "@/components/shared/others/ThemeController";
@@ -13,11 +12,8 @@ const Admin_Profile = () => {
     <PageWrapper>
       <main>
         <DsahboardWrapper>
-          <DashboardContainer>
-            {/* <AdminProfileMain /> */}
-          </DashboardContainer>
+          <DashboardContainer>{/* <AdminProfileMain /> */}</DashboardContainer>
         </DsahboardWrapper>
-        <ThemeController />
       </main>
     </PageWrapper>
   );

@@ -82,7 +82,7 @@ const StudentEnrolledCourses = () => {
         <div>
           {tabbuttons.map(({ content }, idx) => (
             <TabContentWrapper key={idx} isShow={idx === currentIdx}>
-              <div className="grid grid-cols-1 sm:grid-cols-2   sm:mx-4 sm:px-6 sm:-mx-15px">
+              <div className="grid grid-cols-1 sm:grid-cols-3   sm:mx-4 sm:px-6 sm:-mx-15px">
                 {content}
               </div>
             </TabContentWrapper>

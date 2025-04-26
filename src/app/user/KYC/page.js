@@ -11,16 +11,15 @@ export const metadata = {
 };
 const Student_Message = () => {
   return (
-    <PageWrapper>
+    <PlainWrapper>
       <main>
         <UserDashboardWrapper>
           <DashboardContainer>
             <UserKYC />
           </DashboardContainer>
         </UserDashboardWrapper>
-        <ThemeController />
       </main>
-    </PageWrapper>
+    </PlainWrapper>
   );
 };
 

@@ -13,7 +13,6 @@ const Login = () => {
     <PlainWrapper>
       <main>
         <UserLoginMain />
-        <ThemeController />
       </main>
     </PlainWrapper>
   );

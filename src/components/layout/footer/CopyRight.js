@@ -10,9 +10,9 @@ const CopyRight = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-10 lg:mt-4 items-center border-t border-darkcolor">
           <div>
             <p className="text-base text-center sm:text-start text-darkgray">
-              © 2024 Powered by{" "}
+              © 2025 Powered by{" "}
               <a href="#" className="hover:text-primaryColor">
-                Edurock
+                ReadGro
               </a>{" "}
               . All Rights Reserved.
             </p>
@@ -49,8 +49,8 @@ const CopyRight = () => {
 
           <div className="lg:col-start-4 lg:col-span-6">
             <p className="text-whiteColor">
-              Copyright © <span className="text-primaryColor">2024 </span> by
-              edurock. All Rights Reserved.
+              Copyright © <span className="text-primaryColor">2025 </span> by
+              ReadGro. All Rights Reserved.
             </p>
           </div>
 

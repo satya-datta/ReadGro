@@ -4,13 +4,12 @@ import Scrollup from "../others/Scrollup";
 import CartContextProvider from "@/contexts/CartContext";
 import WishlistContextProvider from "@/contexts/WshlistContext";
 import UserContextProvider from "@/contexts/UserContext"; // Import UserContextProvider
+import DashboardFooter from "@/components/layout/footer/DashboardFooter";
 
 const PlainWrapper = ({ children }) => {
   return (
     <UserContextProvider>
       <CartContextProvider>
-      
-
         <WishlistContextProvider>
           <div style={{ marginTop: "80px" }}>{children}</div>{" "}
           {/* Add margin-top */}
@@ -18,6 +17,7 @@ const PlainWrapper = ({ children }) => {
       </CartContextProvider>
 
       {/* footer */}
+      <DashboardFooter />
       {/* scroll up */}
       <Scrollup />
     </UserContextProvider>

@@ -16,7 +16,6 @@ const Admin_Dashboard = () => {
             <AdminDashboardMain />
           </DashboardContainer>
         </DsahboardWrapper>
-        <ThemeController />
       </main>
     </PageWrapper>
   );

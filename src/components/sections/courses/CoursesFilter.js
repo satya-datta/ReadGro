@@ -10,14 +10,9 @@ const CoursesFilter = () => {
 
         <div className="mb-5 md:mb-10">
           <div className="relative" data-aos="fade-up">
-            <div>
-              <div className="text-center">
-                <SectionName>Course-List</SectionName>
-              </div>
+            <div className="text-center">
+              <SectionName>Course-List</SectionName>
             </div>
-            <HeadingPrimary text="center">
-              Choose The Course For your Learning
-            </HeadingPrimary>
           </div>
         </div>
 

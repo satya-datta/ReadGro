@@ -14,10 +14,9 @@ const Admin_Course = () => {
       <main>
         <DsahboardWrapper>
           <DashboardContainer>
-          <AdminGetCourseMain/>  
+            <AdminGetCourseMain />
           </DashboardContainer>
         </DsahboardWrapper>
-        <ThemeController />
       </main>
     </PageWrapper>
   );

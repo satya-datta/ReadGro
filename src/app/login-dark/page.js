@@ -11,7 +11,6 @@ const Login_Dark = () => {
     <PageWrapper>
       <main className="is-dark">
         <LoginMain />
-        <ThemeController />
       </main>
     </PageWrapper>
   );

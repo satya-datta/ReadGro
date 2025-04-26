@@ -22,22 +22,32 @@ const NavbarRight = () => {
       router.push("/user/user-dashboard");
     }
   };
+  const toCamelCase = (str) => {
+    return str
+      .toLowerCase()
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
+  const loginLabel = user ? toCamelCase(user.name) : "Login";
 
   return (
     <div className="lg:col-start-10 lg:col-span-3">
       <ul className="relative nav-list flex justify-end items-center gap-4">
         {!isHome4 && !isHome4Dark && !isHome5 && !isHome5Dark && (
           <>
-            {/* Desktop Login Button (Full) */}
+            {/* Desktop Login Button */}
             <li className="hidden lg:block">
               <button
                 onClick={handleLoginClick}
                 className="text-size-12 2xl:text-size-15 text-whiteColor bg-primaryColor border-primaryColor border hover:text-primaryColor hover:bg-white px-4 py-2 rounded-md dark:hover:bg-whiteColor-dark dark:hover:text-whiteColor"
               >
-                Login <i className="icofont-user-alt-5"></i>
+                {loginLabel} <i className="icofont-user-alt-5"></i>
               </button>
             </li>
-            {/* Desktop Get Started Button (Hidden in Mobile) */}
+
+            {/* Desktop Get Started Button */}
             <li className="hidden lg:block">
               <Link
                 href="/packages"
@@ -49,13 +59,13 @@ const NavbarRight = () => {
           </>
         )}
 
-        {/* Mobile Login Icon Only */}
+        {/* Mobile Login Button */}
         <li className="block lg:hidden">
           <button
             onClick={handleLoginClick}
             className="text-size-12 2xl:text-size-15 text-whiteColor bg-primaryColor border-primaryColor border hover:text-primaryColor hover:bg-white px-4 py-2 rounded-md dark:hover:bg-whiteColor-dark dark:hover:text-whiteColor"
           >
-            Login <i className="icofont-user-alt-5"></i>
+            {loginLabel} <i className="icofont-user-alt-5"></i>
           </button>
         </li>
 

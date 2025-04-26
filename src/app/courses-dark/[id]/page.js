@@ -17,7 +17,6 @@ const Course_Details_Dark = ({ params }) => {
     <PageWrapper>
       <main className="is-dark">
         <CourseDetailsMain />
-        <ThemeController />
       </main>
     </PageWrapper>
   );

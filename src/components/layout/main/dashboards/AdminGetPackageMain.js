@@ -49,7 +49,7 @@ const AdminGetPackages = () => {
                 <td className="px-5 py-2">{pkg.commission || "N/A"}</td>
                 <td className="px-5 py-2 flex space-x-3">
                   <Link
-                    href={`https://readgro-backend.onrender.com/admin/Gnaneswar/admin-package/editpackage/${pkg.package_id}`}
+                    href={`/admin/Gnaneswar/admin-package/editpackage/${pkg.package_id}`}
                   >
                     <button className="text-green-500 hover:underline">
                       Edit

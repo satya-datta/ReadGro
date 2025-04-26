@@ -5,7 +5,7 @@ import React from "react";
 const CourseDetailsMain = ({ id }) => {
   return (
     <>
-      <HeroPrimary path={"Course-Details"} title={"Course Details"} />
+      {/* <HeroPrimary path={"Course-Details"} title={"Course Details"} /> */}
       <CourseDetailsPrimary id={id} />
     </>
   );

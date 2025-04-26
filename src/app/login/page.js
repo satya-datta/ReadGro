@@ -11,7 +11,6 @@ const Login = () => {
     <PageWrapper>
       <main>
         <LoginMain />
-        <ThemeController />
       </main>
     </PageWrapper>
   );

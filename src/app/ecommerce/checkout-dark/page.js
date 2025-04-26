@@ -12,7 +12,6 @@ const Checkout_Dark = async () => {
     <PageWrapper>
       <main className="is-dark">
         <CheckoutMain />
-        <ThemeController />
       </main>
     </PageWrapper>
   );

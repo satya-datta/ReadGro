@@ -3,7 +3,7 @@ import UserAffiliateForm from "@/components/shared/dashboards/UserAffiliateForm"
 import ThemeController from "@/components/shared/others/ThemeController";
 
 import PageWrapper from "@/components/shared/wrappers/PageWrapper";
-
+import PlainWrapper from "@/components/shared/wrappers/PlainWrapper";
 import UserDashboardWrapper from "@/components/shared/wrappers/UserDashboardWrapper";
 export const metadata = {
   title: "Student Reviews | Edurock - Education LMS Template",
@@ -11,16 +11,15 @@ export const metadata = {
 };
 const Student_Reviews = () => {
   return (
-    <PageWrapper>
+    <PlainWrapper>
       <main>
         <UserDashboardWrapper>
           <DashboardContainer>
             <UserAffiliateForm />
           </DashboardContainer>
         </UserDashboardWrapper>
-        <ThemeController />
       </main>
-    </PageWrapper>
+    </PlainWrapper>
   );
 };
 

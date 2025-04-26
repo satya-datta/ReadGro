@@ -11,7 +11,6 @@ const Courses = async () => {
     <PageWrapper>
       <main>
         <PackageMain />
-        <ThemeController />
       </main>
     </PageWrapper>
   );

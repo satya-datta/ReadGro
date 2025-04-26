@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const LoginForm = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -10,6 +11,7 @@ const LoginForm = () => {
   const [redirecting, setRedirecting] = useState(false);
   const [forgotPassword, setForgotPassword] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -132,18 +134,26 @@ const LoginForm = () => {
         </div>
 
         {!forgotPassword && (
-          <div className="mb-25px">
+          <div className="mb-25px relative">
             <label className="text-contentColor dark:text-contentColor-dark mb-10px block">
               Password
             </label>
-            <input
-              type="password"
-              placeholder="Password"
-              className="w-full h-52px pl-5 bg-transparent border border-borderColor rounded"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                className="w-full h-52px pl-5 pr-12 bg-transparent border border-borderColor rounded"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <div
+                className="absolute inset-y-0 right-4 flex items-center cursor-pointer text-gray-400"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+              </div>
+            </div>
           </div>
         )}
 

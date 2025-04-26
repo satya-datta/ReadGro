@@ -1,4 +1,3 @@
-
 import AdminWebsiteHeroMain from "@/components/layout/main/dashboards/AdminWebsiteHeroMain";
 import DashboardContainer from "@/components/shared/containers/DashboardContainer";
 
@@ -18,7 +17,6 @@ const Website_Hero = () => {
             <AdminWebsiteHeroMain />
           </DashboardContainer>
         </DsahboardWrapper>
-        <ThemeController />
       </main>
     </PageWrapper>
   );

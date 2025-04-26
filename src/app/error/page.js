@@ -13,7 +13,6 @@ const Error = async () => {
     <PageWrapper>
       <main>
         <ErrorMain />
-        <ThemeController />
       </main>
     </PageWrapper>
   );

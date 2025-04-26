@@ -44,6 +44,7 @@ const AdminWebsiteHeroMain = () => {
       );
 
       if (response.ok) {
+        alert("images upload Successfully");
         console.log("Images uploaded successfully");
         setImage1(null);
         setImage2(null);

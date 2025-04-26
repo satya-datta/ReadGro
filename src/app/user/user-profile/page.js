@@ -11,16 +11,15 @@ export const metadata = {
 };
 const Student_Profile = () => {
   return (
-    <PageWrapper>
+    <PlainWrapper>
       <main>
         <UserDashboardWrapper>
           <DashboardContainer>
             <StudentProfileMain />
           </DashboardContainer>
         </UserDashboardWrapper>
-        <ThemeController />
       </main>
-    </PageWrapper>
+    </PlainWrapper>
   );
 };
 

@@ -8,7 +8,6 @@ const NotFound = () => {
       <main>
         <ErrorMain />
       </main>
-      <ThemeController />
     </PageWrapper>
   );
 };

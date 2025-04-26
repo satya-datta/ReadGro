@@ -35,7 +35,7 @@ const ProfileDetails = () => {
           phone: data.user.phone,
           address: data.user.Address,
           pincode: data.user.Pincode,
-          avatar: data.user.avatar, // Store current profile image URL
+          avatar: data.user.avatar,
         });
       } else {
         console.error("Failed to fetch user data");
@@ -81,6 +81,7 @@ const ProfileDetails = () => {
         alert("Profile updated successfully");
         setIsEditing(false);
         fetchUserData(user.userId);
+        setSelectedImage(null); // Clear the image preview
       } else {
         console.error("Failed to update user data");
       }
@@ -93,34 +94,13 @@ const ProfileDetails = () => {
     <div className="p-5 bg-white shadow rounded-md">
       <h2 className="text-2xl font-bold mb-4">My Profile</h2>
 
-      {/* Profile Image Upload */}
-      <div className="mb-4">
-        <label className="font-semibold">Profile Picture</label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-          className="block mt-2"
-        />
-        <div className="mt-2">
-          <img
-            src={
-              selectedImage
-                ? URL.createObjectURL(selectedImage)
-                : editableData.avatar
-            }
-            alt="Profile"
-            className="w-20 h-20 rounded-full object-cover"
-          />
-        </div>
-      </div>
-
       {userData ? (
         <div>
-          <ul>
+          {/* Input Fields Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {["name", "email", "phone", "address", "pincode"].map((field) => (
-              <li key={field} className="mb-3">
-                <label className="font-semibold capitalize">
+              <div key={field}>
+                <label className="font-semibold capitalize block mb-1">
                   {field.replace("_", " ")}
                 </label>
                 <input
@@ -129,28 +109,54 @@ const ProfileDetails = () => {
                   value={editableData[field] || ""}
                   onChange={handleInputChange}
                   disabled={!isEditing}
-                  className="w-full p-2 border rounded mt-1"
+                  className={`w-full p-2 border rounded ${
+                    isEditing ? "bg-white" : "bg-gray-100"
+                  }`}
                 />
-              </li>
+              </div>
             ))}
-          </ul>
+          </div>
+
+          {/* Profile Image Upload */}
+          <div className="mb-4 mt-6">
+            <label className="font-semibold block mb-2">Profile Picture</label>
+            <div className="flex items-center flex-wrap gap-4">
+              <label
+                htmlFor="avatarUpload"
+                className={`cursor-pointer px-4 py-2 text-sm rounded ${
+                  isEditing
+                    ? "bg-blue-600 text-white hover:bg-blue-700"
+                    : "bg-gray-300 text-gray-600 cursor-not-allowed"
+                }`}
+              >
+                Choose File
+              </label>
+              <input
+                id="avatarUpload"
+                type="file"
+                accept="image/*"
+                disabled={!isEditing}
+                onChange={handleImageChange}
+                className="hidden"
+              />
+              {/* Show file name */}
+              {selectedImage && (
+                <span className="text-sm text-gray-700">
+                  {selectedImage.name}
+                </span>
+              )}
+            </div>
+          </div>
 
           {/* Edit / Save Button */}
-          {!isEditing ? (
+          <div className="mt-4">
             <button
-              onClick={handleEditClick}
-              className="mt-4 p-2 bg-green text-white rounded"
+              onClick={isEditing ? handleSaveChanges : handleEditClick}
+              className="w-full md:w-auto px-4 py-2 bg-primaryColor text-white rounded hover:bg-primaryColor transition m-[5px]"
             >
-              Want To Edit
+              {isEditing ? "Save Changes" : "Tap to Edit"}
             </button>
-          ) : (
-            <button
-              onClick={handleSaveChanges}
-              className="mt-4 p-2 bg-green text-white rounded"
-            >
-              Save Changes
-            </button>
-          )}
+          </div>
         </div>
       ) : (
         <p>Loading user details...</p>

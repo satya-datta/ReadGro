@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const UserLoginForm = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -10,6 +11,13 @@ const UserLoginForm = () => {
   const [redirecting, setRedirecting] = useState(false);
   const [forgotPassword, setForgotPassword] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [loginMethod, setLoginMethod] = useState(""); // NEW: to track how user logged in
+
+  useEffect(() => {
+    setForgotPassword(false);
+    setOtpSent(false);
+  }, []);
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -29,6 +37,7 @@ const UserLoginForm = () => {
       if (response.ok) {
         setIsAuthenticated(true);
         setError(null);
+        setLoginMethod("password"); // <<< login via password
         setRedirecting(true);
       } else {
         setIsAuthenticated(false);
@@ -41,10 +50,6 @@ const UserLoginForm = () => {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    setForgotPassword(false); // Reset to show login fields on reload
-    setOtpSent(false);
-  }, []);
 
   const handleSendOtp = async () => {
     setLoading(true);
@@ -88,6 +93,7 @@ const UserLoginForm = () => {
       );
       const data = await response.json();
       if (response.ok) {
+        setLoginMethod("otp"); // <<< login via OTP
         setRedirecting(true);
       } else {
         setError(data.message || "Invalid OTP.");
@@ -102,10 +108,14 @@ const UserLoginForm = () => {
   useEffect(() => {
     if (redirecting) {
       setTimeout(() => {
-        window.location.href = "/user/settings";
+        if (loginMethod === "password") {
+          window.location.href = "/user/user-dashboard"; // redirect after password login
+        } else if (loginMethod === "otp") {
+          window.location.href = "/user/settings"; // redirect after OTP login
+        }
       }, 1500);
     }
-  }, [redirecting]);
+  }, [redirecting, loginMethod]);
 
   return (
     <div className="opacity-100 transition-opacity duration-150 ease-linear">
@@ -136,18 +146,26 @@ const UserLoginForm = () => {
         </div>
 
         {!forgotPassword && (
-          <div className="mb-25px">
+          <div className="mb-25px relative">
             <label className="text-contentColor dark:text-contentColor-dark mb-10px block">
               Password
             </label>
-            <input
-              type="password"
-              placeholder="Password"
-              className="w-full h-52px pl-5 bg-transparent border border-borderColor rounded"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                className="w-full h-52px pl-5 pr-12 bg-transparent border border-borderColor rounded"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <div
+                className="absolute inset-y-0 right-4 flex items-center cursor-pointer text-gray-400"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+              </div>
+            </div>
           </div>
         )}
 
@@ -195,6 +213,7 @@ const UserLoginForm = () => {
           )}
         </div>
       </form>
+
       {!forgotPassword && (
         <div
           className="text-center text-primaryColor cursor-pointer"

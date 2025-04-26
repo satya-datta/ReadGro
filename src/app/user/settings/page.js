@@ -12,16 +12,15 @@ export const metadata = {
 };
 const Student_Settings = () => {
   return (
-    <PageWrapper>
+    <PlainWrapper>
       <main>
         <UserDashboardWrapper>
           <DashboardContainer>
             <StudentSettingsMain />
           </DashboardContainer>
         </UserDashboardWrapper>
-        <ThemeController />
       </main>
-    </PageWrapper>
+    </PlainWrapper>
   );
 };
 

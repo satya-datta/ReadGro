@@ -17,7 +17,6 @@ const Admin_Settings = () => {
             <AdminSettingsMain />
           </DashboardContainer>
         </DsahboardWrapper>
-        <ThemeController />
       </main>
     </PageWrapper>
   );

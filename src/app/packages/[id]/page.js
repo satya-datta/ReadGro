@@ -21,7 +21,6 @@ const Course_Details = async ({ params }) => {
       <main>
         {/* <CourseDetailsMain id={id} /> */}
         <CourseDetails3Main id={id} />
-        <ThemeController />
       </main>
     </PageWrapper>
   );

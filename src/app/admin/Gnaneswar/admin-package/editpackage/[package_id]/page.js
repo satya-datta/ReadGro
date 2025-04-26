@@ -18,7 +18,6 @@ const Admin_Package = () => {
             <AdminEditPackageMain package_id={package_id} />
           </DashboardContainer>
         </DsahboardWrapper>
-        <ThemeController />
       </main>
     </PageWrapper>
   );
