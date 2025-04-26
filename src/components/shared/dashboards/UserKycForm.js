@@ -113,7 +113,7 @@ const UserKycForm = () => {
         fetchUserBankData(user.userId);
       } else {
         console.error("Failed to save user bank data");
-        alert(response);
+        alert(response.message);
       }
     } catch (error) {
       console.error("Error saving user bank data:", error);
