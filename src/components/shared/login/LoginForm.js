@@ -28,6 +28,7 @@ const LoginForm = () => {
         }
       );
       const data = await response.json();
+      console.log("Data recieved ---", data);
       if (response.ok) {
         setIsAuthenticated(true);
         setError(null);

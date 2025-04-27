@@ -1,5 +1,7 @@
 const validateAuthToken = async () => {
   try {
+    const token = req.cookies.get("UserauthToken");
+    console.log(token);
     const response = await fetch(
       "https://readgro-backend.onrender.com/auth/uservalidate",
       {
