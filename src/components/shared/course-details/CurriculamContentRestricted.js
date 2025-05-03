@@ -13,7 +13,7 @@ const CurriculumContentRestricted = ({ id, hasPurchased }) => {
   useEffect(() => {
     if (id) {
       // Fetch course topics
-      fetch(`http://localhost:5000/gettopics/${id}`)
+      fetch(`https://readgro-backend.onrender.com/gettopics/${id}`)
         .then((res) => res.json())
         .then((data) => {
           if (Array.isArray(data.topics)) {
@@ -27,7 +27,7 @@ const CurriculumContentRestricted = ({ id, hasPurchased }) => {
         );
 
       // Fetch package names mapped to this course
-      fetch(`http://localhost:5000/getpackagebycourse/${id}`)
+      fetch(`https://readgro-backend.onrender.com/getpackagebycourse/${id}`)
         .then((res) => res.json())
         .then((data) => {
           if (Array.isArray(data.packages)) {

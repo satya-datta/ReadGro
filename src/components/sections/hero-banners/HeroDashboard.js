@@ -9,10 +9,13 @@ const HeroDashboard = () => {
   const handleLogout = async () => {
     try {
       // Call the logout API endpoint to clear the adminToken cookie
-      const response = await fetch("http://localhost:5000/logout", {
-        method: "POST",
-        credentials: "include", // Include cookies in the request
-      });
+      const response = await fetch(
+        "https://readgro-backend.onrender.com/logout",
+        {
+          method: "POST",
+          credentials: "include", // Include cookies in the request
+        }
+      );
 
       if (response.ok) {
         console.log("Logout successful");
