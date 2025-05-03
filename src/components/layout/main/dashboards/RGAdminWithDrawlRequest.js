@@ -12,7 +12,7 @@ const WithDrawlRequest = ({ userId }) => {
     const fetchWithdrawRequests = async () => {
       try {
         const response = await fetch(
-          `https://readgro-backend.onrender.com/getwithdrawlrequests/${userId}`
+          `http://localhost:5000/getwithdrawlrequests/${userId}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch withdrawal requests");
@@ -42,14 +42,11 @@ const WithDrawlRequest = ({ userId }) => {
     setShowOtpModal(true);
 
     try {
-      const response = await fetch(
-        "https://readgro-backend.onrender.com/send-otp",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" }, // ✅ Ensure proper headers
-          body: JSON.stringify({}), // ✅ Even if empty, some servers require a body
-        }
-      );
+      const response = await fetch("http://localhost:5000/send-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }, // ✅ Ensure proper headers
+        body: JSON.stringify({}), // ✅ Even if empty, some servers require a body
+      });
       console.log(response.json());
       if (!response.ok) {
         throw new Error(`Failed to send OTP: ${response.statusText}`);
@@ -67,19 +64,16 @@ const WithDrawlRequest = ({ userId }) => {
     setLoading(true);
     console.log(selectedRequest);
     try {
-      const response = await fetch(
-        "https://readgro-backend.onrender.com/process-payout",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            userId: userId,
-            amount: selectedRequest.amount,
-            otp,
-            requestId: selectedRequest.id, // Include request ID
-          }),
-        }
-      );
+      const response = await fetch("http://localhost:5000/process-payout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: userId,
+          amount: selectedRequest.amount,
+          otp,
+          requestId: selectedRequest.id, // Include request ID
+        }),
+      });
 
       const data = await response.json();
       if (data.success) {

@@ -6,12 +6,13 @@ import { useParams } from "next/navigation";
 import ThemeController from "@/components/shared/others/ThemeController";
 import DsahboardWrapper from "@/components/shared/wrappers/DsahboardWrapper";
 import PageWrapper from "@/components/shared/wrappers/PageWrapper";
+import AdminWrapper from "@/components/shared/wrappers/AdminWrapper";
 
 const Admin_Package = () => {
   const { package_id } = useParams(); // Extract the course ID from the URL
 
   return (
-    <PageWrapper>
+    <AdminWrapper>
       <main>
         <DsahboardWrapper>
           <DashboardContainer>
@@ -19,7 +20,7 @@ const Admin_Package = () => {
           </DashboardContainer>
         </DsahboardWrapper>
       </main>
-    </PageWrapper>
+    </AdminWrapper>
   );
 };
 

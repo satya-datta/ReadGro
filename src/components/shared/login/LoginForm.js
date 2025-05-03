@@ -18,15 +18,12 @@ const LoginForm = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(
-        "https://readgro-backend.onrender.com/authadmin",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({ email, password }),
-        }
-      );
+      const response = await fetch("http://localhost:5000/authadmin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ email, password }),
+      });
       const data = await response.json();
       console.log("Data recieved ---", data);
       if (response.ok) {
@@ -49,14 +46,11 @@ const LoginForm = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(
-        "https://readgro-backend.onrender.com/sendadmin-otp",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email }),
-        }
-      );
+      const response = await fetch("http://localhost:5000/sendadmin-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
       const data = await response.json();
       if (response.ok) {
         setOtpSent(true);
@@ -76,15 +70,12 @@ const LoginForm = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(
-        "https://readgro-backend.onrender.com/verifyadmin-otp",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, otp }),
-          credentials: "include",
-        }
-      );
+      const response = await fetch("http://localhost:5000/verifyadmin-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, otp }),
+        credentials: "include",
+      });
       const data = await response.json();
       if (response.ok) {
         setRedirecting(true);

@@ -1,5 +1,6 @@
 import LoginMain from "@/components/layout/main/LoginMain";
 import ThemeController from "@/components/shared/others/ThemeController";
+import AdminWrapper from "@/components/shared/wrappers/AdminWrapper";
 
 import PlainWrapper from "@/components/shared/wrappers/PlainWrapper";
 export const metadata = {
@@ -8,11 +9,11 @@ export const metadata = {
 };
 const Login = () => {
   return (
-    <PlainWrapper>
+    <AdminWrapper>
       <main>
         <LoginMain />
       </main>
-    </PlainWrapper>
+    </AdminWrapper>
   );
 };
 

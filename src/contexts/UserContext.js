@@ -34,7 +34,7 @@ const UserContextProvider = ({ children }) => {
       .then(({ isValid, user }) => {
         if (isValid) {
           const avatarUrl = user?.avatar
-            ? `https://readgro-backend.onrender.com/uploads/${user.avatar}`
+            ? `http://localhost:5000/uploads/${user.avatar}`
             : null;
 
           const enrichedUser = {

@@ -11,7 +11,7 @@ const UserHeroDashboard = () => {
 
   useEffect(() => {
     if (user?.avatar) {
-      const fullImageUrl = `https://readgro-backend.onrender.com/uploads/${user.avatar}`;
+      const fullImageUrl = `http://localhost:5000/uploads/${user.avatar}`;
 
       // Preload image
       const img = new window.Image();
@@ -23,13 +23,10 @@ const UserHeroDashboard = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch(
-        "https://readgro-backend.onrender.com/userlogout",
-        {
-          method: "POST",
-          credentials: "include",
-        }
-      );
+      const response = await fetch("http://localhost:5000/userlogout", {
+        method: "POST",
+        credentials: "include",
+      });
 
       if (response.ok) {
         window.location.href = "/";

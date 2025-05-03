@@ -1,25 +1,22 @@
 const validateAdminToken = async () => {
   try {
-    const response = await fetch(
-      "https://readgro-backend.onrender.com/authadmin",
-      {
-        method: "GET",
-        credentials: "include", // Ensures cookies are sent in the request
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch("http://localhost:5000/auth/validate", {
+      method: "GET",
+      credentials: "include", // ✅ send cookie
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     if (!response.ok) {
-      return { isValid: false, user: null };
+      return { isValid: false, admin: null };
     }
 
     const data = await response.json();
-    return { isValid: !!data.user, user: data.user };
+    return { isValid: !!data.admin, admin: data.admin };
   } catch (error) {
-    console.error("Token validation error:", error);
-    return { isValid: false, user: null };
+    console.error("Admin token validation error:", error);
+    return { isValid: false, admin: null };
   }
 };
 

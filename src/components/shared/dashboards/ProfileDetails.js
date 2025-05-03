@@ -18,7 +18,7 @@ const ProfileDetails = () => {
   const fetchUserData = async (userId) => {
     try {
       const response = await fetch(
-        `https://readgro-backend.onrender.com/getuser_details/${userId}`,
+        `http://localhost:5000/getuser_details/${userId}`,
         {
           method: "GET",
           credentials: "include",
@@ -69,7 +69,7 @@ const ProfileDetails = () => {
 
     try {
       const response = await fetch(
-        `https://readgro-backend.onrender.com/update_user/${user?.userId}`,
+        `http://localhost:5000/update_user/${user?.userId}`,
         {
           method: "PUT",
           body: formData,

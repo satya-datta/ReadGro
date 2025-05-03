@@ -9,7 +9,11 @@ const SidebarDashboard = () => {
   const partOfPathNaem = pathname.split("/")[2].split("-")[0];
   const isAdmin = partOfPathNaem === "Gnaneswar" ? true : false;
   const isInstructor = partOfPathNaem === "instructor" ? true : false;
-  const { user, isUserAuthenticated } = useUserContext();
+
+  const userContext = useUserContext(); // Use safely
+  const user = userContext?.user;
+
+  // Handle when user context is not available
 
   const adminItems = [
     {
@@ -725,11 +729,25 @@ const SidebarDashboard = () => {
       ],
     },
   ];
-  const items = isAdmin
+
+  const items = user
+    ? studentItems
+    : isAdmin
     ? adminItems
     : isInstructor
     ? instructorItems
-    : studentItems;
+    : [];
+  
+  return (
+    <div className="lg:col-span-3 col-span-1 w-full">
+      <div className="p-5 2xl:p-7 rounded-lg2 shadow-accordion dark:shadow-accordion-dark bg-whiteColor dark:bg-whiteColor-dark h-auto">
+        {items.map((item, idx) => (
+          <ItemsDashboard key={idx} item={item} />
+        ))}
+      </div>
+    </div>
+  );
+  
   return (
     <div className="lg:col-span-3 col-span-1 w-full">
       <div className="p-5 2xl:p-7 rounded-lg2 shadow-accordion dark:shadow-accordion-dark bg-whiteColor dark:bg-whiteColor-dark h-auto">

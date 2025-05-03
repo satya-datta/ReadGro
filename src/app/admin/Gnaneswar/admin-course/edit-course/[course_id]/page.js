@@ -6,12 +6,13 @@ import DashboardContainer from "@/components/shared/containers/DashboardContaine
 import ThemeController from "@/components/shared/others/ThemeController";
 import DsahboardWrapper from "@/components/shared/wrappers/DsahboardWrapper";
 import PageWrapper from "@/components/shared/wrappers/PageWrapper";
+import AdminWrapper from "@/components/shared/wrappers/AdminWrapper";
 
 const Admin_Course = () => {
   const { course_id } = useParams(); // Extract the course ID from the URL
 
   return (
-    <PageWrapper>
+    <AdminWrapper>
       <main>
         <DsahboardWrapper>
           <DashboardContainer>
@@ -20,7 +21,7 @@ const Admin_Course = () => {
           </DashboardContainer>
         </DsahboardWrapper>
       </main>
-    </PageWrapper>
+    </AdminWrapper>
   );
 };
 
