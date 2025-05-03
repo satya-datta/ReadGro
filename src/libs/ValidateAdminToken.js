@@ -1,12 +1,16 @@
 const validateAdminToken = async () => {
   try {
+    const token = localStorage.getItem("adminToken");
+
+    if (!token) return { isValid: false, admin: null };
+
     const response = await fetch(
       "https://readgro-backend.onrender.com/auth/validate",
       {
         method: "GET",
-        credentials: "include", // ✅ send cookie
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // ✅ Send token in header
         },
       }
     );
@@ -16,6 +20,7 @@ const validateAdminToken = async () => {
     }
 
     const data = await response.json();
+    console.log(data);
     return { isValid: !!data.admin, admin: data.admin };
   } catch (error) {
     console.error("Admin token validation error:", error);

@@ -30,6 +30,7 @@ const LoginForm = () => {
       const data = await response.json();
       console.log("Data recieved ---", data);
       if (response.ok) {
+        localStorage.setItem("adminToken", data.token); // ✅ Save token
         setIsAuthenticated(true);
         setError(null);
         setRedirecting(true);
