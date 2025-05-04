@@ -4,7 +4,7 @@ const CourseList = () => {
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    fetch("https://readgro-backend.onrender.com/getallcourses") // Update with your API URL
+    fetch("http://localhost:5000/getallcourses") // Update with your API URL
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data.courses)) {
@@ -39,7 +39,7 @@ const CourseList = () => {
             </p>
 
             {/* Enroll Button */}
-            <button className="mt-3 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700">
+            <button className="mt-3 px-4 py-2 bg-primaryColor text-white rounded hover:bg-primaryColor-700">
               Enroll Now
             </button>
           </div>

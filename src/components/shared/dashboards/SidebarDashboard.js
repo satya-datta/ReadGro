@@ -748,15 +748,6 @@ const SidebarDashboard = () => {
     </div>
   );
   
-  return (
-    <div className="lg:col-span-3 col-span-1 w-full">
-      <div className="p-5 2xl:p-7 rounded-lg2 shadow-accordion dark:shadow-accordion-dark bg-whiteColor dark:bg-whiteColor-dark h-auto">
-        {items?.map((item, idx) => (
-          <ItemsDashboard key={idx} item={item} />
-        ))}
-      </div>
-    </div>
-  );
 };
 
 export default SidebarDashboard;

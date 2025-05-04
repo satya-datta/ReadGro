@@ -25,7 +25,7 @@ const UserKycForm = () => {
   const fetchUserBankData = async (userId) => {
     try {
       const response = await fetch(
-        `https://readgro-backend.onrender.com/getuser_bank_details/${userId}`,
+        `http://localhost:5000/getuser_bank_details/${userId}`,
         {
           method: "GET",
           credentials: "include",
@@ -62,25 +62,35 @@ const UserKycForm = () => {
   const validateForm = () => {
     let newErrors = {};
 
-    if (!editableData.account_holder_name.match(/^[a-zA-Z\s]+$/)) {
+    if (!editableData.account_holder_name.trim()) {
+      newErrors.account_holder_name = "Account holder name is required";
+    } else if (!/^[a-zA-Z\s]+$/.test(editableData.account_holder_name)) {
       newErrors.account_holder_name = "Only alphabets and spaces are allowed";
     }
 
-    if (!editableData.ifsc_code.match(/^[A-Z]{4}[A-Z0-9]{7}$/)) {
-      newErrors.ifsc_code =
-        "IFSC code must be 11 characters, start with 4 letters";
+    if (!editableData.ifsc_code.trim()) {
+      newErrors.ifsc_code = "IFSC code is required";
+    } else if (!/^[A-Z]{4}[A-Z0-9]{7}$/.test(editableData.ifsc_code)) {
+      newErrors.ifsc_code = "Invalid IFSC code format (e.g., ABCD0123456)";
     }
 
-    if (!editableData.account_number.match(/^\d{8,}$/)) {
-      newErrors.account_number = "Account number must be at least 8 digits";
+    if (!editableData.account_number.trim()) {
+      newErrors.account_number = "Account number is required";
+    } else if (!/^\d{8,18}$/.test(editableData.account_number)) {
+      newErrors.account_number =
+        "Account number must be between 8 and 18 digits";
     }
 
-    if (!editableData.bank_name.match(/^[a-zA-Z\s]+$/)) {
+    if (!editableData.bank_name.trim()) {
+      newErrors.bank_name = "Bank name is required";
+    } else if (!/^[a-zA-Z\s]+$/.test(editableData.bank_name)) {
       newErrors.bank_name = "Only alphabets and spaces are allowed";
     }
 
-    if (!editableData.upi_id.match(/^[\w.-]+@[\w.-]+$/)) {
-      newErrors.upi_id = "Invalid UPI ID format (example@upi)";
+    if (!editableData.upi_id.trim()) {
+      newErrors.upi_id = "UPI ID is required";
+    } else if (!/^[\w.-]+@[\w.-]+$/.test(editableData.upi_id)) {
+      newErrors.upi_id = "Invalid UPI ID format (e.g., name@bank)";
     }
 
     setErrors(newErrors);
@@ -91,8 +101,8 @@ const UserKycForm = () => {
     if (!validateForm()) return;
 
     const url = isNewUser
-      ? `https://readgro-backend.onrender.com/insert_bank_detials`
-      : `https://readgro-backend.onrender.com/updateuser_bank_details/${user?.userId}`;
+      ? `http://localhost:5000/insert_bank_detials`
+      : `http://localhost:5000/updateuser_bank_details/${user?.userId}`;
 
     const method = isNewUser ? "POST" : "PUT";
 
@@ -113,7 +123,7 @@ const UserKycForm = () => {
         fetchUserBankData(user.userId);
       } else {
         console.error("Failed to save user bank data");
-        alert(response.message);
+        alert("Failed to save data. Please try again.");
       }
     } catch (error) {
       console.error("Error saving user bank data:", error);
@@ -149,10 +159,9 @@ const UserKycForm = () => {
         ))}
       </ul>
 
-      {/* Save Button */}
       <button
         onClick={handleSaveChanges}
-        className="mt-4 p-2 bg-green text-white rounded"
+        className="mt-4 p-2 bg-primaryColor text-white rounded hover:bg-primaryColor"
       >
         Save Changes
       </button>

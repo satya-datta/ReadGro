@@ -1,7 +1,7 @@
 import AdminDashboardMain from "@/components/layout/main/dashboards/AdminDashboardMain";
 import StudentSettingsMain from "@/components/layout/main/dashboards/StudentSettingsMain";
 import DashboardContainer from "@/components/shared/containers/DashboardContainer";
-import ThemeController from "@/components/shared/others/ThemeController";
+
 import DsahboardWrapper from "@/components/shared/wrappers/DsahboardWrapper";
 import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 import PlainWrapper from "@/components/shared/wrappers/PlainWrapper";
@@ -12,15 +12,17 @@ export const metadata = {
 };
 const Student_Settings = () => {
   return (
-    <PlainWrapper>
-      <main>
-        <UserDashboardWrapper>
-          <DashboardContainer>
-            <StudentSettingsMain />
-          </DashboardContainer>
-        </UserDashboardWrapper>
-      </main>
-    </PlainWrapper>
+    <div className="min-h-screen bg-gradient-to-b from-blue-50  to-yellow-50">
+      <PlainWrapper>
+        <main>
+          <UserDashboardWrapper>
+            <DashboardContainer>
+              <StudentSettingsMain />
+            </DashboardContainer>
+          </UserDashboardWrapper>
+        </main>
+      </PlainWrapper>
+    </div>
   );
 };
 

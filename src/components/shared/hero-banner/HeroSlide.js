@@ -9,11 +9,11 @@ const HeroSlide = ({ card, idx }) => {
   const { addProductToWishlist } = useWishlistContext();
   const depBgs = [
     "bg-secondaryColor",
-    "bg-green",
+    "bg-primaryColor",
     "bg-secondaryColor2",
-    "bg-greencolor2",
+    "bg-primaryColorcolor2",
     "bg-orange",
-    "bg-green",
+    "bg-primaryColor",
   ];
   return (
     <div>

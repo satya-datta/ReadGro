@@ -1,6 +1,5 @@
 import LoginMain from "@/components/layout/main/LoginMain";
 import UserLoginMain from "@/components/layout/main/UserLoginMain";
-import ThemeController from "@/components/shared/others/ThemeController";
 
 import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 import PlainWrapper from "@/components/shared/wrappers/PlainWrapper";

@@ -24,7 +24,10 @@ const AdminContextProvider = ({ children }) => {
           setAdmin(admin);
           setIsAdminAuthenticated(true);
 
-          if (currentPath === "/admin/Gnaneswar/login") {
+          if (
+            currentPath === "/admin/Gnaneswar/login" ||
+            currentPath === "/admin/Gnaneswar"
+          ) {
             router.push("/admin/Gnaneswar/dashboard");
           }
         } else {

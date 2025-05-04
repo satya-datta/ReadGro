@@ -1,6 +1,5 @@
 import DashboardContainer from "@/components/shared/containers/DashboardContainer";
 import UserAffiliateForm from "@/components/shared/dashboards/UserAffiliateForm";
-import ThemeController from "@/components/shared/others/ThemeController";
 
 import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 import PlainWrapper from "@/components/shared/wrappers/PlainWrapper";
@@ -11,15 +10,17 @@ export const metadata = {
 };
 const Student_Reviews = () => {
   return (
-    <PlainWrapper>
-      <main>
-        <UserDashboardWrapper>
-          <DashboardContainer>
-            <UserAffiliateForm />
-          </DashboardContainer>
-        </UserDashboardWrapper>
-      </main>
-    </PlainWrapper>
+    <div className="min-h-screen bg-gradient-to-b from-blue-50  to-yellow-50">
+      <PlainWrapper>
+        <main>
+          <UserDashboardWrapper>
+            <DashboardContainer>
+              <UserAffiliateForm />
+            </DashboardContainer>
+          </UserDashboardWrapper>
+        </main>
+      </PlainWrapper>
+    </div>
   );
 };
 

@@ -75,7 +75,7 @@ const AdminAddCourseMain = () => {
       }
 
       const courseResponse = await fetch(
-        "https://readgro-backend.onrender.com/create-course",
+        "http://localhost:5000/create-course",
         {
           method: "POST",
           body: formData,
@@ -96,7 +96,7 @@ const AdminAddCourseMain = () => {
         };
 
         const topicResponse = await fetch(
-          "https://readgro-backend.onrender.com/create-topic",
+          "http://localhost:5000/create-topic",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -218,7 +218,7 @@ const AdminAddCourseMain = () => {
           <button
             type="button"
             onClick={handleAddTopic}
-            className="mt-2 px-4 py-2 bg-green-500 text-white rounded"
+            className="mt-2 px-4 py-2 bg-green text-white rounded"
           >
             Add Topic
           </button>

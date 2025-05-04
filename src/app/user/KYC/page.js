@@ -1,6 +1,6 @@
 import StudentProfileMain from "@/components/layout/main/dashboards/StudentProfileMain";
 import DashboardContainer from "@/components/shared/containers/DashboardContainer";
-import ThemeController from "@/components/shared/others/ThemeController";
+
 import UserDashboardWrapper from "@/components/shared/wrappers/UserDashboardWrapper";
 import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 import UserKYC from "@/components/layout/main/dashboards/UserKYC";
@@ -11,15 +11,17 @@ export const metadata = {
 };
 const Student_Message = () => {
   return (
-    <PlainWrapper>
-      <main>
-        <UserDashboardWrapper>
-          <DashboardContainer>
-            <UserKYC />
-          </DashboardContainer>
-        </UserDashboardWrapper>
-      </main>
-    </PlainWrapper>
+    <div className="min-h-screen bg-gradient-to-b from-blue-50  to-yellow-50">
+      <PlainWrapper>
+        <main>
+          <UserDashboardWrapper>
+            <DashboardContainer>
+              <UserKYC />
+            </DashboardContainer>
+          </UserDashboardWrapper>
+        </main>
+      </PlainWrapper>
+    </div>
   );
 };
 

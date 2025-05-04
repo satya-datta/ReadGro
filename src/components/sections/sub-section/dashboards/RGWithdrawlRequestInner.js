@@ -20,7 +20,7 @@ const RGWithdrawlRequestInner = () => {
 
     try {
       const response = await fetch(
-        `https://readgro-backend.onrender.com/getwithdrawlrequests/${user.userId}`,
+        `http://localhost:5000/getwithdrawlrequests/${user.userId}`,
         {
           method: "GET",
           credentials: "include",
@@ -49,7 +49,7 @@ const RGWithdrawlRequestInner = () => {
   const fetchUserBankData = async (userId) => {
     try {
       const response = await fetch(
-        `https://readgro-backend.onrender.com/getuser_bank_details/${userId}`,
+        `http://localhost:5000/getuser_bank_details/${userId}`,
         {
           method: "GET",
           credentials: "include",
@@ -90,7 +90,7 @@ const RGWithdrawlRequestInner = () => {
 
     try {
       const response = await fetch(
-        `https://readgro-backend.onrender.com/withdrawlrequests/${user.userId}`,
+        `http://localhost:5000/withdrawlrequests/${user.userId}`,
         {
           method: "POST",
           credentials: "include",
@@ -180,7 +180,7 @@ const RGWithdrawlRequestInner = () => {
                       <span
                         className={`${
                           request.status === "approved"
-                            ? "bg-greencolor2"
+                            ? "bg-primaryColorcolor2"
                             : "bg-secondaryColor"
                         } h-22px inline-block px-7px leading-22px font-bold text-whiteColor rounded-md capitalize`}
                       >

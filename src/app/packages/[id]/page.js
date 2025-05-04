@@ -1,6 +1,6 @@
 import CourseDetailsMain from "@/components/layout/main/CourseDetailsMain";
 import CourseDetails3Main from "@/components/layout/main/CourseDetails3Main";
-import ThemeController from "@/components/shared/others/ThemeController";
+
 import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 import courses from "@/../public/fakedata/courses.json";
 import { notFound } from "next/navigation";

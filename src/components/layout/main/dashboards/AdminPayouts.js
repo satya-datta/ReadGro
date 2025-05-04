@@ -13,9 +13,7 @@ const AdminPayouts = ({ userId }) => {
   useEffect(() => {
     const fetchWithdrawRequests = async () => {
       try {
-        const response = await fetch(
-          `https://readgro-backend.onrender.com/getpayouts`
-        );
+        const response = await fetch(`http://localhost:5000/getpayouts`);
         if (!response.ok)
           throw new Error("Failed to fetch withdrawal requests");
         const data = await response.json();
@@ -47,7 +45,7 @@ const AdminPayouts = ({ userId }) => {
     setSelectedRequest(request);
     setShowOtpModal(true);
     try {
-      await fetch("https://readgro-backend.onrender.com/send-otp", {
+      await fetch("http://localhost:5000/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({}),
@@ -61,14 +59,11 @@ const AdminPayouts = ({ userId }) => {
     if (!otp) return alert("Please enter OTP");
     setLoading(true);
     try {
-      const response = await fetch(
-        "https://readgro-backend.onrender.com/process-payout",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userId, amount: selectedRequest.amount, otp }),
-        }
-      );
+      const response = await fetch("http://localhost:5000/process-payout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, amount: selectedRequest.amount, otp }),
+      });
       const data = await response.json();
       if (data.success) {
         alert("Payout processed successfully!");
@@ -162,7 +157,7 @@ const AdminPayouts = ({ userId }) => {
             />
             <div className="mt-3 flex justify-center gap-3">
               <button
-                className="bg-green-500 text-white px-4 py-2 rounded"
+                className="bg-primaryColor text-white px-4 py-2 rounded"
                 onClick={handleOtpSubmit}
                 disabled={loading}
               >

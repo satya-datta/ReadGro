@@ -1,6 +1,5 @@
 import RGWithdrawlRequest from "@/components/layout/main/dashboards/RGWithdrawlRequest";
 import DashboardContainer from "@/components/shared/containers/DashboardContainer";
-import ThemeController from "@/components/shared/others/ThemeController";
 
 import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 import PlainWrapper from "@/components/shared/wrappers/PlainWrapper";
@@ -11,15 +10,17 @@ export const metadata = {
 };
 const Instructor_Announcements = () => {
   return (
-    <PlainWrapper>
-      <main>
-        <UserDashboardWrapper>
-          <DashboardContainer>
-            <RGWithdrawlRequest />
-          </DashboardContainer>
-        </UserDashboardWrapper>
-      </main>
-    </PlainWrapper>
+    <div className="min-h-screen bg-gradient-to-b from-blue-50  to-yellow-50">
+      <PlainWrapper>
+        <main>
+          <UserDashboardWrapper>
+            <DashboardContainer>
+              <RGWithdrawlRequest />
+            </DashboardContainer>
+          </UserDashboardWrapper>
+        </main>
+      </PlainWrapper>
+    </div>
   );
 };
 

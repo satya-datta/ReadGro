@@ -1,7 +1,7 @@
 "use client";
 import { useSearchParams } from "next/navigation";
 import CheckoutMain from "@/components/layout/main/ecommerce/CheckoutMain";
-import ThemeController from "@/components/shared/others/ThemeController";
+
 import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 // import { metadata } from "./metadata";
 

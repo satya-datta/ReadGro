@@ -8,22 +8,20 @@ const HeroSlide2 = ({ slide, idx }) => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await fetch(
-          "https://readgro-backend.onrender.com/getwebsite_hero"
-        );
+        const response = await fetch("http://localhost:5000/getwebsite_hero");
         if (response.ok) {
           const data = await response.json();
           if (data && data.length > 0) {
             setImageUrls(
               data.map((item) => ({
                 image1: item.image1
-                  ? `https://readgro-backend.onrender.com/uploads/${item.image1}`
+                  ? `http://localhost:5000/uploads/${item.image1}`
                   : null,
                 image2: item.image2
-                  ? `https://readgro-backend.onrender.com/uploads/${item.image2}`
+                  ? `http://localhost:5000/uploads/${item.image2}`
                   : null,
                 image3: item.image3
-                  ? `https://readgro-backend.onrender.com/uploads/${item.image3}`
+                  ? `http://localhost:5000/uploads/${item.image3}`
                   : null,
               }))
             );

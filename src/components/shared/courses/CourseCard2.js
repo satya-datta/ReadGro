@@ -27,7 +27,7 @@ const CourseCard2 = ({ course, card, isList, isNotSidebar }) => {
 
     {
       category: "Development",
-      bg: "bg-green",
+      bg: "bg-primaryColor",
     },
 
     {
@@ -37,7 +37,7 @@ const CourseCard2 = ({ course, card, isList, isNotSidebar }) => {
 
     {
       category: "Web Design",
-      bg: "bg-greencolor2",
+      bg: "bg-primaryColorcolor2",
     },
 
     {
@@ -47,7 +47,7 @@ const CourseCard2 = ({ course, card, isList, isNotSidebar }) => {
 
     {
       category: "Art & Design",
-      bg: "bg-green",
+      bg: "bg-primaryColor",
     },
     {
       category: "Personal Development",
@@ -56,7 +56,7 @@ const CourseCard2 = ({ course, card, isList, isNotSidebar }) => {
 
     {
       category: "Marketing",
-      bg: "bg-green",
+      bg: "bg-primaryColor",
     },
 
     {
@@ -66,7 +66,7 @@ const CourseCard2 = ({ course, card, isList, isNotSidebar }) => {
 
     {
       category: "Data Science",
-      bg: "bg-greencolor2",
+      bg: "bg-primaryColorcolor2",
     },
 
     {
@@ -76,7 +76,7 @@ const CourseCard2 = ({ course, card, isList, isNotSidebar }) => {
 
     {
       category: "Mobile Application",
-      bg: "bg-green",
+      bg: "bg-primaryColor",
     },
   ];
 

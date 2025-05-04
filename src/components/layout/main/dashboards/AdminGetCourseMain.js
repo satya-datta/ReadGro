@@ -9,9 +9,7 @@ const AdminGetCourseMain = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch(
-          "https://readgro-backend.onrender.com/getallcourses"
-        ); // API endpoint for fetching courses
+        const response = await fetch("http://localhost:5000/getallcourses"); // API endpoint for fetching courses
         const data = await response.json();
         if (response.ok) {
           setCourses(data.courses); // Update the state with fetched courses
@@ -39,7 +37,7 @@ const AdminGetCourseMain = () => {
 
     try {
       const response = await fetch(
-        `https://readgro-backend.onrender.com/delete-course/${courseId}`,
+        `http://localhost:5000/delete-course/${courseId}`,
         { method: "DELETE" }
       );
       const data = await response.json();

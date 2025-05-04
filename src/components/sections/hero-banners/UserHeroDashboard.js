@@ -10,26 +10,43 @@ const UserHeroDashboard = () => {
   const [loadedImageUrl, setLoadedImageUrl] = useState(null);
 
   useEffect(() => {
-    if (user?.avatar) {
-      const fullImageUrl = `https://readgro-backend.onrender.com/uploads/${user.avatar}`;
+    const fetchUserDetails = async () => {
+      if (!user?.userId) return;
 
-      // Preload image
-      const img = new window.Image();
-      img.src = fullImageUrl;
-      img.onload = () => setLoadedImageUrl(fullImageUrl);
-      img.onerror = () => setLoadedImageUrl(null); // fallback in case of failure
-    }
-  }, [user?.avatar]);
+      try {
+        const response = await fetch(
+          `http://localhost:5000/getuser_details/${user.userId}`
+        );
+        if (!response.ok) throw new Error("Failed to fetch user details");
+
+        const data = await response.json();
+        console.log(data.user.avatar);
+        if (data?.user.avatar) {
+          const fullImageUrl = `http://localhost:5000/uploads/${data.user.avatar}`;
+
+          // Preload image
+          const img = new window.Image();
+          img.src = fullImageUrl;
+          img.onload = () => setLoadedImageUrl(fullImageUrl);
+          img.onerror = () => setLoadedImageUrl(null); // fallback
+        } else {
+          setLoadedImageUrl(null);
+        }
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+        setLoadedImageUrl(null);
+      }
+    };
+
+    fetchUserDetails();
+  }, [user?.userId]);
 
   const handleLogout = async () => {
     try {
-      const response = await fetch(
-        "https://readgro-backend.onrender.com/userlogout",
-        {
-          method: "POST",
-          credentials: "include",
-        }
-      );
+      const response = await fetch("http://localhost:5000/userlogout", {
+        method: "POST",
+        credentials: "include",
+      });
 
       if (response.ok) {
         window.location.href = "/";
@@ -43,19 +60,28 @@ const UserHeroDashboard = () => {
 
   return (
     <section>
-      <div className="container-fluid-2 relative">
+      <div className="container-fluid-2 relative  w-full px-4 md:px-8  ">
         <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-green-400 via-emerald-400 to-green-400 opacity-20 blur-3xl"></div>
 
         <div className="relative bg-gradient-to-r from-green-500 to-emerald-500 bg-opacity-60 backdrop-blur-xl p-8 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl overflow-hidden">
           <div className="flex items-center gap-6">
-            <div className="flex-shrink-0">
-              {loadedImageUrl ? (
+            <div className="flex-shrink-0 relative w-24 h-24">
+              {!loadedImageUrl && (
+                <div className="absolute inset-0 rounded-full bg-gray-300 animate-pulse border-4 border-white shadow-lg" />
+              )}
+
+              {loadedImageUrl && (
                 <img
                   src={loadedImageUrl}
                   alt="User Profile"
-                  className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg"
+                  className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg transition-opacity duration-500 opacity-0"
+                  onLoad={(e) => {
+                    e.currentTarget.style.opacity = 1;
+                  }}
                 />
-              ) : (
+              )}
+
+              {!loadedImageUrl && user?.avatar === null && (
                 <NextImage
                   src={dashboardImage2}
                   alt="Default Profile"
@@ -65,6 +91,7 @@ const UserHeroDashboard = () => {
                 />
               )}
             </div>
+
             <div className="text-green-100">
               <h5 className="text-lg font-semibold">HELLO</h5>
               <h2 className="text-3xl font-bold">
@@ -74,7 +101,7 @@ const UserHeroDashboard = () => {
           </div>
           <button
             onClick={() => setShowLogoutPopup(true)}
-            className="px-6 py-2 bg-white text-green-600 font-semibold rounded-full shadow hover:bg-green-100 transition"
+            className="px-6 py-2 bg-white text-green-600 font-semibold rounded-full shadow hover:bg-primaryColor-100 transition"
           >
             Logout
           </button>

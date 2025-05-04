@@ -35,13 +35,10 @@ const AdminWebsiteHeroMain = () => {
     }
 
     try {
-      const response = await fetch(
-        "https://readgro-backend.onrender.com/website_hero",
-        {
-          method: "PUT",
-          body: formData,
-        }
-      );
+      const response = await fetch("http://localhost:5000/website_hero", {
+        method: "PUT",
+        body: formData,
+      });
 
       if (response.ok) {
         alert("images upload Successfully");

@@ -14,7 +14,7 @@ const PackageDetailsPrimary = ({ type, id }) => {
   useEffect(() => {
     if (!id) return;
 
-    fetch(`https://readgro-backend.onrender.com/getpackage/${id}`)
+    fetch(`http://localhost:5000/getpackage/${id}`)
       .then((res) => res.json())
       .then((data) => {
         if (data) {
@@ -114,7 +114,7 @@ const PackageDetailsPrimary = ({ type, id }) => {
               <div className="lg:w-1/2">
                 <div className="relative h-80 md:h-96 rounded-xl overflow-hidden shadow-lg">
                   <img
-                    src={`https://readgro-backend.onrender.com/uploads/${packageDetails.package_image}`}
+                    src={`http://localhost:5000/uploads/${packageDetails.package_image}`}
                     alt={packageDetails.package_name}
                     className="w-full h-full object-cover"
                   />

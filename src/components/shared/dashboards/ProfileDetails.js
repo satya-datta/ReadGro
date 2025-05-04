@@ -6,6 +6,7 @@ const ProfileDetails = () => {
   const { user } = useUserContext();
   const [userData, setUserData] = useState(null);
   const [editableData, setEditableData] = useState({});
+  const [errors, setErrors] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -18,7 +19,7 @@ const ProfileDetails = () => {
   const fetchUserData = async (userId) => {
     try {
       const response = await fetch(
-        `https://readgro-backend.onrender.com/getuser_details/${userId}`,
+        `http://localhost:5000/getuser_details/${userId}`,
         {
           method: "GET",
           credentials: "include",
@@ -58,7 +59,34 @@ const ProfileDetails = () => {
     setIsEditing(true);
   };
 
+  const validateForm = () => {
+    let newErrors = {};
+
+    if (!editableData.name?.trim()) newErrors.name = "Name is required";
+    if (!editableData.email?.trim()) newErrors.email = "Email is required";
+
+    if (!editableData.phone?.trim()) {
+      newErrors.phone = "Phone number is required";
+    } else if (!/^\d{10}$/.test(editableData.phone)) {
+      newErrors.phone = "Phone number must be 10 digits";
+    }
+
+    if (!editableData.address?.trim())
+      newErrors.address = "Address is required";
+
+    if (!editableData.pincode?.trim()) {
+      newErrors.pincode = "Pincode is required";
+    } else if (!/^\d{6}$/.test(editableData.pincode)) {
+      newErrors.pincode = "Pincode must be 6 digits";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSaveChanges = async () => {
+    if (!validateForm()) return;
+
     const formData = new FormData();
     Object.keys(editableData).forEach((key) => {
       formData.append(key, editableData[key]);
@@ -69,7 +97,7 @@ const ProfileDetails = () => {
 
     try {
       const response = await fetch(
-        `https://readgro-backend.onrender.com/update_user/${user?.userId}`,
+        `http://localhost:5000/update_user/${user?.userId}`,
         {
           method: "PUT",
           body: formData,
@@ -81,7 +109,8 @@ const ProfileDetails = () => {
         alert("Profile updated successfully");
         setIsEditing(false);
         fetchUserData(user.userId);
-        setSelectedImage(null); // Clear the image preview
+        setSelectedImage(null);
+        setErrors({});
       } else {
         console.error("Failed to update user data");
       }
@@ -93,7 +122,7 @@ const ProfileDetails = () => {
   return (
     <div className="p-5 bg-white shadow rounded-md">
       <h2 className="text-2xl font-bold mb-4">My Profile</h2>
-
+    
       {userData ? (
         <div>
           {/* Input Fields Grid */}
@@ -111,8 +140,11 @@ const ProfileDetails = () => {
                   disabled={!isEditing}
                   className={`w-full p-2 border rounded ${
                     isEditing ? "bg-white" : "bg-gray-100"
-                  }`}
+                  } ${errors[field] ? "border-red-500" : ""}`}
                 />
+                {errors[field] && (
+                  <p className="text-red-500 text-sm">{errors[field]}</p>
+                )}
               </div>
             ))}
           </div>
@@ -139,7 +171,6 @@ const ProfileDetails = () => {
                 onChange={handleImageChange}
                 className="hidden"
               />
-              {/* Show file name */}
               {selectedImage && (
                 <span className="text-sm text-gray-700">
                   {selectedImage.name}

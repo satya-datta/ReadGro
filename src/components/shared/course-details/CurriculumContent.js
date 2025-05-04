@@ -8,7 +8,7 @@ const CurriculumContent = ({ id }) => {
 
   useEffect(() => {
     if (id) {
-      fetch(`https://readgro-backend.onrender.com/gettopics/${id}`)
+      fetch(`http://localhost:5000/gettopics/${id}`)
         .then((res) => res.json())
         .then((data) => {
           if (Array.isArray(data.topics)) {

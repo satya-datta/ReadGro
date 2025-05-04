@@ -44,9 +44,7 @@ const CheckoutWeb = ({ packagename }) => {
   // Fetch package details when packagename is available
   useEffect(() => {
     if (packagename) {
-      fetch(
-        `https://readgro-backend.onrender.com/getpackagebyname/${package_name}`
-      )
+      fetch(`http://localhost:5000/getpackagebyname/${package_name}`)
         .then((res) => res.json())
         .then((data) => setPackageDetails(data))
         .catch((err) => console.error("Error fetching package:", err));
@@ -60,7 +58,7 @@ const CheckoutWeb = ({ packagename }) => {
 
     try {
       const response = await fetch(
-        "https://readgro-backend.onrender.com/validate_refferalcode",
+        "http://localhost:5000/validate_refferalcode",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -123,7 +121,7 @@ const CheckoutWeb = ({ packagename }) => {
     try {
       // Step 1: Validate user
       const validateResponse = await fetch(
-        "https://readgro-backend.onrender.com/validate_user",
+        "http://localhost:5000/validate_user",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -166,7 +164,7 @@ const CheckoutWeb = ({ packagename }) => {
 
       // Step 3: Register the User
       const registerResponse = await fetch(
-        "https://readgro-backend.onrender.com/create-user",
+        "http://localhost:5000/create-user",
         {
           method: "POST",
           credentials: "include",
@@ -404,7 +402,7 @@ const CheckoutWeb = ({ packagename }) => {
             {packageDetails?.package_image && (
               <div className="mt-5">
                 <img
-                  src={`https://readgro-backend.onrender.com/uploads/${packageDetails.package_image}`}
+                  src={`http://localhost:5000/uploads/${packageDetails.package_image}`}
                   alt={packageDetails?.package_name || "Package"}
                   className="w-full h-[400px] object-cover rounded-md border"
                 />
@@ -417,7 +415,7 @@ const CheckoutWeb = ({ packagename }) => {
                 onClick={handleNext}
                 type="submit"
                 width="full"
-                className="px-5 py-3 bg-green-500 text-white font-bold rounded hover:bg-green-600 w-3/4 lg:w-[300px]"
+                className="px-5 py-3 bg-primaryColor text-white font-bold rounded hover:bg-primaryColor w-3/4 lg:w-[300px]"
               >
                 Next
               </ButtonPrimary>
