@@ -24,12 +24,15 @@ const UserLoginForm = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch("http://localhost:5000/userauth", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        "https://readgro-backend.onrender.com/userauth",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ email, password }),
+        }
+      );
       const data = await response.json();
       if (response.ok) {
         setIsAuthenticated(true);
@@ -52,11 +55,14 @@ const UserLoginForm = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch("http://localhost:5000/send-userlogin-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
+      const response = await fetch(
+        "https://readgro-backend.onrender.com/send-userlogin-otp",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        }
+      );
       const data = await response.json();
       if (response.ok) {
         setOtpSent(true);
@@ -76,12 +82,15 @@ const UserLoginForm = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch("http://localhost:5000/verifyuser-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, otp }),
-        credentials: "include",
-      });
+      const response = await fetch(
+        "https://readgro-backend.onrender.com/verifyuser-otp",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, otp }),
+          credentials: "include",
+        }
+      );
       const data = await response.json();
       if (response.ok) {
         setLoginMethod("otp"); // <<< login via OTP

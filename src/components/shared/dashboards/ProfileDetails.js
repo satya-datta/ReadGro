@@ -19,7 +19,7 @@ const ProfileDetails = () => {
   const fetchUserData = async (userId) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/getuser_details/${userId}`,
+        `https://readgro-backend.onrender.com/getuser_details/${userId}`,
         {
           method: "GET",
           credentials: "include",
@@ -97,7 +97,7 @@ const ProfileDetails = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/update_user/${user?.userId}`,
+        `https://readgro-backend.onrender.com/update_user/${user?.userId}`,
         {
           method: "PUT",
           body: formData,
@@ -122,7 +122,7 @@ const ProfileDetails = () => {
   return (
     <div className="p-5 bg-white shadow rounded-md">
       <h2 className="text-2xl font-bold mb-4">My Profile</h2>
-    
+
       {userData ? (
         <div>
           {/* Input Fields Grid */}

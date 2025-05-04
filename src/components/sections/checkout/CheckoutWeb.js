@@ -44,7 +44,9 @@ const CheckoutWeb = ({ packagename }) => {
   // Fetch package details when packagename is available
   useEffect(() => {
     if (packagename) {
-      fetch(`http://localhost:5000/getpackagebyname/${package_name}`)
+      fetch(
+        `https://readgro-backend.onrender.com/getpackagebyname/${package_name}`
+      )
         .then((res) => res.json())
         .then((data) => setPackageDetails(data))
         .catch((err) => console.error("Error fetching package:", err));
@@ -58,7 +60,7 @@ const CheckoutWeb = ({ packagename }) => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/validate_refferalcode",
+        "https://readgro-backend.onrender.com/validate_refferalcode",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -121,7 +123,7 @@ const CheckoutWeb = ({ packagename }) => {
     try {
       // Step 1: Validate user
       const validateResponse = await fetch(
-        "http://localhost:5000/validate_user",
+        "https://readgro-backend.onrender.com/validate_user",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -164,7 +166,7 @@ const CheckoutWeb = ({ packagename }) => {
 
       // Step 3: Register the User
       const registerResponse = await fetch(
-        "http://localhost:5000/create-user",
+        "https://readgro-backend.onrender.com/create-user",
         {
           method: "POST",
           credentials: "include",
@@ -402,7 +404,7 @@ const CheckoutWeb = ({ packagename }) => {
             {packageDetails?.package_image && (
               <div className="mt-5">
                 <img
-                  src={`http://localhost:5000/uploads/${packageDetails.package_image}`}
+                  src={`https://readgro-backend.onrender.com/uploads/${packageDetails.package_image}`}
                   alt={packageDetails?.package_name || "Package"}
                   className="w-full h-[400px] object-cover rounded-md border"
                 />

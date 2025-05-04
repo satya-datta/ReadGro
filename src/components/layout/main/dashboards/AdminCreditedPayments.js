@@ -10,7 +10,9 @@ const AdminCreditedPayments = () => {
   useEffect(() => {
     const fetchPayments = async () => {
       try {
-        const response = await fetch("http://localhost:5000/payments");
+        const response = await fetch(
+          "https://readgro-backend.onrender.com/payments"
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch payments");
         }

@@ -20,7 +20,7 @@ const RGWithdrawlRequestInner = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/getwithdrawlrequests/${user.userId}`,
+        `https://readgro-backend.onrender.com/getwithdrawlrequests/${user.userId}`,
         {
           method: "GET",
           credentials: "include",
@@ -49,7 +49,7 @@ const RGWithdrawlRequestInner = () => {
   const fetchUserBankData = async (userId) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/getuser_bank_details/${userId}`,
+        `https://readgro-backend.onrender.com/getuser_bank_details/${userId}`,
         {
           method: "GET",
           credentials: "include",
@@ -90,7 +90,7 @@ const RGWithdrawlRequestInner = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/withdrawlrequests/${user.userId}`,
+        `https://readgro-backend.onrender.com/withdrawlrequests/${user.userId}`,
         {
           method: "POST",
           credentials: "include",

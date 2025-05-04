@@ -17,7 +17,9 @@ const PasswordContent = () => {
   useEffect(() => {
     const fetchAdminDetails = async () => {
       try {
-        const response = await fetch("http://localhost:5000/getadmindetails");
+        const response = await fetch(
+          "https://readgro-backend.onrender.com/getadmindetails"
+        );
         const data = await response.json();
         setEmail(data.email || "");
         setName(data.name || "");
@@ -34,7 +36,7 @@ const PasswordContent = () => {
     setSuccess("");
     try {
       const response = await fetch(
-        "http://localhost:5000/admin-cred-send-otp",
+        "https://readgro-backend.onrender.com/admin-cred-send-otp",
         {
           method: "POST",
           headers: {
@@ -74,19 +76,22 @@ const PasswordContent = () => {
       : null;
 
     try {
-      const response = await fetch("http://localhost:5000/update-admin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          name,
-          phone_number: phone,
-          password: hashedPassword,
-          otp,
-        }),
-      });
+      const response = await fetch(
+        "https://readgro-backend.onrender.com/update-admin",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            name,
+            phone_number: phone,
+            password: hashedPassword,
+            otp,
+          }),
+        }
+      );
 
       const responseData = await response.json(); // Get response body
 
