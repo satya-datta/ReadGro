@@ -3,8 +3,8 @@ import ErrorMain from "@/components/layout/main/ErrorMain";
 import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 
 export const metadata = {
-  title: "Error | Edurock - Education LMS Template",
-  description: "Error | Edurock - Education LMS Template",
+  title: "Error | ReadGro - Education LMS Template",
+  description: "Error | ReadGro - Education LMS Template",
 };
 
 const Error = async () => {

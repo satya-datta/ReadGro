@@ -5,8 +5,8 @@ import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 import PlainWrapper from "@/components/shared/wrappers/PlainWrapper";
 import UserDashboardWrapper from "@/components/shared/wrappers/UserDashboardWrapper";
 export const metadata = {
-  title: "Instructor Announcements | Edurock - Education LMS Template",
-  description: "Instructor Announcements | Edurock - Education LMS Template",
+  title: "Instructor Announcements | ReadGro - Education LMS Template",
+  description: "Instructor Announcements | ReadGro - Education LMS Template",
 };
 const Instructor_Announcements = () => {
   return (

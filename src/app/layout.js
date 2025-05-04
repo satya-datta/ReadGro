@@ -25,7 +25,7 @@ export const hind = Hind({
 });
 
 export const metadata = {
-  title: "Home 1 | Edurock - Education LMS Template",
+  title: "Home 1 | ReadGro - Education LMS Template",
   description: "Home description",
   icons: { icon: "/favicon.ico" }, // Add this lineC:\Users\lenovo\Downloads\ReadGro_MAIN\READGRO\src\assets\images\favicon.ico
 };

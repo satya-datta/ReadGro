@@ -7,8 +7,8 @@ import AdminWrapper from "@/components/shared/wrappers/AdminWrapper";
 import DsahboardWrapper from "@/components/shared/wrappers/DsahboardWrapper";
 import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 export const metadata = {
-  title: "Admin Quiz Attempts | Edurock - Education LMS Template",
-  description: "Admin Quiz Attempts | Edurock - Education LMS Template",
+  title: "Admin Quiz Attempts | ReadGro - Education LMS Template",
+  description: "Admin Quiz Attempts | ReadGro - Education LMS Template",
 };
 const Admin_Quiz_Attempts = () => {
   return (

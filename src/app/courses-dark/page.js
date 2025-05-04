@@ -3,8 +3,8 @@ import CoursesMain from "@/components/layout/main/CoursesMain";
 import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 import React from "react";
 export const metadata = {
-  title: "Courses - Dark | Edurock - Education LMS Template",
-  description: "Courses - Dark | Edurock - Education LMS Template",
+  title: "Courses - Dark | ReadGro - Education LMS Template",
+  description: "Courses - Dark | ReadGro - Education LMS Template",
 };
 const Courses_Dark = () => {
   return (

@@ -6,8 +6,8 @@ import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 import PlainWrapper from "@/components/shared/wrappers/PlainWrapper";
 import UserDashboardWrapper from "@/components/shared/wrappers/UserDashboardWrapper";
 export const metadata = {
-  title: "Student Enrolled Courses | Edurock - Education LMS Template",
-  description: "Student Enrolled Courses | Edurock - Education LMS Template",
+  title: "Student Enrolled Courses | ReadGro - Education LMS Template",
+  description: "Student Enrolled Courses | ReadGro - Education LMS Template",
 };
 const Student_Enrolled_Courses = ({ params }) => {
   const { id } = params;

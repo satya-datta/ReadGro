@@ -3,8 +3,8 @@ import ContactMain from "@/components/layout/main/ContactMain";
 import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 
 export const metadata = {
-  title: "Contact | Edurock - Education LMS Template",
-  description: "Contact | Edurock - Education LMS Template",
+  title: "Contact | ReadGro - Education LMS Template",
+  description: "Contact | ReadGro - Education LMS Template",
 };
 
 const Contact = async () => {

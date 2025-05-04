@@ -6,8 +6,8 @@ import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 import PlainWrapper from "@/components/shared/wrappers/PlainWrapper";
 import UserDashboardWrapper from "@/components/shared/wrappers/UserDashboardWrapper";
 export const metadata = {
-  title: "Student My Quiz Attempts | Edurock - Education LMS Template",
-  description: "Student My Quiz Attempts | Edurock - Education LMS Template",
+  title: "Student My Quiz Attempts | ReadGro - Education LMS Template",
+  description: "Student My Quiz Attempts | ReadGro - Education LMS Template",
 };
 const Student_My_Quiz_Attempts = () => {
   return (

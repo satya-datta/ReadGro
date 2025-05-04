@@ -5,8 +5,8 @@ import AdminWrapper from "@/components/shared/wrappers/AdminWrapper";
 import DsahboardWrapper from "@/components/shared/wrappers/DsahboardWrapper";
 import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 export const metadata = {
-  title: "Admin Settings | Edurock - Education LMS Template",
-  description: "Admin Settings | Edurock - Education LMS Template",
+  title: "Admin Settings | ReadGro - Education LMS Template",
+  description: "Admin Settings | ReadGro - Education LMS Template",
 };
 const Admin_Settings = () => {
   return (

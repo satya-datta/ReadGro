@@ -6,8 +6,8 @@ import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 import UserKYC from "@/components/layout/main/dashboards/UserKYC";
 import PlainWrapper from "@/components/shared/wrappers/PlainWrapper";
 export const metadata = {
-  title: "Student Message | Edurock - Education LMS Template",
-  description: "Student Message | Edurock - Education LMS Template",
+  title: "Student Message | ReadGro - Education LMS Template",
+  description: "Student Message | ReadGro - Education LMS Template",
 };
 const Student_Message = () => {
   return (

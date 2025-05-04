@@ -3,8 +3,8 @@ import CoursesMain from "@/components/layout/main/CoursesMain";
 import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 
 export const metadata = {
-  title: "Courses | Edurock - Education LMS Template",
-  description: "Courses | Edurock - Education LMS Template",
+  title: "Courses | ReadGro - Education LMS Template",
+  description: "Courses | ReadGro - Education LMS Template",
 };
 
 const Courses = async () => {

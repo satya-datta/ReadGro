@@ -4,8 +4,8 @@ import AdminWrapper from "@/components/shared/wrappers/AdminWrapper";
 
 import PlainWrapper from "@/components/shared/wrappers/PlainWrapper";
 export const metadata = {
-  title: "Login/Register | Edurock - Education LMS Template",
-  description: "Login/Register | Edurock - Education LMS Template",
+  title: "Login/Register | ReadGro - Education LMS Template",
+  description: "Login/Register | ReadGro - Education LMS Template",
 };
 const Login = () => {
   return (
