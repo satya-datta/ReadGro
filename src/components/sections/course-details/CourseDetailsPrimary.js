@@ -119,10 +119,6 @@ const CourseDetailsPrimary = ({ id, type }) => {
               {type !== 2 && type !== 3 && (
                 <div className="md:w-80 shrink-0">
                   <div className="border border-gray-200 rounded-lg p-6 shadow-sm">
-                    <button className="w-full bg-primaryColor hover:bg-primary-dark text-white font-medium py-3 px-4 rounded-lg transition duration-200 mb-4">
-                      Enroll Now
-                    </button>
-
                     <div className="space-y-3 text-sm text-gray-600">
                       <div className="flex items-center gap-2">
                         <svg

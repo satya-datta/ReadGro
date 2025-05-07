@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import FooterNavItems from "./FooterNavItems";
 import FooterAbout from "./FooterAbout";
-import FooterRecentPosts from "./FooterRecentPosts";
-
+import logoImage from "@/assets/images/rg.png";
+import Image from "next/image";
 const FooterNavList = () => {
   const [packages, setPackages] = useState([]);
 
@@ -14,10 +14,9 @@ const FooterNavList = () => {
         );
         const data = await response.json();
 
-        // Assuming each item has a "name" field
         const formatted = data.map((pkg) => ({
           name: pkg.package_name,
-          path: `/packages/${pkg.package_id}`, // Customize path if needed
+          path: `/packages/${pkg.package_id}`,
         }));
 
         setPackages(formatted);
@@ -33,55 +32,35 @@ const FooterNavList = () => {
     {
       heading: "Usefull Links",
       items: [
-        {
-          name: "About Us",
-          path: "/about",
-        },
-        {
-          name: "Courses",
-          path: "/courses",
-        },
-        {
-          name: "Select Plan & Register",
-          path: "/packages",
-        },
-        {
-          name: "User Login",
-          path: "/user/login",
-        },
-        {
-          name: "Contact Us",
-          path: "/contact",
-        },
+        { name: "About Us", path: "/about" },
+        { name: "Courses", path: "/courses" },
+        { name: "Select Plan & Register", path: "/packages" },
+        { name: "User Login", path: "/user/login" },
+        { name: "Contact Us", path: "/contact" },
       ],
     },
     {
       heading: "Plans",
       items:
-        packages.length > 0
-          ? packages
-          : [
-              {
-                name: "Loading...",
-                path: "#",
-              },
-            ],
+        packages.length > 0 ? packages : [{ name: "Loading...", path: "#" }],
     },
   ];
 
   return (
     <section>
-      <div className="grid grid-cols-1 sm:grid-cols-12 md:grid-cols-2 lg:grid-cols-12 gap-30px md:gap-y-5 lg:gap-y-0 pt-60px pb-50px md:pt-30px md:pb-30px lg:pt-110px lg:pb-20">
-        {/* left */}
-        <FooterAbout />
+      <div className="grid grid-cols-1 sm:grid-cols-12 md:grid-cols-12 gap-6 pt-4 pb-4 md:pt-6 md:pb-6 lg:pt-10 lg:pb-6 items-start">
+        {/* Logo on the far left */}
+        <div className="sm:col-span-12 md:col-span-3 lg:col-span-2 flex justify-center md:justify-start">
+          <Image src={logoImage} alt="ReadGro Logo" width={150} height={400} />
+        </div>
 
-        {/* nav area */}
-        {lists.map((list, idx) => (
-          <FooterNavItems key={idx} list={list} idx={idx} />
-        ))}
-
-        {/* right */}
-        {/* <FooterRecentPosts /> */}
+        {/* About and Nav Sections */}
+        <div className="sm:col-span-12 md:col-span-9 lg:col-span-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <FooterAbout />
+          {lists.map((list, idx) => (
+            <FooterNavItems key={idx} list={list} idx={idx} />
+          ))}
+        </div>
       </div>
     </section>
   );

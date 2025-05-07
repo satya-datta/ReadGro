@@ -151,7 +151,7 @@ const PlanCard = ({ package_id, userCurrentPackage }) => {
       },
       prefill: {
         name: user?.name || "Gnaneswar",
-        email: user?.email || "bunnyroyals24@gmail.com",
+        email: user?.email || "readgroofficial@gmail.com",
         contact: user?.phone || "6304586548",
       },
       theme: {

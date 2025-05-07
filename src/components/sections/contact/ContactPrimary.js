@@ -46,7 +46,7 @@ const ContactPrimary = () => {
                 Mail address
               </h3>
               <p className="text-size-13 lg:text-size-15 text-contentColor dark:text-contentColor-dark leaing-5">
-                bunnyroyals24@gmail.com
+                readgroofficial@gmail.com
               </p>
               {/* <p className="text-size-15 text-contentColor dark:text-contentColor-dark leaing-26px">
                 998757478492
