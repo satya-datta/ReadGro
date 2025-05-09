@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import aboutImage8 from "@/assets/images/about/about_8.png";
-import aboutImage14 from "@/assets/images/about/about_12.png";
+import aboutImage14 from "@/assets/images/about/about_10.png";
 
 import SectionName from "@/components/shared/section-names/SectionName";
 

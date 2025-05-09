@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import HreoName from "../section-names/HreoName";
 import Link from "next/link";
+
 const HeroSlide2 = ({ slide, idx }) => {
   const { title, tag } = slide;
   const [imageUrls, setImageUrls] = useState(null); // Initialize as null
@@ -45,18 +46,12 @@ const HeroSlide2 = ({ slide, idx }) => {
 
   const getBackgroundImage = () => {
     if (imageUrls && imageUrls.length > 0) {
-      if (idx === 0) {
-        if (imageUrls[0].image1) {
-          return `url('${imageUrls[0].image1}')`;
-        }
-      } else if (idx === 1) {
-        if (imageUrls[0].image2) {
-          return `url('${imageUrls[0].image2}')`;
-        }
-      } else if (idx === 2) {
-        if (imageUrls[0].image3) {
-          return `url('${imageUrls[0].image3}')`;
-        }
+      if (idx === 0 && imageUrls[0].image1) {
+        return `url('${imageUrls[0].image1}')`;
+      } else if (idx === 1 && imageUrls[0].image2) {
+        return `url('${imageUrls[0].image2}')`;
+      } else if (idx === 2 && imageUrls[0].image3) {
+        return `url('${imageUrls[0].image3}')`;
       }
     }
 
@@ -64,14 +59,19 @@ const HeroSlide2 = ({ slide, idx }) => {
     return idx === 0
       ? "url('../assets/images/herobanner/university_1.jpg')"
       : idx === 1
-      ? "url('../assets/images//herobanner/university_2.jpg')"
+      ? "url('../assets/images/herobanner/university_2.jpg')"
       : "url('../assets/images/herobanner/university_3.jpg')";
   };
 
   return (
     <div
-      className={`hero relative z-0`}
-      style={{ backgroundImage: getBackgroundImage() }}
+      className="hero relative z-0"
+      style={{
+        backgroundImage: getBackgroundImage(),
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundPosition: "center center",
+      }}
     >
       <div className="bg-black bg-opacity-70 overflow-hidden pt-50px pb-100px md:pt-35 md:pb-170px lg:pt-100px lg:pb-150px 2xl:pt-35 2xl:pb-170px">
         <div className="container 2xl:container-secondary-md relative overflow-hidden text-center">
