@@ -136,7 +136,7 @@ const CourseDetailsPrimary = ({ id, type }) => {
                         </svg>
                         <span>Lifetime access</span>
                       </div>
-                      <div className="flex items-center gap-2">
+                      {/* <div className="flex items-center gap-2">
                         <svg
                           className="w-5 h-5 text-gray-400"
                           fill="none"
@@ -151,8 +151,8 @@ const CourseDetailsPrimary = ({ id, type }) => {
                           />
                         </svg>
                         <span>Certificate of completion</span>
-                      </div>
-                      <div className="flex items-center gap-2">
+                      </div> */}
+                      {/* <div className="flex items-center gap-2">
                         <svg
                           className="w-5 h-5 text-gray-400"
                           fill="none"
@@ -167,7 +167,7 @@ const CourseDetailsPrimary = ({ id, type }) => {
                           />
                         </svg>
                         <span>Downloadable resources</span>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
