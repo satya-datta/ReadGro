@@ -4,13 +4,16 @@ const validateAdminToken = async () => {
 
     if (!token) return { isValid: false, admin: null };
 
-    const response = await fetch("http://localhost:5000/auth/validate", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // ✅ Send token in header
-      },
-    });
+    const response = await fetch(
+      "https://readgro-backend.onrender.com/auth/validate",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // ✅ Send token in header
+        },
+      }
+    );
 
     if (!response.ok) {
       return { isValid: false, admin: null };

@@ -20,12 +20,12 @@ const AdmineditCourseMain = ({ course_id }) => {
     const fetchCourseDetails = async () => {
       try {
         const courseResponse = await fetch(
-          `http://localhost:5000/getspecific_course/${course_id}`
+          `https://readgro-backend.onrender.com/getspecific_course/${course_id}`
         );
         const courseData = await courseResponse.json();
 
         const topicsResponse = await fetch(
-          `http://localhost:5000/gettopics/${course_id}`
+          `https://readgro-backend.onrender.com/gettopics/${course_id}`
         );
         const topicsData = await topicsResponse.json();
 
@@ -91,26 +91,32 @@ const AdmineditCourseMain = ({ course_id }) => {
 
     try {
       // Update course details with image
-      await fetch(`http://localhost:5000/updatecoursedetails/${course_id}`, {
-        method: "PUT",
-        body: formData, // Send FormData directly
-      });
+      await fetch(
+        `https://readgro-backend.onrender.com/updatecoursedetails/${course_id}`,
+        {
+          method: "PUT",
+          body: formData, // Send FormData directly
+        }
+      );
 
       // Update existing topics
       for (const topic of topics) {
-        await fetch(`http://localhost:5000/updatetopic/${topic.topic_id}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            topic_name: topic.topic_name,
-            video_url: topic.video_url,
-          }),
-        });
+        await fetch(
+          `https://readgro-backend.onrender.com/updatetopic/${topic.topic_id}`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              topic_name: topic.topic_name,
+              video_url: topic.video_url,
+            }),
+          }
+        );
       }
 
       // Create new topics
       for (const topic of newTopics) {
-        await fetch("http://localhost:5000/create-topic", {
+        await fetch("https://readgro-backend.onrender.com/create-topic", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ ...topic, course_id }),
@@ -119,9 +125,12 @@ const AdmineditCourseMain = ({ course_id }) => {
 
       // Delete removed topics
       for (const topicId of deletedTopics) {
-        await fetch(`http://localhost:5000/delete-topic/${topicId}`, {
-          method: "DELETE",
-        });
+        await fetch(
+          `https://readgro-backend.onrender.com/delete-topic/${topicId}`,
+          {
+            method: "DELETE",
+          }
+        );
       }
 
       // Reset states after successful update

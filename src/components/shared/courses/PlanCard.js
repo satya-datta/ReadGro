@@ -30,7 +30,7 @@ const PlanCard = ({ package_id, userCurrentPackage }) => {
   }, [showPopup]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/getpackage/${package_id}`)
+    fetch(`https://readgro-backend.onrender.com/getpackage/${package_id}`)
       .then((res) => res.json())
       .then((data) => setPackageData(data))
       .catch((error) =>
@@ -39,14 +39,16 @@ const PlanCard = ({ package_id, userCurrentPackage }) => {
   }, [package_id]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/getcoursemappings/${package_id}`)
+    fetch(
+      `https://readgro-backend.onrender.com/getcoursemappings/${package_id}`
+    )
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
           const courseIds = data.map((course) => course.course_id);
           setTotalCourses(data.length);
 
-          fetch("http://localhost:5000/getcoursedetails", {
+          fetch("https://readgro-backend.onrender.com/getcoursedetails", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ course_ids: courseIds }),
@@ -69,7 +71,7 @@ const PlanCard = ({ package_id, userCurrentPackage }) => {
 
   useEffect(() => {
     if (package_id > 1) {
-      fetch(`http://localhost:5000/getpackage/${package_id - 1}`)
+      fetch(`https://readgro-backend.onrender.com/getpackage/${package_id - 1}`)
         .then((res) => res.json())
         .then((data) => setPreviousPackageName(data.package_name))
         .catch((error) =>
@@ -164,12 +166,15 @@ const PlanCard = ({ package_id, userCurrentPackage }) => {
   // Function to upgrade the user's package
   const upgradePackage = async (userId, newPackageId) => {
     try {
-      const response = await fetch(`http://localhost:5000/upgrade_package`, {
-        method: "PUT",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: userId, package_id: newPackageId }),
-      });
+      const response = await fetch(
+        `https://readgro-backend.onrender.com/upgrade_package`,
+        {
+          method: "PUT",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId: userId, package_id: newPackageId }),
+        }
+      );
 
       const data = await response.json();
       console.log(data.message);

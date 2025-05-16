@@ -15,7 +15,7 @@ const UserHeroDashboard = () => {
 
       try {
         const response = await fetch(
-          `http://localhost:5000/getuser_details/${user.userId}`
+          `https://readgro-backend.onrender.com/getuser_details/${user.userId}`
         );
         if (!response.ok) throw new Error("Failed to fetch user details");
 
@@ -43,10 +43,13 @@ const UserHeroDashboard = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:5000/userlogout", {
-        method: "POST",
-        credentials: "include",
-      });
+      const response = await fetch(
+        "https://readgro-backend.onrender.com/userlogout",
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
 
       if (response.ok) {
         window.location.href = "/";

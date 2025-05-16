@@ -11,7 +11,9 @@ const EnrolledContent = ({ package_id }) => {
 
   // Fetch course IDs mapped to the package
   useEffect(() => {
-    fetch(`http://localhost:5000/getcoursemappings/${package_id}`)
+    fetch(
+      `https://readgro-backend.onrender.com/getcoursemappings/${package_id}`
+    )
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
@@ -36,7 +38,7 @@ const EnrolledContent = ({ package_id }) => {
   useEffect(() => {
     if (courseIds.length === 0) return;
 
-    fetch("http://localhost:5000/getcoursedetails", {
+    fetch("https://readgro-backend.onrender.com/getcoursedetails", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
