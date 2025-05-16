@@ -21,7 +21,7 @@ const CounterStudent = () => {
 
       try {
         const response = await axios.get(
-          `https://readgro-backend.onrender.com/earnings/${user.userId}`
+          `http://localhost:5000/earnings/${user.userId}`
         );
         setEarnings(response.data);
       } catch (error) {

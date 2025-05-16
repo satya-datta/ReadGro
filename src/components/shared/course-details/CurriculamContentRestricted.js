@@ -6,14 +6,14 @@ import { useRouter } from "next/navigation";
 const CurriculumContentRestricted = ({ id, hasPurchased }) => {
   const [topics, setTopics] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
-  const [showPopup, setShowPopup] = useState(false);
-  const [packageNames, setPackageNames] = useState([]); // Store package names
+  const [showLockedPopup, setShowLockedPopup] = useState(false);
+  const [showVideoModal, setShowVideoModal] = useState(false);
+  const [packageNames, setPackageNames] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
     if (id) {
-      // Fetch course topics
-      fetch(`https://readgro-backend.onrender.com/gettopics/${id}`)
+      fetch(`http://localhost:5000/gettopics/${id}`)
         .then((res) => res.json())
         .then((data) => {
           if (Array.isArray(data.topics)) {
@@ -26,8 +26,7 @@ const CurriculumContentRestricted = ({ id, hasPurchased }) => {
           console.error(`Error fetching topics for course ${id}:`, error)
         );
 
-      // Fetch package names mapped to this course
-      fetch(`https://readgro-backend.onrender.com/getpackagebycourse/${id}`)
+      fetch(`http://localhost:5000/getpackagebycourse/${id}`)
         .then((res) => res.json())
         .then((data) => {
           if (Array.isArray(data.packages)) {
@@ -65,11 +64,12 @@ const CurriculumContentRestricted = ({ id, hasPurchased }) => {
 
   const handleVideoClick = (index, youtubeLink) => {
     if (index > 0 && !hasPurchased) {
-      setShowPopup(true);
+      setShowLockedPopup(true);
     } else {
       const embedUrl = getEmbedUrl(youtubeLink);
       if (embedUrl) {
         setSelectedVideo(embedUrl);
+        setShowVideoModal(true);
       } else {
         window.open(youtubeLink, "_blank");
       }
@@ -78,57 +78,74 @@ const CurriculumContentRestricted = ({ id, hasPurchased }) => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4">Course Topics</h2>
-      <ul className="border border-gray-300 rounded-lg p-4">
-        {topics.map((topic, index) => (
-          <li
-            key={index}
-            className="py-4 px-2 border-b last:border-none flex justify-between items-center"
-          >
-            <div>
-              <h4 className="text-lg font-medium">{topic.topic_name}</h4>
-            </div>
-            <button
-              onClick={() => handleVideoClick(index, topic.video_url)}
-              className={`px-3 py-1 text-xs font-medium rounded-md flex items-center gap-2 transition 
-    ${
-      index === 0 || hasPurchased
-        ? "bg-blue-600 hover:bg-blue-700 text-white"
-        : "bg-gray-400 text-white cursor-not-allowed"
-    }`}
+      <ul className="divide-y border rounded-lg">
+        {topics.map((topic, index) => {
+          const isLocked = index > 0 && !hasPurchased;
+
+          return (
+            <li
+              key={index}
+              className="flex items-center justify-between px-4 py-3 hover:bg-gray-50"
             >
-              <i className="icofont-play-alt-2 text-sm"></i>
-              <span className="whitespace-nowrap">Watch Video</span>
-            </button>
-          </li>
-        ))}
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => handleVideoClick(index, topic.video_url)}
+                  disabled={isLocked}
+                  className={`w-9 h-9 flex items-center justify-center border rounded-full 
+                    ${
+                      isLocked
+                        ? "border-gray-300"
+                        : "border-blue-500 text-blue-600 hover:bg-blue-100"
+                    }`}
+                >
+                  <i className="icofont-play-alt-2 text-sm"></i>
+                </button>
+
+                <span className="text-sm font-medium text-gray-800">
+                  {topic.topic_name} : {index + 1}
+                </span>
+              </div>
+
+              {isLocked && (
+                <i className="icofont-lock text-gray-400 text-lg"></i>
+              )}
+            </li>
+          );
+        })}
       </ul>
 
-      {selectedVideo ? (
-        <div className="mt-6">
-          <h3 className="text-xl font-semibold mb-2">Now Playing:</h3>
-          <iframe
-            width="100%"
-            height="400"
-            src={selectedVideo}
-            title="YouTube Video"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
+      {/* Video Modal */}
+      {showVideoModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">
+          <div className="bg-white p-4 rounded-lg shadow-lg relative w-full max-w-2xl">
+            <button
+              className="absolute top-2 right-2 text-gray-600 hover:text-black text-xl"
+              onClick={() => setShowVideoModal(false)}
+            >
+              ✖
+            </button>
+            <h3 className="text-xl font-semibold mb-4">Now Playing</h3>
+            <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-lg">
+              <iframe
+                src={selectedVideo}
+                title="YouTube Video"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="absolute top-0 left-0 w-full h-full"
+              ></iframe>
+            </div>
+          </div>
         </div>
-      ) : (
-        <p className="text-red-500 mt-4">No video selected.</p>
       )}
 
-      {/* Popup Modal */}
-      {showPopup && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+      {/* Locked Content Popup */}
+      {showLockedPopup && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-40">
           <div className="bg-white p-6 rounded-lg shadow-lg text-center relative w-96">
-            {/* Close Icon */}
             <button
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-              onClick={() => setShowPopup(false)}
+              onClick={() => setShowLockedPopup(false)}
             >
               ✖
             </button>
@@ -150,7 +167,6 @@ const CurriculumContentRestricted = ({ id, hasPurchased }) => {
               )}
             </ul>
 
-            {/* View Plans Button */}
             <button
               className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 w-full"
               onClick={() => router.push("/packages")}

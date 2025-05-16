@@ -9,7 +9,7 @@ const CoursesWeb = () => {
   const router = useRouter();
 
   useEffect(() => {
-    fetch("https://readgro-backend.onrender.com/getallcourses")
+    fetch("http://localhost:5000/getallcourses")
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data.courses)) {
@@ -25,7 +25,7 @@ const CoursesWeb = () => {
   }, []);
 
   const fetchTopicsCount = (courseId) => {
-    fetch(`https://readgro-backend.onrender.com/gettopics/${courseId}`)
+    fetch(`http://localhost:5000/gettopics/${courseId}`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data.topics)) {
@@ -62,7 +62,7 @@ const CoursesWeb = () => {
               <div className="relative">
                 {course.course_image && (
                   <img
-                    src={`https://readgro-backend.onrender.com/uploads/${course.course_image}`}
+                    src={`${course.course_image}`}
                     alt={course.course_name}
                     className="w-full h-48 object-cover"
                   />

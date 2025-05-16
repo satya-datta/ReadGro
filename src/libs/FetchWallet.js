@@ -5,14 +5,11 @@ export const FetchWallet = async (userId) => {
   }
 
   try {
-    const response = await fetch(
-      `https://readgro-backend.onrender.com/getwallet/${userId}`,
-      {
-        method: "GET",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    const response = await fetch(`http://localhost:5000/getwallet/${userId}`, {
+      method: "GET",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+    });
 
     if (!response.ok) {
       throw new Error(`Error fetching wallet: ${response.statusText}`);
@@ -32,15 +29,12 @@ export const deductWalletBalance = async (userId, amount, setShowPopup) => {
   }
 
   try {
-    const response = await fetch(
-      `https://readgro-backend.onrender.com/deductwallet`,
-      {
-        method: "POST",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_id: userId, amount }),
-      }
-    );
+    const response = await fetch(`http://localhost:5000/deductwallet`, {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id: userId, amount }),
+    });
 
     const data = await response.json();
 

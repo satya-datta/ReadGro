@@ -10,9 +10,7 @@ const AdminGetUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch(
-          "https://readgro-backend.onrender.com/getallusers"
-        ); // API endpoint for fetching users
+        const response = await fetch("http://localhost:5000/getallusers"); // API endpoint for fetching users
         const data = await response.json();
         if (response.ok) {
           setUsers(data.users); // Update the state with fetched users

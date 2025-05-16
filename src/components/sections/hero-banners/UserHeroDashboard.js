@@ -15,14 +15,14 @@ const UserHeroDashboard = () => {
 
       try {
         const response = await fetch(
-          `https://readgro-backend.onrender.com/getuser_details/${user.userId}`
+          `http://localhost:5000/getuser_details/${user.userId}`
         );
         if (!response.ok) throw new Error("Failed to fetch user details");
 
         const data = await response.json();
         console.log(data.user.avatar);
         if (data?.user.avatar) {
-          const fullImageUrl = `https://readgro-backend.onrender.com/uploads/${data.user.avatar}`;
+          const fullImageUrl = `${data.user.avatar}`;
 
           // Preload image
           const img = new window.Image();
@@ -43,13 +43,10 @@ const UserHeroDashboard = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch(
-        "https://readgro-backend.onrender.com/userlogout",
-        {
-          method: "POST",
-          credentials: "include",
-        }
-      );
+      const response = await fetch("http://localhost:5000/userlogout", {
+        method: "POST",
+        credentials: "include",
+      });
 
       if (response.ok) {
         window.location.href = "/";

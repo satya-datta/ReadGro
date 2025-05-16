@@ -16,9 +16,7 @@ const AdminAddPackageMain = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch(
-          "https://readgro-backend.onrender.com/getallcourses"
-        );
+        const response = await fetch("http://localhost:5000/getallcourses");
         const data = await response.json();
         if (response.ok) {
           setCourses(data.courses);
@@ -72,6 +70,7 @@ const AdminAddPackageMain = () => {
 
     try {
       const formData = new FormData();
+
       formData.append("packageName", packageName);
       formData.append("price", price);
       formData.append("discountPrice", discountPrice);
@@ -80,8 +79,13 @@ const AdminAddPackageMain = () => {
       formData.append("packageImage", packageImage);
       formData.append("courses", JSON.stringify(selectedCourses));
 
+      // Log the form data for debugging purposes
+      formData.forEach((value, key) => {
+        console.log(key, value);
+      });
+
       const response = await fetch(
-        "https://readgro-backend.onrender.com/create-package_withcourses",
+        "http://localhost:5000/create-package_withcourses",
         {
           method: "POST",
           body: formData,
@@ -89,6 +93,7 @@ const AdminAddPackageMain = () => {
       );
 
       const data = await response.json();
+      console.log(data);
       if (!response.ok) {
         alert(data.message);
         throw new Error(data.message);

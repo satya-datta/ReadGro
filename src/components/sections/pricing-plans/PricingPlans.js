@@ -11,7 +11,7 @@ const PackageWeb = () => {
   const router = useRouter();
 
   useEffect(() => {
-    fetch("https://readgro-backend.onrender.com/getallpackages")
+    fetch("http://localhost:5000/getallpackages")
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
@@ -30,7 +30,7 @@ const PackageWeb = () => {
   }, []);
 
   const fetchCourseCount = (packageId) => {
-    fetch(`https://readgro-backend.onrender.com/getcoursemappings/${packageId}`)
+    fetch(`http://localhost:5000/getcoursemappings/${packageId}`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
@@ -51,7 +51,7 @@ const PackageWeb = () => {
   };
 
   const fetchPreviousPackage = (packageId) => {
-    fetch(`https://readgro-backend.onrender.com/getpackage/${packageId - 1}`)
+    fetch(`http://localhost:5000/getpackage/${packageId - 1}`)
       .then((res) => res.json())
       .then((data) => {
         setPreviousPackages((prev) => ({
@@ -79,11 +79,7 @@ const PackageWeb = () => {
               onClick={() => router.push(`/packages/${pkg.package_id}`)}
             >
               <img
-                src={
-                  pkg.package_image
-                    ? `https://readgro-backend.onrender.com/uploads/${pkg.package_image}`
-                    : freeImage
-                }
+                src={pkg.package_image ? `${pkg.package_image}` : freeImage}
                 alt={pkg.package_name}
                 className="w-full h-48 object-cover rounded-lg"
               />
