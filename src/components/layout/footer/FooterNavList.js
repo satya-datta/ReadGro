@@ -1,36 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import FooterNavItems from "./FooterNavItems";
 import FooterAbout from "./FooterAbout";
 import logoImage from "@/assets/images/rg.png";
 import Image from "next/image";
+
 const FooterNavList = () => {
-  const [packages, setPackages] = useState([]);
-
-  useEffect(() => {
-    const fetchPackages = async () => {
-      try {
-        const response = await fetch(
-          "https://readgro-backend.onrender.com/getallpackages"
-        );
-        const data = await response.json();
-
-        const formatted = data.map((pkg) => ({
-          name: pkg.package_name,
-          path: `/packages/${pkg.package_id}`,
-        }));
-
-        setPackages(formatted);
-      } catch (error) {
-        console.error("Failed to fetch packages:", error);
-      }
-    };
-
-    fetchPackages();
-  }, []);
-
   const lists = [
     {
-      heading: "Usefull Links",
+      heading: "Useful Links",
       items: [
         { name: "About Us", path: "/about" },
         { name: "Courses", path: "/courses" },
@@ -40,9 +17,12 @@ const FooterNavList = () => {
       ],
     },
     {
-      heading: "Plans",
-      items:
-        packages.length > 0 ? packages : [{ name: "Loading...", path: "#" }],
+      heading: "Policies",
+      items: [
+        { name: "Privacy Policy", path: "/privacy-policy" },
+        { name: "Terms and Conditions", path: "/terms-and-conditions" },
+        { name: "Cancellation and Refund", path: "/cancellation-refund" },
+      ],
     },
   ];
 

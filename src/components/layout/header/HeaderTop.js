@@ -21,57 +21,21 @@ const HeaderTop = () => {
           isHome5 ||
           isHome5Dark
             ? "lg:container 3xl:container2-lg"
-            : "container 3xl:container-secondary-lg "
-        } 4xl:container mx-auto text-whiteColor text-size-12 xl:text-sm py-5px xl:py-9px`}
+            : "container 3xl:container-secondary-lg"
+        } 4xl:container mx-auto text-whiteColor text-size-12 xl:text-sm py-1 xl:py-2`}
       >
         <div className="flex justify-between items-center">
           <div>
-            <p>Call Us: +91 99896 53692 Mail Us: readgroofficial@mail.com</p>
+            <p>
+              <i className="icofont-phone text-primaryColor text-size-15 mr-1"></i>
+              Call Us: +91 99896 53692
+            </p>
           </div>
-          <div className="flex gap-37px items-center">
-            <div>
-              {/* <p>
-                <i className="icofont-location-pin text-primaryColor text-size-15 mr-5px"></i>
-                <span>684 West College St. Sun City, USA</span>
-              </p> */}
-            </div>
-            <div>
-              {/* header social list  */}
-              <ul className="flex gap-[18px] text-size-15">
-                <li>
-                  <a
-                    className="hover:text-primaryColor"
-                    href="https://www.facebook.com"
-                  >
-                    <i className="icofont-facebook"></i>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="hover:text-primaryColor"
-                    href="https://www.twitter.com"
-                  >
-                    <i className="icofont-twitter"></i>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="hover:text-primaryColor"
-                    href="https://www.instagram.com"
-                  >
-                    <i className="icofont-instagram"></i>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="hover:text-primaryColor"
-                    href="https://www.youtube.com"
-                  >
-                    <i className="icofont-youtube-play"></i>
-                  </a>
-                </li>
-              </ul>
-            </div>
+          <div>
+            <p>
+              <i className="icofont-email text-primaryColor text-size-15 mr-1"></i>
+              Mail Us: readgroofficial@mail.com
+            </p>
           </div>
         </div>
       </div>
