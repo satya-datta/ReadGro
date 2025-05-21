@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import HreoName from "../section-names/HreoName";
 import Link from "next/link";
+import PreloaderPrimary from "@/components/shared/others/PreloaderPrimary";
 
 const HeroSlide2 = ({ slide, idx }) => {
   const { title, tag } = slide;
-  const [imageUrls, setImageUrls] = useState(null); // Initialize as null
+  const [imageUrls, setImageUrls] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -18,21 +19,23 @@ const HeroSlide2 = ({ slide, idx }) => {
           if (data && data.length > 0) {
             setImageUrls(
               data.map((item) => ({
-                image1: item.image1 ? `${item.image1}` : null,
-                image2: item.image2 ? `${item.image2}` : null,
-                image3: item.image3 ? `${item.image3}` : null,
+                image1: item.image1 || null,
+                image2: item.image2 || null,
+                image3: item.image3 || null,
               }))
             );
           } else {
-            setImageUrls([]); // Set to empty array if no data
+            setImageUrls([]);
           }
         } else {
           console.error("Failed to fetch images:", response.status);
-          setImageUrls([]); // Set to empty array on error
+          setImageUrls([]);
         }
       } catch (error) {
         console.error("Error fetching images:", error);
-        setImageUrls([]); // Set to empty array on error
+        setImageUrls([]);
+      } finally {
+        setLoading(false); // 👈 Ensure loading is false no matter what
       }
     };
 
@@ -41,22 +44,24 @@ const HeroSlide2 = ({ slide, idx }) => {
 
   const getBackgroundImage = () => {
     if (imageUrls && imageUrls.length > 0) {
-      if (idx === 0 && imageUrls[0].image1) {
+      if (idx === 0 && imageUrls[0].image1)
         return `url('${imageUrls[0].image1}')`;
-      } else if (idx === 1 && imageUrls[0].image2) {
+      if (idx === 1 && imageUrls[0].image2)
         return `url('${imageUrls[0].image2}')`;
-      } else if (idx === 2 && imageUrls[0].image3) {
+      if (idx === 2 && imageUrls[0].image3)
         return `url('${imageUrls[0].image3}')`;
-      }
     }
 
-    // Default background if images are not available or are null
     return idx === 0
       ? "url('../assets/images/herobanner/university_1.jpg')"
       : idx === 1
       ? "url('../assets/images/herobanner/university_2.jpg')"
       : "url('../assets/images/herobanner/university_3.jpg')";
   };
+
+  if (loading) {
+    return <PreloaderPrimary />;
+  }
 
   return (
     <div
@@ -73,11 +78,9 @@ const HeroSlide2 = ({ slide, idx }) => {
           <div data-aos="fade-up">
             <div>
               <HreoName>{tag}</HreoName>
-
               <h1 className="text-size-35 md:text-size-50 lg:text-5xl 2xl:text-size-75 leading-42px md:leading-15 lg:leading-14 2xl:leading-90px text-whiteColor md:tracking-half lg:tracking-normal 2xl:tracking-half font-bold mb-5 md:mb-50px">
                 {title}
               </h1>
-
               <div>
                 <Link
                   href="/about"
