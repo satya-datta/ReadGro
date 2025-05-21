@@ -121,7 +121,7 @@ const UserLoginForm = () => {
     <div className="opacity-100 transition-opacity duration-150 ease-linear">
       <div className="text-center">
         <h3 className="text-size-32 font-bold text-blackColor dark:text-blackColor-dark mb-2 leading-normal">
-          {forgotPassword ? "Reset Password" : "Login"}
+          {forgotPassword ? "Login With Otp" : "Login"}
         </h3>
       </div>
 
@@ -182,6 +182,12 @@ const UserLoginForm = () => {
               onChange={(e) => setOtp(e.target.value)}
               required
             />
+            <div
+              className="mt-2 text-sm text-primaryColor cursor-pointer"
+              onClick={handleSendOtp}
+            >
+              Resend OTP
+            </div>
           </div>
         )}
 

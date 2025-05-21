@@ -2,24 +2,23 @@
 
 import React, { useState, useEffect } from "react";
 import { useUserContext } from "@/contexts/UserContext";
-import { fetchPackages } from "@/components/layout/header/PackagesDropdown"; // Import fetchPackages
+import { fetchPackages } from "@/components/layout/header/PackagesDropdown";
 
 const UserAffiliateForm = () => {
   const { user } = useUserContext();
   const [referralCode, setReferralCode] = useState("");
   const [referralLink, setReferralLink] = useState("");
-  const [selectedPackage, setSelectedPackage] = useState("All Packages");
+  const [selectedPackage, setSelectedPackage] = useState("");
   const [generatedLink, setGeneratedLink] = useState("");
-  const [packages, setPackages] = useState([]); // Store fetched packages
+  const [packages, setPackages] = useState([]);
 
   useEffect(() => {
     if (user?.userId) {
       fetchReferralCode(user.userId);
     }
-    loadPackages(); // Fetch packages when component mounts
+    loadPackages();
   }, [user?.userId]);
 
-  // Fetch referral code from the API when the component loads
   const fetchReferralCode = async (userId) => {
     try {
       const response = await fetch(
@@ -32,11 +31,10 @@ const UserAffiliateForm = () => {
       );
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
         if (data.user.generatedReferralCode) {
           setReferralCode(data.user.generatedReferralCode);
           setReferralLink(
-            `https://readgro-backend.onrender.com?referralcode=${data.user.generatedReferralCode}`
+            `https://read-gro-fm6j.vercel.app/?referralcode=${data.user.generatedReferralCode}`
           );
         }
       } else {
@@ -47,7 +45,6 @@ const UserAffiliateForm = () => {
     }
   };
 
-  // Fetch packages from API
   const loadPackages = async () => {
     const packageList = await fetchPackages();
     setPackages(packageList);
@@ -59,13 +56,14 @@ const UserAffiliateForm = () => {
   };
 
   const generatePackageLink = () => {
+    if (!selectedPackage) return;
     const newLink = `${referralLink}&package=${selectedPackage}`;
     setGeneratedLink(newLink);
   };
 
   return (
     <div className="p-5 bg-white shadow rounded-md">
-      <h2 className="text-lg font-semibold  mb-4">AFFILIATE LINKS</h2>
+      <h2 className="text-lg font-semibold mb-4">AFFILIATE LINKS</h2>
 
       {/* Referral Link */}
       <div className="mb-4">
@@ -111,10 +109,10 @@ const UserAffiliateForm = () => {
 
       <hr className="my-4 border-gray-300" />
 
-      {/* Generate Link For */}
+      {/* Generate Link For Package */}
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-medium mb-1">
-          Generate Link For
+          Generate Link For Package
         </label>
         <div className="flex">
           <select
@@ -122,7 +120,7 @@ const UserAffiliateForm = () => {
             onChange={(e) => setSelectedPackage(e.target.value)}
             className="p-2 border border-gray-300 rounded-md flex-1 bg-gray-100 text-sm"
           >
-            <option value="All Packages">All Packages</option>
+            <option value="">-- Select Package --</option>
             {packages.map((pkg) => (
               <option key={pkg.path} value={pkg.name}>
                 {pkg.name}
@@ -131,7 +129,12 @@ const UserAffiliateForm = () => {
           </select>
           <button
             onClick={generatePackageLink}
-            className="ml-2 px-4 py-2 bg-primaryColor text-white text-sm font-medium rounded-md hover:bg-purple-700"
+            disabled={!selectedPackage}
+            className={`ml-2 px-4 py-2 text-sm font-medium rounded-md ${
+              selectedPackage
+                ? "bg-primaryColor text-white hover:bg-purple-700"
+                : "bg-gray-400 text-white cursor-not-allowed"
+            }`}
           >
             Generate Link
           </button>

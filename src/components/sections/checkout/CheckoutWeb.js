@@ -208,7 +208,7 @@ const CheckoutWeb = ({ packagename }) => {
 
       return new Promise((resolve) => {
         const options = {
-          key: "rzp_test_D0wbfHHAyV89wY", // Replace with your Razorpay Key ID
+          key: "rzp_live_BF04chKRoQcXXm", // Replace with your Razorpay Key ID
           amount: priceToPay * 100, // Convert to paisa (INR subunit)
           currency: "INR",
           name: "Read Gro",

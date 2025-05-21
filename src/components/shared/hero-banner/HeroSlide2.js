@@ -5,6 +5,7 @@ import Link from "next/link";
 const HeroSlide2 = ({ slide, idx }) => {
   const { title, tag } = slide;
   const [imageUrls, setImageUrls] = useState(null); // Initialize as null
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -67,7 +68,7 @@ const HeroSlide2 = ({ slide, idx }) => {
         backgroundPosition: "center center",
       }}
     >
-      <div className="bg-black bg-opacity-70 overflow-hidden pt-50px pb-100px md:pt-35 md:pb-170px lg:pt-100px lg:pb-150px 2xl:pt-35 2xl:pb-170px">
+      <div className="bg-black bg-opacity-40 overflow-hidden pt-50px pb-100px md:pt-35 md:pb-170px lg:pt-100px lg:pb-150px 2xl:pt-35 2xl:pb-170px">
         <div className="container 2xl:container-secondary-md relative overflow-hidden text-center">
           <div data-aos="fade-up">
             <div>

@@ -9,6 +9,10 @@ const ProfileDetails = () => {
   const [errors, setErrors] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [sponsorDetails, setSponsorDetails] = useState({
+    sponsor_email: "",
+    sponsor_mobile: "",
+  });
 
   useEffect(() => {
     if (user?.userId) {
@@ -37,12 +41,46 @@ const ProfileDetails = () => {
           address: data.user.Address,
           pincode: data.user.Pincode,
           avatar: data.user.avatar,
+          reffercode: data.user.referralCode, // Assuming reffercode comes here
         });
+        console.log(data.user);
+
+        if (data.user.referralCode) {
+          fetchSponsorDetails(data.user.referralCode);
+        }
       } else {
         console.error("Failed to fetch user data");
       }
     } catch (error) {
       console.error("Error fetching user data:", error);
+    }
+  };
+
+  // New function to fetch sponsor details by reffercode
+  const fetchSponsorDetails = async (reffercode) => {
+    try {
+      const response = await fetch(
+        `https://readgro-backend.onrender.com/getsponseordetails/${reffercode}`,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setSponsorDetails({
+          sponsor_email: data.email || "",
+          sponsor_mobile: data.phone || "",
+        });
+        console.log(sponsorDetails);
+      } else {
+        console.error("Failed to fetch sponsor details");
+        setSponsorDetails({ sponsor_email: "", sponsor_mobile: "" });
+      }
+    } catch (error) {
+      console.error("Error fetching sponsor details:", error);
+      setSponsorDetails({ sponsor_email: "", sponsor_mobile: "" });
     }
   };
 
@@ -122,9 +160,34 @@ const ProfileDetails = () => {
   return (
     <div className="p-5 bg-white shadow rounded-md">
       <h2 className="text-2xl font-bold mb-4">My Profile</h2>
-
+      {/* Sponsor Email - Always Read-only */}
+      <div className="mb-6">
+        <h3 className="text-lg font-semibold mb-3">Sponsor Details</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="font-semibold block mb-1">Sponsor Email</label>
+            <input
+              type="text"
+              value={sponsorDetails.sponsor_email}
+              disabled
+              className="w-full p-2 border rounded bg-gray-100 text-gray-600"
+            />
+          </div>
+          <div>
+            <label className="font-semibold block mb-1">Sponsor Mobile</label>
+            <input
+              type="text"
+              value={sponsorDetails.sponsor_mobile}
+              disabled
+              className="w-full p-2 border rounded bg-gray-100 text-gray-600"
+            />
+          </div>
+        </div>
+      </div>
       {userData ? (
         <div>
+          <h3 className="text-lg font-semibold mb-3">User Details</h3>
+
           {/* Input Fields Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {["name", "email", "phone", "address", "pincode"].map((field) => (

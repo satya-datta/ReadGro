@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 const CurriculumContent = ({ id }) => {
   const [topics, setTopics] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [showVideoModal, setShowVideoModal] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -45,6 +46,7 @@ const CurriculumContent = ({ id }) => {
     const embedUrl = getEmbedUrl(youtubeLink);
     if (embedUrl) {
       setSelectedVideo(embedUrl);
+      setShowVideoModal(true);
     } else {
       window.open(youtubeLink, "_blank");
     }
@@ -53,42 +55,54 @@ const CurriculumContent = ({ id }) => {
   return (
     <div>
       <h2 className="text-2xl font-bold mb-4">Course Topics</h2>
-      <ul className="border border-gray-300 rounded-lg p-4">
+      <ul className="divide-y border rounded-lg">
         {topics.map((topic, index) => (
           <li
             key={index}
-            className="py-4 px-2 border-b last:border-none flex justify-between items-center"
+            className="flex items-center justify-between px-4 py-3 hover:bg-gray-50"
           >
-            <div>
-              <h4 className="text-lg font-medium">{topic.topic_name}</h4>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => handleVideoClick(topic.video_url)}
+                className="w-9 h-9 flex items-center justify-center border border-blue-500 text-blue-600 rounded-full hover:bg-blue-100"
+              >
+                <i className="icofont-play-alt-2 text-sm"></i>
+              </button>
+
+              <span className="text-sm font-medium text-gray-800">
+                {topic.topic_name} : {index + 1}
+              </span>
             </div>
-            <button
-              onClick={() => handleVideoClick(topic.video_url)}
-              className="px-6 py-7 text-xs font-medium rounded-md flex items-center gap-2 transition bg-blue-600 hover:bg-blue-700 text-white"
-            >
-              <i className="icofont-play-alt-2"></i>
-              <span className="hidden sm:inline ml-2">Watch Video</span>
-            </button>
           </li>
         ))}
       </ul>
 
-      {selectedVideo ? (
-        <div className="mt-6">
-          <h3 className="text-xl font-semibold mb-2">Now Playing:</h3>
-          <iframe
-            width="100%"
-            height="400"
-            src={selectedVideo}
-            title="YouTube Video"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
+      {/* Video Modal */}
+      {showVideoModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">
+          <div className="bg-white p-4 rounded-lg shadow-lg relative w-full max-w-2xl">
+            <button
+              className="absolute top-2 right-2 text-gray-600 hover:text-black text-xl"
+              onClick={() => setShowVideoModal(false)}
+            >
+              ✖
+            </button>
+            <h3 className="text-xl font-semibold mb-4">Now Playing</h3>
+            <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-lg">
+              <iframe
+                src={selectedVideo}
+                title="YouTube Video"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="absolute top-0 left-0 w-full h-full"
+              ></iframe>
+            </div>
+          </div>
         </div>
-      ) : (
-        <p className="text-red-500 mt-4">No video selected.</p>
       )}
     </div>
   );
 };
+
+export default CurriculumContent;

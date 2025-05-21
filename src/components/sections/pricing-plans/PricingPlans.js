@@ -1,10 +1,11 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaBook } from "react-icons/fa";
 import freeImage from "@/assets/images/icon/price__1.png";
 
-const PackageWeb = () => {
+const PricingPlans = () => {
   const [packages, setPackages] = useState([]);
   const [courseCounts, setCourseCounts] = useState({});
   const [previousPackages, setPreviousPackages] = useState({});
@@ -100,7 +101,7 @@ const PackageWeb = () => {
                 </div>
                 <div className="text-left ml-2">
                   <p className="text-gray-500 font-medium">
-                    🎁 Get up to {pkg.commission || 0}₹ on referral
+                    🏱 Get up to {pkg.commission || 0}₹ on referral
                   </p>
 
                   {pkg.package_id === 1 ? (
@@ -130,4 +131,4 @@ const PackageWeb = () => {
   );
 };
 
-export default PackageWeb;
+export default PricingPlans;

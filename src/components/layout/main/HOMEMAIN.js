@@ -1,57 +1,64 @@
+import dynamic from "next/dynamic";
+import React from "react";
 import Faq from "@/components/sections/faq/Faq";
 import Counter2 from "@/components/sections/sub-section/Counter2";
-import React, { Suspense } from "react";
 
-// Lazy load components
-const Hero7 = React.lazy(() =>
-  import("@/components/sections/hero-banners/Hero7")
-);
-const About11 = React.lazy(() =>
-  import("@/components/sections/abouts/About11")
+// Fallback loading component
+const Loading = ({ text }) => (
+  <div style={{ padding: "20px", textAlign: "center" }}>{text}</div>
 );
 
-const CoursesFilter = React.lazy(() =>
-  import("@/components/sections/courses/CoursesFilter")
+// Dynamically import sections with fallback
+const Hero7 = dynamic(
+  () => import("@/components/sections/hero-banners/Hero7"),
+  {
+    loading: () => <Loading text="Loading Hero Section..." />,
+    ssr: false,
+  }
 );
 
-const PricingPlans = React.lazy(() =>
-  import("@/components/sections/pricing-plans/PricingPlans")
+const About11 = dynamic(() => import("@/components/sections/abouts/About11"), {
+  loading: () => <Loading text="Loading About Section..." />,
+  ssr: false,
+});
+
+const CoursesFilter = dynamic(
+  () => import("@/components/sections/courses/CoursesFilter"),
+  {
+    loading: () => <Loading text="Loading Courses..." />,
+    ssr: false,
+  }
 );
 
-const Testimonials = React.lazy(() =>
-  import("@/components/sections/testimonials/Testimonials")
+const PricingPlans = dynamic(
+  () => import("@/components/sections/pricing-plans/PricingPlans"),
+  {
+    loading: () => <Loading text="Loading Pricing Plans..." />,
+    ssr: false,
+  }
+);
+
+const Testimonials = dynamic(
+  () => import("@/components/sections/testimonials/Testimonials"),
+  {
+    loading: () => <Loading text="Loading Testimonials..." />,
+    ssr: false,
+  }
 );
 
 const HOMEMAIN = () => {
   return (
     <>
-      <Suspense fallback={<div>Loading Hero Section...</div>}>
-        <div style={{ marginBottom: "90px" }}>
-          <Hero7 />
-        </div>
-      </Suspense>
+      <div style={{ marginBottom: "90px" }}>
+        <Hero7 />
+      </div>
 
-      <Suspense fallback={<div>Loading About Section...</div>}>
-        <About11 />
-      </Suspense>
-
-      <Suspense fallback={<div>Loading Counter2...</div>}>
-        <Counter2 type="lg" />
-      </Suspense>
-
-      <Suspense fallback={<div>Loading Courses...</div>}>
-        <CoursesFilter />
-      </Suspense>
-
-      <Suspense fallback={<div>Loading Pricing Plans...</div>}>
-        <PricingPlans />
-      </Suspense>
-      <Suspense fallback={<div>Loading Testimonials...</div>}>
-        <Testimonials />
-      </Suspense>
-      <Suspense fallback={<div>Loading Counter2...</div>}>
-        <Faq />
-      </Suspense>
+      <About11 />
+      <Counter2 type="lg" />
+      <CoursesFilter />
+      <PricingPlans />
+      <Testimonials />
+      <Faq />
     </>
   );
 };
