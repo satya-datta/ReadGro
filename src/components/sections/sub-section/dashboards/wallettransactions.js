@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useUserContext } from "@/contexts/UserContext";
 import HeadingDashboard from "@/components/shared/headings/HeadingDashboard";
 import { FetchWallet } from "@/libs/FetchWallet"; // Import fetchWallet function
+import Testloader from "@/components/shared/others/loader";
 
 const WalletTransactions = () => {
   const { user } = useUserContext(); // Retrieve user data from context
@@ -65,7 +66,9 @@ const WalletTransactions = () => {
       <hr className="my-4 border-contentColor opacity-35" />
       <div>
         {loading ? (
-          <p className="text-center">Loading...</p>
+          <div>
+            <Testloader />
+          </div>
         ) : error ? (
           <p className="text-center text-red-500">{error}</p>
         ) : (

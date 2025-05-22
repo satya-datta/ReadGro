@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useUserContext } from "@/contexts/UserContext";
 import HeadingDashboard from "@/components/shared/headings/HeadingDashboard";
 import { FetchWallet } from "@/libs/FetchWallet";
+import Testloader from "@/components/shared/others/loader";
 
 const RGWithdrawlRequestInner = () => {
   const { user } = useUserContext();
@@ -148,7 +149,9 @@ const RGWithdrawlRequestInner = () => {
       <hr className="my-4 border-gray-300" />
 
       {loading ? (
-        <p className="text-center">Loading...</p>
+        <div>
+          <Testloader />
+        </div>
       ) : error ? (
         <p className="text-center text-red-500">{error}</p>
       ) : (

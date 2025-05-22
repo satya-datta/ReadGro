@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useUserContext } from "@/contexts/UserContext";
 import { FetchWallet, deductWalletBalance } from "@/libs/FetchWallet";
 import { createOrder, validatePayment } from "@/libs/PaymentOrder";
+import Testloader from "../others/loader";
 
 const PlanCard = ({ package_id, userCurrentPackage }) => {
   const router = useRouter();
@@ -80,7 +81,12 @@ const PlanCard = ({ package_id, userCurrentPackage }) => {
     }
   }, [package_id]);
 
-  if (!packageData) return <div>Loading...</div>;
+  if (!packageData)
+    return (
+      <div>
+        <Testloader />
+      </div>
+    );
 
   const userPackageId = userCurrentPackage?.package_id || 0;
   const userPackagePrice = userCurrentPackage?.package_price || 0;

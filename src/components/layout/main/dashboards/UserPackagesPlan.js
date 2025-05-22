@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import useTab from "@/hooks/useTab";
 import { useUserContext } from "@/contexts/UserContext";
 import PlanCard from "@/components/shared/courses/PlanCard";
+import Testloader from "@/components/shared/others/loader";
 
 const UserPackagePlan = () => {
   const { currentIdx, handleTabClick } = useTab();
@@ -48,7 +49,12 @@ const UserPackagePlan = () => {
     return () => clearInterval(interval); // Cleanup interval on unmount
   }, [user?.userId]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div>
+        <Testloader />
+      </div>
+    );
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (

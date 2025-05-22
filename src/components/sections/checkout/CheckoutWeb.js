@@ -9,6 +9,7 @@ import ButtonPrimary from "@/components/shared/buttons/ButtonPrimary";
 import Cookies from "js-cookie"; // Import the cookies library
 import { Eye, EyeOff } from "lucide-react"; // Import icons
 import { createOrder, validatePayment } from "@/libs/PaymentOrder";
+import Testloader from "@/components/shared/others/loader";
 
 const CheckoutWeb = ({ packagename }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -383,7 +384,7 @@ const CheckoutWeb = ({ packagename }) => {
                 <tbody>
                   <tr className="border-b">
                     <td className="p-10px md:p-15px">
-                      {packageDetails?.package_name || "Loading..."}
+                      {packageDetails?.package_name ||<div><Testloader/></div>}
                     </td>
                     <td className="p-10px md:p-15px">
                       ₹{packageDetails?.package_price || "0.00"}

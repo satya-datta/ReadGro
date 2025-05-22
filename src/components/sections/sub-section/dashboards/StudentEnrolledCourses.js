@@ -7,6 +7,7 @@ import EnrolledContent from "@/components/shared/dashboards/EnrolledContent";
 import ActiveContent from "@/components/shared/dashboards/ActiveContent";
 import CompletedContent from "@/components/shared/dashboards/CompletedContent";
 import { useUserContext } from "@/contexts/UserContext";
+import Testloader from "@/components/shared/others/loader";
 const StudentEnrolledCourses = () => {
   const { currentIdx, handleTabClick } = useTab();
   const { user } = useUserContext();
@@ -41,7 +42,9 @@ const StudentEnrolledCourses = () => {
     {
       name: "ENROLLED COURSES",
       content: loading ? (
-        <p>Loading...</p>
+        <div className="flex justify-center items-center min-h-[0px]">
+          <Testloader />
+        </div>
       ) : error ? (
         <p className="text-red-500">{error}</p>
       ) : (

@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useUserContext } from "@/contexts/UserContext";
+import Testloader from "../others/loader";
 
 const ProfileDetails = () => {
   const { user } = useUserContext();
@@ -253,7 +254,9 @@ const ProfileDetails = () => {
           </div>
         </div>
       ) : (
-        <p>Loading user details...</p>
+        <>
+          <Testloader />
+        </>
       )}
     </div>
   );
