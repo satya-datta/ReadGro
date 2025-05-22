@@ -64,34 +64,40 @@ const HeroSlide2 = ({ slide, idx }) => {
   }
 
   return (
-    <div
-      className="hero relative z-0"
-      style={{
-        backgroundImage: getBackgroundImage(),
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "center center",
-      }}
-    >
-      <div className="bg-black bg-opacity-40 overflow-hidden pt-50px pb-100px md:pt-35 md:pb-170px lg:pt-100px lg:pb-150px 2xl:pt-35 2xl:pb-170px">
-        <div className="container 2xl:container-secondary-md relative overflow-hidden text-center">
-          <div data-aos="fade-up">
-            <div>
-              <HreoName>{tag}</HreoName>
-              <h1 className="text-size-35 md:text-size-50 lg:text-5xl 2xl:text-size-75 leading-42px md:leading-15 lg:leading-14 2xl:leading-90px text-whiteColor md:tracking-half lg:tracking-normal 2xl:tracking-half font-bold mb-5 md:mb-50px">
-                {title}
-              </h1>
-              <div>
-                <Link
-                  href="/about"
-                  className="text-whiteColor bg-primaryColor border border-primaryColor px-10 py-15px hover:text-primaryColor hover:bg-whiteColor rounded-full inline-block dark:hover:bg-whiteColor-dark dark:hover:text-whiteColor"
-                >
-                  More about ReadGro
-                </Link>
-              </div>
-              <div className="mt-20 md:mt-50px"></div>
-            </div>
-          </div>
+    <div className="relative z-0 w-full">
+      {/* Hero Image */}
+      <div className="relative w-full h-[400px] md:h-[600px] lg:h-[750px] overflow-hidden">
+        <img
+          src={
+            (idx === 0 && imageUrls?.[0]?.image1) ||
+            (idx === 1 && imageUrls?.[0]?.image2) ||
+            (idx === 2 && imageUrls?.[0]?.image3) ||
+            (idx === 0
+              ? "/assets/images/herobanner/university_1.jpg"
+              : idx === 1
+              ? "/assets/images/herobanner/university_2.jpg"
+              : "/assets/images/herobanner/university_3.jpg")
+          }
+          alt="Hero"
+          className="absolute top-0 left-0 w-full h-full object-cover"
+        />
+        {/* Dark overlay */}
+        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-40"></div>
+      </div>
+
+      {/* Hero Content */}
+      <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center text-center px-4">
+        <div data-aos="fade-up">
+          <HreoName>{tag}</HreoName>
+          <h1 className="text-white text-[35px] md:text-[50px] lg:text-5xl 2xl:text-[75px] leading-tight font-bold mb-5 md:mb-10">
+            {title}
+          </h1>
+          <Link
+            href="/about"
+            className="text-white bg-primaryColor border border-primaryColor px-10 py-[15px] hover:text-primaryColor hover:bg-white rounded-full inline-block"
+          >
+            More about ReadGro
+          </Link>
         </div>
       </div>
     </div>

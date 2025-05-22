@@ -17,6 +17,8 @@ const CounterStudent = () => {
   });
 
   const [loadedImageUrl, setLoadedImageUrl] = useState(null);
+  const [packageDetails, setPackageDetails] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchEarnings = async () => {
@@ -45,6 +47,22 @@ const CounterStudent = () => {
           img.src = data.user.avatar;
           img.onload = () => setLoadedImageUrl(data.user.avatar);
           img.onerror = () => setLoadedImageUrl(null);
+        }
+
+        // Fetch package details
+        if (user?.package_id) {
+          fetch(
+            `https://readgro-backend.onrender.com/getpackage/${user.package_id}`
+          )
+            .then((res) => res.json())
+            .then((packageData) => {
+              if (packageData) {
+                setPackageDetails(packageData);
+              } else {
+                setError("Package details not found");
+              }
+            })
+            .catch(() => setError("Error fetching package details"));
         }
       } catch (err) {
         console.error("Error fetching user details:", err);
@@ -86,14 +104,22 @@ const CounterStudent = () => {
     <div className="bg-white rounded-lg shadow-lg p-6 mt-4 w-full">
       <HeadingDashboard>Dashboard</HeadingDashboard>
 
-      {/* Profile Image - Only visible on mobile screens */}
+      {/* Profile Card */}
       {loadedImageUrl && (
-        <div className="flex justify-center my-6 md:hidden">
+        <div className="flex flex-col items-center bg-gray-100 rounded-lg shadow-md p-4 mb-6 max-w-[300px] mx-auto w-full md:hidden">
           <img
             src={loadedImageUrl}
             alt="User Profile"
-            className="w-28 h-28 rounded-full border-4 border-white shadow-lg object-cover"
+            className="w-full h-48 object-cover rounded-md"
           />
+          <div className="text-center mt-4">
+            <h2 className="text-lg font-semibold text-gray-800">
+              {user?.name}
+            </h2>
+            <p className="text-sm text-blue-600 font-medium">
+              {packageDetails?.package_name || "Loading..."}
+            </p>
+          </div>
         </div>
       )}
 
