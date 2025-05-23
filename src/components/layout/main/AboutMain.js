@@ -8,11 +8,11 @@ const AboutMain = () => {
   return (
     <>
       {/* Hero Banner */}
-      <HeroPrimary
+      {/* <HeroPrimary
         title="About ReadGro"
         subtitle="Empowering Learners, Transforming Lives"
         path={"About Us"}
-      />
+      /> */}
 
       {/* Main About Section */}
       <About11 />
@@ -78,44 +78,6 @@ const AboutMain = () => {
                       Funding scholarships for disadvantaged students
                     </li>
                   </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-16 bg-white dark:bg-gray-700 p-8 rounded-xl shadow-lg">
-              <h3 className="text-2xl font-bold text-center text-blackColor dark:text-whiteColor mb-6">
-                Your Impact By the Numbers
-              </h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-                <div className="p-4">
-                  <div className="text-4xl font-bold text-primary mb-2">5%</div>
-                  <p className="text-contentColor dark:text-contentColor-dark">
-                    of each enrollment donated
-                  </p>
-                </div>
-                <div className="p-4">
-                  <div className="text-4xl font-bold text-primary mb-2">
-                    10K+
-                  </div>
-                  <p className="text-contentColor dark:text-contentColor-dark">
-                    children supported
-                  </p>
-                </div>
-                <div className="p-4">
-                  <div className="text-4xl font-bold text-primary mb-2">
-                    25+
-                  </div>
-                  <p className="text-contentColor dark:text-contentColor-dark">
-                    schools built
-                  </p>
-                </div>
-                <div className="p-4">
-                  <div className="text-4xl font-bold text-primary mb-2">
-                    50K+
-                  </div>
-                  <p className="text-contentColor dark:text-contentColor-dark">
-                    books donated
-                  </p>
                 </div>
               </div>
             </div>

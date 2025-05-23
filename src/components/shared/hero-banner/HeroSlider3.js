@@ -1,5 +1,5 @@
 "use client";
-import herobannerImage from "@/assets/images/herobanner/herobanner__slider.png";
+import herobannerImage from "@/assets/images/herobanner__video.jpg";
 import herobannerImage2 from "@/assets/images/herobanner/herobanner__slider__2.png";
 import herobannerImage3 from "@/assets/images/herobanner/herobanner__slider__3.png";
 import herobannerImage5 from "@/assets/images/herobanner/herobanner__slider__5.png";
@@ -23,40 +23,12 @@ const HeroSlider3 = () => {
           </>
         ) : (
           <>
-            School Bag <span className="text-secondaryColor">Ninbn</span>
+            Master Skills , Make Money.
+            <span className="text-secondaryColor">ReadGro</span>
           </>
         ),
       image: isHome9 || isHome9Dark ? herobannerImage5 : herobannerImage,
       tag: "EDUCATION SOLUTION",
-    },
-    {
-      title:
-        isHome9 || isHome9Dark ? (
-          <>
-            Best Colorful <span className="text-secondaryColor">Career</span>
-          </>
-        ) : (
-          <>
-            Best Colorful <span className="text-secondaryColor">Career</span>
-          </>
-        ),
-      image: isHome9 || isHome9Dark ? herobannerImage6 : herobannerImage2,
-      tag: "Coror Solution",
-    },
-    {
-      title:
-        isHome9 || isHome9Dark ? (
-          <>
-            {" "}
-            Reading Table <span className="text-secondaryColor">Lamp</span>
-          </>
-        ) : (
-          <>
-            Reading Table <span className="text-secondaryColor">Lamp</span>
-          </>
-        ),
-      image: isHome9 || isHome9Dark ? herobannerImage7 : herobannerImage3,
-      tag: "Minimal Solution",
     },
   ];
   return (

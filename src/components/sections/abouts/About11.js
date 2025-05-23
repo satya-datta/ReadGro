@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import aboutImage8 from "@/assets/images/about/about_8.png";
-import aboutImage14 from "@/assets/images/about/about_10.png";
+import aboutImage14 from "@/assets/images/about_bg_1.jpg";
 
 import SectionName from "@/components/shared/section-names/SectionName";
 
@@ -22,7 +22,11 @@ const About11 = () => {
                   src={aboutImage8}
                   alt=""
                 />
-                <Image className="w-full" src={aboutImage14} alt="" />
+                <Image
+                  className="w-full rounded-2xl" // <-- Added border radius
+                  src={aboutImage14}
+                  alt=""
+                />
               </div>
             </TiltWrapper>
           </div>

@@ -93,7 +93,7 @@ const PackageWeb = () => {
                   <BookOpen size={18} className="text-green-500 mr-2" />
                   {courseCounts[pkg.package_id] !== undefined
                     ? `${courseCounts[pkg.package_id]} Courses`
-                    : "Loading courses..."}
+                    : "homourses..."}
                 </div>
 
                 {/* Package Price */}

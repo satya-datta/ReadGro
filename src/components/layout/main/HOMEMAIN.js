@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import React from "react";
 import Faq from "@/components/sections/faq/Faq";
 import Counter2 from "@/components/sections/sub-section/Counter2";
+import Testloader from "@/components/shared/others/loader";
 
 // Fallback loading component
 const Loading = ({ text }) => (
@@ -25,7 +26,7 @@ const About11 = dynamic(() => import("@/components/sections/abouts/About11"), {
 const CoursesFilter = dynamic(
   () => import("@/components/sections/courses/CoursesFilter"),
   {
-    loading: () => <Loading text="Loading Courses..." />,
+    loading: () => <Testloader />,
     ssr: false,
   }
 );
@@ -33,7 +34,7 @@ const CoursesFilter = dynamic(
 const PricingPlans = dynamic(
   () => import("@/components/sections/pricing-plans/PricingPlans"),
   {
-    loading: () => <Loading text="Loading Pricing Plans..." />,
+    loading: () => <Testloader />,
     ssr: false,
   }
 );

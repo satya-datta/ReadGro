@@ -101,24 +101,45 @@ const CounterStudent = () => {
   ];
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 mt-4 w-full">
+    <div className="bg-white rounded-lg shadow-lg p-6 mt-0 w-full">
       <HeadingDashboard>Dashboard</HeadingDashboard>
 
       {/* Profile Card */}
+      {/* Profile Card for Mobile and Desktop */}
       {loadedImageUrl && (
-        <div className="flex flex-col items-center bg-gray-100 rounded-lg shadow-md p-4 mb-6 max-w-[300px] mx-auto w-full md:hidden">
-          <img
-            src={loadedImageUrl}
-            alt="User Profile"
-            className="w-full h-48 object-cover rounded-md"
-          />
-          <div className="text-center mt-4">
-            <h2 className="text-lg font-semibold text-gray-800">
-              {user?.name}
-            </h2>
-            <p className="text-sm text-blue-600 font-medium">
-              {packageDetails?.package_name || "Loading..."}
-            </p>
+        <div className="mb-1">
+          {/* Mobile View */}
+          <div className="flex flex-col items-center bg-gray-100 rounded-lg shadow-md p-4 md:hidden max-w-[300px] mx-auto">
+            <img
+              src={loadedImageUrl}
+              alt="User Profile"
+              className="w-full h-48 object-cover rounded-md"
+            />
+            <div className="text-center mt-4">
+              <h2 className="text-lg font-semibold text-gray-800">
+                {user?.name}
+              </h2>
+              <p className="text-sm text-blue-600 font-medium">
+                {packageDetails?.package_name || "Loading..."}
+              </p>
+            </div>
+          </div>
+
+          {/* Desktop/Laptop View */}
+          <div className="hidden md:flex bg-gray-100 rounded-lg shadow-md p-4 items-center gap-6 max-w-xl mx-auto">
+            <img
+              src={loadedImageUrl}
+              alt="User Profile"
+              className="w-32 h-32 object-cover rounded-md"
+            />
+            <div>
+              <h2 className="text-xl font-semibold text-gray-800">
+                {user?.name}
+              </h2>
+              <p className="text-md text-blue-600 font-medium mt-1">
+                {packageDetails?.package_name || "Loading..."}
+              </p>
+            </div>
           </div>
         </div>
       )}

@@ -1,5 +1,6 @@
 import StudentEnrolledCoursesMain from "@/components/layout/main/dashboards/StudentEnrolledCoursesMain";
 import DashboardContainer from "@/components/shared/containers/DashboardContainer";
+import UserHeroDashboard from "@/components/sections/hero-banners/UserHeroDashboard";
 
 import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 import PlainWrapper from "@/components/shared/wrappers/PlainWrapper";

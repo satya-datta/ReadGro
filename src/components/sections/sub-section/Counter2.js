@@ -24,12 +24,12 @@ const Counter2 = ({ type }) => {
       name: "tOTAL INSTRUCTOR",
       image: counter3,
       data: 10,
-      symbol: "k",
+      symbol: "+",
     },
     {
       name: "OVER THE WORLD",
       image: counter4,
-      data: 214,
+      data: 201,
       symbol: "+",
     },
   ];

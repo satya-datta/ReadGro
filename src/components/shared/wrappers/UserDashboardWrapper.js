@@ -4,7 +4,7 @@ import UserHeroDashboard from "@/components/sections/hero-banners/UserHeroDashbo
 const UserDashboardWrapper = ({ children }) => {
   return (
     <>
-      <UserHeroDashboard />
+  
       {children}
     </>
   );
