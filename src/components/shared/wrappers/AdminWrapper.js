@@ -1,3 +1,9 @@
+import DashboardFooter from "@/components/layout/footer/DashboardFooter";
+import AdminContextProvider from "@/contexts/AdminContext";
+import CartContextProvider from "@/contexts/CartContext";
+import WishlistContextProvider from "@/contexts/WshlistContext";
+import Scrollup from "../others/Scrollup";
+
 const AdminWrapper = ({ children }) => {
   return (
     <AdminContextProvider>
