@@ -3,6 +3,7 @@ import AdminContextProvider from "@/contexts/AdminContext";
 import CartContextProvider from "@/contexts/CartContext";
 import WishlistContextProvider from "@/contexts/WshlistContext";
 import Scrollup from "../others/Scrollup";
+import HeroDashboard from "@/components/sections/hero-banners/HeroDashboard";
 
 const AdminWrapper = ({ children }) => {
   return (
@@ -11,6 +12,7 @@ const AdminWrapper = ({ children }) => {
         <WishlistContextProvider>
           <div className="min-h-screen flex flex-col justify-between">
             {/* Main content with top margin */}
+            <HeroDashboard />
             <main className="flex-grow mt-20">{children}</main>
 
             {/* Footer always at bottom */}

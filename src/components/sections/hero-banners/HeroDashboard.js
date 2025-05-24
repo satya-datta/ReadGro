@@ -1,60 +1,90 @@
 "use client";
-import dashboardImage2 from "@/assets/images/dashbord/dashbord__2.jpg";
-import Image from "next/image";
+
 import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import Image from "next/image";
+import dashboardImage2 from "@/assets/images/dashbord/dashbord__2.jpg";
+import logo1 from "@/assets/images/logo/RGFULL.png";
+import SidebarDashboard from "@/components/shared/dashboards/SidebarDashboard"; // Keep if needed
 
 const HeroDashboard = () => {
   const [showLogoutPopup, setShowLogoutPopup] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleLogout = () => {
     try {
-      // Remove the admin token from localStorage
       localStorage.removeItem("adminToken");
-
       console.log("Logout successful");
-
-      // Redirect to the login page
       window.location.href = "/admin/Gnaneswar/login";
     } catch (err) {
       console.error("Error during logout:", err);
     } finally {
-      setShowLogoutPopup(false); // Close the popup
+      setShowLogoutPopup(false);
     }
   };
 
   return (
-    <section>
-      <div className="container-fluid-2 relative w-full px-4 md:px-8">
-        {/* Glowing Background */}
-        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-green via-emerald-400 to-green opacity-20 blur-3xl"></div>
+    <>
+      {/* Navbar */}
+      <nav className="sticky top-0 z-50 w-full bg-white shadow-md px-4 md:px-8 py-3 flex justify-between items-center">
+        {/* Left: Hamburger Menu */}
+        <button
+          className="lg:hidden text-green-600"
+          onClick={() => setSidebarOpen(true)}
+        >
+          <Menu size={24} />
+        </button>
 
-        {/* Foreground Content */}
-        <div className="relative bg-gradient-to-r from-green-500 to-emerald-500 bg-opacity-60 backdrop-blur-xl p-8 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl overflow-hidden">
-          {/* Profile Section */}
-          <div className="flex items-center gap-6">
-            <div className="flex-shrink-0 relative w-24 h-24">
-              <Image
-                src={dashboardImage2}
-                alt="Admin Profile"
-                className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg"
-              />
-            </div>
+        {/* Logo */}
+        <Image
+          src={logo1}
+          alt="ReadGro Logo"
+          className="w-40 h-auto pl-6 py-2"
+          priority
+        />
 
-            <div className="text-green-100">
-              <h5 className="text-lg font-semibold">HELLO</h5>
-              <h2 className="text-3xl font-bold">GNANESWAR</h2>
-            </div>
+        {/* Right: Admin Info & Logout */}
+        <div className="flex items-center gap-4">
+          <div className="relative w-10 h-10">
+            <Image
+              src={dashboardImage2}
+              alt="Admin Profile"
+              width={40}
+              height={40}
+              className="rounded-full border-2 border-green-500 object-cover"
+            />
           </div>
-
-          {/* Logout Button */}
           <button
             onClick={() => setShowLogoutPopup(true)}
-            className="px-6 py-2 bg-white text-green-600 font-semibold rounded-full shadow hover:bg-primaryColor-100 transition"
+            className="px-3 py-1 text-sm bg-green text-white rounded-[6px] hover:bg-green-600 transition"
           >
             Logout
           </button>
         </div>
+      </nav>
+
+      {/* Sidebar Drawer (optional) */}
+      <div
+        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform z-40 lg:hidden ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="flex justify-between items-center px-4 py-3 border-b">
+          <span className="font-bold">Admin Menu</span>
+          <button onClick={() => setSidebarOpen(false)}>
+            <X />
+          </button>
+        </div>
+        <SidebarDashboard /> {/* Replace or remove if not needed */}
       </div>
+
+      {/* Overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-30 z-30 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        ></div>
+      )}
 
       {/* Logout Confirmation Popup */}
       {showLogoutPopup && (
@@ -81,7 +111,7 @@ const HeroDashboard = () => {
           </div>
         </div>
       )}
-    </section>
+    </>
   );
 };
 
