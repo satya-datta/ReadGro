@@ -63,7 +63,7 @@ const CurriculumContentRestricted = ({ id, hasPurchased }) => {
   };
 
   const handleVideoClick = (index, youtubeLink) => {
-    if (index > 0 && !hasPurchased) {
+    if (!hasPurchased && (index > 0 || topics.length < 4)) {
       setShowLockedPopup(true);
     } else {
       const embedUrl = getEmbedUrl(youtubeLink);
@@ -80,7 +80,7 @@ const CurriculumContentRestricted = ({ id, hasPurchased }) => {
     <div>
       <ul className="divide-y border rounded-lg">
         {topics.map((topic, index) => {
-          const isLocked = index > 0 && !hasPurchased;
+          const isLocked = !hasPurchased && (index > 0 || topics.length < 4);
 
           return (
             <li
@@ -94,7 +94,7 @@ const CurriculumContentRestricted = ({ id, hasPurchased }) => {
                   className={`w-9 h-9 flex items-center justify-center border rounded-full 
                     ${
                       isLocked
-                        ? "border-gray-300"
+                        ? "border-gray-300 text-gray-400"
                         : "border-blue-500 text-blue-600 hover:bg-blue-100"
                     }`}
                 >

@@ -67,7 +67,7 @@ const PricingPlans = () => {
     <div className="bg-gray-100 min-h-screen py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-extrabold text-gray-900 mb-6 text-center">
-          Pricing Plans
+          Packages
         </h2>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {packages.map((pkg) => (

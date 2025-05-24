@@ -85,7 +85,7 @@ const ContactPrimary = () => {
                 Digital Agency Network 2025
               </p>
               <p className="text-size-15 text-contentColor dark:text-contentColor-dark leaing-26px">
-                Kakinada
+                Vishakapatnam
               </p>
             </div>
           </div>
@@ -119,9 +119,6 @@ const ContactPrimary = () => {
               </h3>
               <p className="text-size-13 lg:text-size-15 text-contentColor dark:text-contentColor-dark leaing-5">
                 +91 99896 53692
-              </p>
-              <p className="text-size-15 text-contentColor dark:text-contentColor-dark leaing-26px">
-                +91 63045 86548
               </p>
             </div>
           </div>

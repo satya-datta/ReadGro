@@ -34,7 +34,7 @@ const HeaderTop = () => {
           <div>
             <p>
               <i className="icofont-email text-primaryColor text-size-15 mr-1"></i>
-              Mail Us: readgroofficial@mail.com
+              Mail Us: readgroofficial@gmail.com
             </p>
           </div>
         </div>
