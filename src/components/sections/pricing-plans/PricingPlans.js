@@ -109,7 +109,7 @@ const PricingPlans = () => {
 
               <button
                 className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-                onClick={() => router.push(`/package/${pkg.package_id}`)}
+                onClick={() => router.push(`/packages/${pkg.package_id}`)}
               >
                 Subscribe ₹{pkg.package_price}
               </button>

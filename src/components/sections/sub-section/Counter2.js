@@ -17,8 +17,8 @@ const Counter2 = ({ type }) => {
     {
       name: "TOTAL STUDENTS",
       image: counter2,
-      data: 145,
-      symbol: "+",
+      data: 2,
+      symbol: "k",
     },
     {
       name: "tOTAL INSTRUCTOR",
