@@ -85,19 +85,7 @@ const PricingPlans = () => {
               </h3>
 
               <p className="text-gray-600 text-sm mb-4">{pkg.description}</p>
-              <div className="text-left ml-2">
-                {pkg.package_id === 1 ? (
-                  <p className="text-gray-800 font-medium">
-                    ✅ GET Basic Package Courses
-                  </p>
-                ) : (
-                  previousPackages[pkg.package_id] && (
-                    <p className="text-gray-800 font-medium">
-                      ✅ Free {previousPackages[pkg.package_id]} Courses
-                    </p>
-                  )
-                )}
-              </div>
+
               <div className="text-left mb-2 ml-2 text-sm">
                 {courseNames[pkg.package_id]?.names.map((name, idx) => (
                   <p key={idx} className="text-gray-800 text-base font-medium">

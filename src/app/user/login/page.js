@@ -1,5 +1,6 @@
 import LoginMain from "@/components/layout/main/LoginMain";
 import UserLoginMain from "@/components/layout/main/UserLoginMain";
+import LoginWrapper from "@/components/shared/wrappers/LoginWrapper";
 
 import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 import PlainWrapper from "@/components/shared/wrappers/PlainWrapper";
@@ -9,11 +10,11 @@ export const metadata = {
 };
 const Login = () => {
   return (
-    <PlainWrapper>
+    <LoginWrapper>
       <main>
         <UserLoginMain />
       </main>
-    </PlainWrapper>
+    </LoginWrapper>
   );
 };
 

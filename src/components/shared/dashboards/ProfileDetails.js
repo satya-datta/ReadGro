@@ -11,7 +11,7 @@ const ProfileDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [sponsorDetails, setSponsorDetails] = useState({
-    sponsor_email: "",
+    sponsor_name: "",
     sponsor_mobile: "",
   });
 
@@ -70,18 +70,19 @@ const ProfileDetails = () => {
       );
       if (response.ok) {
         const data = await response.json();
+        console.log("hi", data);
         setSponsorDetails({
-          sponsor_email: data.email || "",
+          sponsor_name: data.name || "",
           sponsor_mobile: data.phone || "",
         });
         console.log(sponsorDetails);
       } else {
         console.error("Failed to fetch sponsor details");
-        setSponsorDetails({ sponsor_email: "", sponsor_mobile: "" });
+        setSponsorDetails({ sponsor_name: "", sponsor_mobile: "" });
       }
     } catch (error) {
       console.error("Error fetching sponsor details:", error);
-      setSponsorDetails({ sponsor_email: "", sponsor_mobile: "" });
+      setSponsorDetails({ sponsor_name: "", sponsor_mobile: "" });
     }
   };
 
@@ -166,10 +167,10 @@ const ProfileDetails = () => {
         <h3 className="text-lg font-semibold mb-3">Sponsor Details</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="font-semibold block mb-1">Sponsor Email</label>
+            <label className="font-semibold block mb-1">Sponsor Name</label>
             <input
               type="text"
-              value={sponsorDetails.sponsor_email}
+              value={sponsorDetails.sponsor_name}
               disabled
               className="w-full p-2 border rounded bg-gray-100 text-gray-600"
             />
