@@ -377,19 +377,19 @@ const CheckoutWeb = ({ packagename }) => {
                 <thead>
                   <tr className="border-b">
                     <td className="p-10px md:p-15px">Product</td>
-                    <td className="p-10px md:p-15px">Actual Price</td>
-                    <td className="p-10px md:p-15px">With Discount</td>
+                    <td className="p-10px md:p-15px"> Price</td>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-b">
                     <td className="p-10px md:p-15px">
-                      {packageDetails?.package_name ||<div><Testloader/></div>}
+                      {packageDetails?.package_name || (
+                        <div>
+                          <Testloader />
+                        </div>
+                      )}
                     </td>
-                    <td className="p-10px md:p-15px">
-                      ₹{packageDetails?.package_price || "0.00"}
-                      {/* Strike-through original price */}
-                    </td>
+
                     <td className="p-10px md:p-15px font-bold text-green-600">
                       ₹
                       {discountedPrice ||

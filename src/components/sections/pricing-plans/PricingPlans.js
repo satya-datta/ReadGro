@@ -1,11 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation"; // ✅ Import useRouter
+import { useRouter } from "next/navigation";
 
 const PricingPlans = () => {
   const router = useRouter();
   const [packages, setPackages] = useState([]);
-  const [courseCounts, setCourseCounts] = useState({});
   const [courseNames, setCourseNames] = useState({});
 
   useEffect(() => {
@@ -14,52 +13,43 @@ const PricingPlans = () => {
       .then((data) => {
         if (Array.isArray(data)) {
           setPackages(data);
-          data.forEach((pkg) => fetchCourseCount(pkg.package_id));
+          data.forEach((pkg) => fetchCourseDetails(pkg.package_id));
         }
       })
       .catch((error) => console.error("Error fetching packages:", error));
   }, []);
 
-  const fetchCourseCount = (packageId) => {
+  const fetchCourseDetails = (packageId) => {
     fetch(`https://readgro-backend.onrender.com/getcoursemappings/${packageId}`)
       .then((res) => res.json())
       .then((data) => {
-        if (Array.isArray(data)) {
-          const courseIds = data.map((course) => course.course_id);
-          setCourseCounts((prevCounts) => ({
-            ...prevCounts,
-            [packageId]: data.length,
-          }));
-
-          if (courseIds.length > 0) {
-            fetch("https://readgro-backend.onrender.com/getcoursedetails", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ course_ids: courseIds }),
+        const courseIds = data.map((course) => course.course_id);
+        if (courseIds.length > 0) {
+          fetch("https://readgro-backend.onrender.com/getcoursedetails", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ course_ids: courseIds }),
+          })
+            .then((res) => res.json())
+            .then((courseData) => {
+              if (Array.isArray(courseData.courses)) {
+                const names = courseData.courses.map((c) => c.name);
+                setCourseNames((prev) => ({
+                  ...prev,
+                  [packageId]: {
+                    names,
+                    total: names.length,
+                  },
+                }));
+              }
             })
-              .then((res) => res.json())
-              .then((courseData) => {
-                if (Array.isArray(courseData.courses)) {
-                  const firstThree = courseData.courses
-                    .slice(0, 3)
-                    .map((c) => c.name);
-                  setCourseNames((prev) => ({
-                    ...prev,
-                    [packageId]: {
-                      names: firstThree,
-                      total: courseIds.length,
-                    },
-                  }));
-                }
-              })
-              .catch((error) =>
-                console.error("Error fetching course details:", error)
-              );
-          }
+            .catch((err) =>
+              console.error("Error fetching course details:", err)
+            );
         }
       })
-      .catch((error) =>
-        console.error(`Error fetching courses for package ${packageId}:`, error)
+      .catch((err) =>
+        console.error(`Error fetching course mapping for ${packageId}:`, err)
       );
   };
 
@@ -70,51 +60,62 @@ const PricingPlans = () => {
           Packages
         </h2>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {packages.map((pkg) => (
-            <div
-              key={pkg.package_id}
-              className="bg-white p-6 rounded-lg shadow-md"
-            >
-              <img
-                src={pkg.package_image ? `${pkg.package_image}` : freeImage}
-                alt={pkg.package_name}
-                className="w-full h-48 object-cover rounded-lg"
-              />
-              <h3 className="text-xl font-semibold text-gray-800 text-center">
-                {pkg.package_name}
-              </h3>
+          {packages.map((pkg) => {
+            const courseData = courseNames[pkg.package_id];
+            const names = courseData?.names || [];
+            const total = courseData?.total || 0;
 
-              <p className="text-gray-600 text-sm mb-4">{pkg.description}</p>
-
-              <div className="text-left mb-2 ml-2 text-sm">
-                {courseNames[pkg.package_id]?.names.map((name, idx) => (
-                  <p key={idx} className="text-gray-800 text-base font-medium">
-                    ✅ {name}
-                  </p>
-                ))}
-                {courseNames[pkg.package_id]?.total > 3 && (
-                  <p className="text-gray-500 text-sm">
-                    + {courseNames[pkg.package_id].total - 3} more courses
-                  </p>
-                )}
-              </div>
-
-              {/* <p className="text-2xl font-bold text-gray-900 mb-4 text-right">
-                ₹{pkg.package_price}
-              </p> */}
-
-              {/* <p className="text-gray-600 text-sm mb-2">
-                Duration: {pkg.duration} days
-              </p> */}
-
-              <button
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-                onClick={() => router.push(`/packages/${pkg.package_id}`)}
+            return (
+              <div
+                key={pkg.package_id}
+                className="bg-white p-6 rounded-lg shadow-md flex flex-col justify-between"
               >
-                Subscribe ₹{pkg.package_price}
-              </button>
-            </div>
-          ))}
+                <img
+                  src={pkg.package_image}
+                  alt={pkg.package_name}
+                  className="w-full h-48 object-cover rounded-lg mb-4"
+                />
+
+                <h3 className="text-xl font-semibold text-gray-800 text-center mb-2">
+                  {pkg.package_name}
+                </h3>
+
+                {/* Pricing Section */}
+                <div className="text-center mb-4">
+                  <p className="text-gray-500 line-through text-sm">
+                    ₹{pkg.package_price}
+                  </p>
+                  <p className="text-2xl font-bold text-blue-600">
+                    ₹{pkg.discount_price}
+                  </p>
+                </div>
+
+                {/* Course List */}
+                <div className="text-left text-sm mb-4 space-y-1 ml-2">
+                  {names.slice(0, total > 3 ? 2 : 3).map((name, idx) => (
+                    <p
+                      key={idx}
+                      className="text-gray-800 text-base font-medium"
+                    >
+                      ✅ {name}
+                    </p>
+                  ))}
+                  {total > 3 && (
+                    <p className="text-gray-800 text-base font-medium">
+                      ✅ + {total - 2} more courses
+                    </p>
+                  )}
+                </div>
+
+                <button
+                  className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+                  onClick={() => router.push(`/packages/${pkg.package_id}`)}
+                >
+                  Buy Now
+                </button>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

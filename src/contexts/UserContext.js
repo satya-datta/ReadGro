@@ -19,9 +19,9 @@ const UserContextProvider = ({ children }) => {
 
     if (referralCode) {
       // Store referral code and package name in cookies with 2-hour expiry (7200 seconds)
-      Cookies.set("referralCode", referralCode, { expires: 1 / 12 }); // 1/12 of a day = 2 hours
+      Cookies.set("referralCode", referralCode, { expires: 10 / (24 * 60) }); // 10 minutes
       if (packageType) {
-        Cookies.set("packageName", packageType, { expires: 1 / 12 }); // 2-hour expiry
+        Cookies.set("packageName", packageType, { expires: 10 / (24 * 60) }); // 10 minutes
         router.push(
           `/checkout?referralcode=${referralCode}&package=${packageType}`
         );
