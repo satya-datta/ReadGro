@@ -5,7 +5,8 @@ import CounterDashboard from "@/components/shared/dashboards/CounterDashboard";
 import HeadingDashboard from "@/components/shared/headings/HeadingDashboard";
 import axios from "axios";
 import { useUserContext } from "@/contexts/UserContext";
-import readgroLogo from "@/assets/images/rg.png"; // Update the path if different
+import Image from "next/image";
+const readgroLogo = require("@/assets/images/rg.png");
 
 const CounterStudent = () => {
   const { user } = useUserContext();
@@ -127,6 +128,7 @@ const CounterStudent = () => {
           </div>
 
           {/* Desktop/Laptop View */}
+          {/* Desktop/Laptop View */}
           <div className="hidden md:flex bg-gray-100 rounded-lg shadow-md p-4 items-center justify-between gap-6 max-w-xl mx-auto">
             {/* User Image & Info */}
             <div className="flex items-center gap-6">
@@ -135,7 +137,7 @@ const CounterStudent = () => {
                 alt="User Profile"
                 className="w-32 h-32 object-cover rounded-md"
               />
-              <div>
+              <div className="flex flex-col items-center justify-center text-center">
                 <h2 className="text-xl font-semibold text-gray-800">
                   {user?.name}
                 </h2>
@@ -146,6 +148,13 @@ const CounterStudent = () => {
             </div>
 
             {/* Logo on the right */}
+            <Image
+              src={readgroLogo}
+              alt="Readgro Logo"
+              width={50}
+              height={40}
+              className="object-contain"
+            />
           </div>
         </div>
       )}
