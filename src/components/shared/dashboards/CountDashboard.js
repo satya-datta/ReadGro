@@ -1,3 +1,5 @@
+"use client"; // If you're using Next.js App Router
+
 import Image from "next/image";
 import CountUp from "react-countup";
 
