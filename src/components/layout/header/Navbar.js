@@ -18,15 +18,15 @@ const Navbar = () => {
 
   return (
     <div
-      className={`transition-all duration-500 sticky-header z-medium dark:bg-whiteColor-dark ${
+      className={`transition-all duration-500 sticky-header z-medium dark:bg-gradient-to-r from-green-100 via-green-50 to-yellow-100 ${
         isHome2 || isHome2Dark
           ? "lg:border-b border-borderColor dark:border-borderColor-dark"
           : ""
       }`}
     >
-      <nav>
+      <nav className="bg-gradient-to-r from-green-100 via-green-50 to-yellow-100">
         <div
-          className={`py-15px lg:py-0 px-15px ${
+          className={`py-[15px] lg:py-0 px-[15px] ${
             isHome1 ||
             isHome1Dark ||
             isHome4 ||
@@ -39,17 +39,12 @@ const Navbar = () => {
               : "lg:container 3xl:container-secondary-lg "
           } 4xl:container mx-auto relative`}
         >
-          {isHome4 || isHome4Dark || isHome5 || isHome5Dark ? (
-            <NavbarTop />
-          ) : (
-            ""
-          )}
-          <div className="grid grid-cols-2 lg:grid-cols-12 items-center gap-15px">
+          {(isHome4 || isHome4Dark || isHome5 || isHome5Dark) && <NavbarTop />}
+          <div className="grid grid-cols-2 lg:grid-cols-12 items-center gap-[15px]">
             {/* navbar left */}
             <NavbarLogo />
             {/* Main menu */}
             <NavItems />
-
             {/* navbar right */}
             <NavbarRight isHome2Dark={isHome2Dark} />
           </div>

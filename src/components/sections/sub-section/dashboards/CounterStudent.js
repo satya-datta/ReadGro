@@ -5,6 +5,7 @@ import CounterDashboard from "@/components/shared/dashboards/CounterDashboard";
 import HeadingDashboard from "@/components/shared/headings/HeadingDashboard";
 import axios from "axios";
 import { useUserContext } from "@/contexts/UserContext";
+import readgroLogo from "@/assets/images/rg.png"; // Update the path if different
 
 const CounterStudent = () => {
   const { user } = useUserContext();
@@ -126,20 +127,25 @@ const CounterStudent = () => {
           </div>
 
           {/* Desktop/Laptop View */}
-          <div className="hidden md:flex bg-gray-100 rounded-lg shadow-md p-4 items-center gap-6 max-w-xl mx-auto">
-            <img
-              src={loadedImageUrl}
-              alt="User Profile"
-              className="w-32 h-32 object-cover rounded-md"
-            />
-            <div>
-              <h2 className="text-xl font-semibold text-gray-800">
-                {user?.name}
-              </h2>
-              <p className="text-md text-blue-600 font-medium mt-1">
-                {packageDetails?.package_name || "Loading..."}
-              </p>
+          <div className="hidden md:flex bg-gray-100 rounded-lg shadow-md p-4 items-center justify-between gap-6 max-w-xl mx-auto">
+            {/* User Image & Info */}
+            <div className="flex items-center gap-6">
+              <img
+                src={loadedImageUrl}
+                alt="User Profile"
+                className="w-32 h-32 object-cover rounded-md"
+              />
+              <div>
+                <h2 className="text-xl font-semibold text-gray-800">
+                  {user?.name}
+                </h2>
+                <p className="text-md text-blue-600 font-medium mt-1">
+                  {packageDetails?.package_name || "Loading..."}
+                </p>
+              </div>
             </div>
+
+            {/* Logo on the right */}
           </div>
         </div>
       )}

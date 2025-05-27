@@ -91,7 +91,7 @@ const PlanCard = ({ package_id, userCurrentPackage }) => {
   const userPackageId = userCurrentPackage?.package_id || 0;
   const userPackagePrice = userCurrentPackage?.package_price || 0;
   const priceDifference = Math.max(
-    packageData.package_price - userPackagePrice,
+    packageData.discount_price - userPackagePrice,
     0
   );
 
