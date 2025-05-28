@@ -98,7 +98,7 @@ const PackageWeb = () => {
 
                 {/* Package Price */}
                 <p className="text-lg font-bold mt-2">
-                  💰 ₹{pkg.package_price}
+                  💰 ₹{pkg.discount_price}
                 </p>
 
                 {/* View Plan Button */}

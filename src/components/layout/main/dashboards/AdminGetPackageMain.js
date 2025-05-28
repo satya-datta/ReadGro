@@ -44,7 +44,7 @@ const AdminGetPackages = () => {
             {packages.map((pkg) => (
               <tr key={pkg.package_id} className="border-b">
                 <td className="px-5 py-2">{pkg.package_name}</td>
-                <td className="px-5 py-2">{pkg.package_price}</td>
+                <td className="px-5 py-2">{pkg.discount_price}</td>
                 <td className="px-5 py-2">{pkg.created_time}</td>
                 <td className="px-5 py-2">{pkg.commission || "N/A"}</td>
                 <td className="px-5 py-2 flex space-x-3">
