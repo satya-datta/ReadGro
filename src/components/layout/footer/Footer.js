@@ -19,7 +19,7 @@ const Footer = () => {
           : isHome10
           ? "2xl:bg-[url(../assets/images/footer/footer_bg_ai.png)]"
           : ""
-      } bg-darkblack 2xl:bg-cover`}
+      } bg-blackColor2 dark:bg-lightGrey10-dark 2xl:bg-cover`}
     >
       <div
         className={`${

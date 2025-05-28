@@ -28,7 +28,7 @@ const HeaderTop = () => {
           <div>
             <p>
               <i className="icofont-phone text-primaryColor text-size-15 mr-1"></i>
-              Call Us: +91 99896 53692
+              Call Us: +91 93913 57589
             </p>
           </div>
           <div>

@@ -30,7 +30,7 @@ const NavItems = () => {
     },
     {
       id: 4,
-      name: "Plan",
+      name: "Packages",
       path: "/packages",
       dropdown: <PackagesDropdown />,
       isRelative: true,
@@ -38,7 +38,7 @@ const NavItems = () => {
 
     {
       id: 5,
-      name: "Contact Us", 
+      name: "Contact Us",
       path: "/contact",
       // dropdown: <DropdownEcommerce />,
       isRelative: true,

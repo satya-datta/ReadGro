@@ -50,7 +50,7 @@ const Testimonials = dynamic(
 const HOMEMAIN = () => {
   return (
     <>
-      <div style={{ marginBottom: "90px" }}>
+      <div style={{ marginBottom: "60px", marginTop: "60px" }}>
         <Hero7 />
       </div>
 

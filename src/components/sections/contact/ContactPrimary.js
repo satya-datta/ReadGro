@@ -118,7 +118,7 @@ const ContactPrimary = () => {
                 Phone Number
               </h3>
               <p className="text-size-13 lg:text-size-15 text-contentColor dark:text-contentColor-dark leaing-5">
-                +91 99896 53692
+                +91 93913 57589
               </p>
             </div>
           </div>
