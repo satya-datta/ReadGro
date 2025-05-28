@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import counter1 from "@/assets/images/counter/course.png";
+
 import counter2 from "@/assets/images/counter/counter__2.png";
 import counter3 from "@/assets/images/counter/counter__3.png";
 import counter4 from "@/assets/images/counter/counter__4.png";
