@@ -134,7 +134,7 @@ const PlanCard = ({ package_id, userCurrentPackage }) => {
     }
 
     const options = {
-      key: "rzp_live_BF04chKRoQcXXm", // Replace with your Razorpay Key ID
+      key: "rzp_test_WtaxFTogvVwXDt", // Replace with your Razorpay Key ID
       amount: priceDifference * 100, // Convert to paisa (INR subunit)
       currency: "INR",
       name: "Read Gro",

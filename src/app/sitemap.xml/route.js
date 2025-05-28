@@ -1,50 +1,55 @@
-export async function getServerSideProps({ res }) {
+// app/sitemap.xml/route.js
+import { NextResponse } from "next/server";
+
+export async function GET() {
   const baseUrl = "https://readgro.com";
-  const backendUrl = "https://readgro-backend.onrender.com"; // Replace with your backend domain
+  const backendUrl = "https://readgro-backend.onrender.com";
 
-  // Fetch courses with course_id
-  const coursesRes = await fetch(`${backendUrl}/getspecific_course/courses-ids`);
-  const courses = coursesRes.ok ? await coursesRes.json() : [];
+  const staticPaths = ["", "about", "contact", "courses", "packages"];
 
-  // Fetch packages with package_id
-  const packagesRes = await fetch(`${backendUrl}/getpackage/packages-ids`);
-  const packages = packagesRes.ok ? await packagesRes.json() : [];
+  let courses = [];
+  let packages = [];
 
-  const staticPaths = [
-    "",
-    "about",
-    "contact",
-    "courses",
-    "packages"
-  ];
+  try {
+    const coursesRes = await fetch(
+      `${backendUrl}/getspecific_course/courses-ids`
+    );
+    if (coursesRes.ok) {
+      courses = await coursesRes.json();
+    }
+  } catch (err) {
+    console.error("Failed to fetch courses:", err);
+  }
+
+  try {
+    const packagesRes = await fetch(`${backendUrl}/getpackage/packages-ids`);
+    if (packagesRes.ok) {
+      packages = await packagesRes.json();
+    }
+  } catch (err) {
+    console.error("Failed to fetch packages:", err);
+  }
 
   let sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n`;
   sitemap += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
 
-  // Add static pages
-  staticPaths.forEach(path => {
+  staticPaths.forEach((path) => {
     sitemap += `<url><loc>${baseUrl}/${path}</loc></url>\n`;
   });
 
-  // Add dynamic course pages using course_id
-  courses.forEach(course => {
+  courses.forEach((course) => {
     sitemap += `<url><loc>${baseUrl}/courses/${course.course_id}</loc></url>\n`;
   });
 
-  // Add dynamic package pages using package_id
-  packages.forEach(pkg => {
+  packages.forEach((pkg) => {
     sitemap += `<url><loc>${baseUrl}/packages/${pkg.package_id}</loc></url>\n`;
   });
 
   sitemap += `</urlset>`;
 
-  res.setHeader("Content-Type", "text/xml");
-  res.write(sitemap);
-  res.end();
-
-  return { props: {} };
-}
-
-export default function Sitemap() {
-  return null;
+  return new NextResponse(sitemap, {
+    headers: {
+      "Content-Type": "application/xml",
+    },
+  });
 }
