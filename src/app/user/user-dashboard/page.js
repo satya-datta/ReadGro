@@ -6,8 +6,8 @@ import PlainWrapper from "@/components/shared/wrappers/PlainWrapper";
 import UserDashboardWrapper from "@/components/shared/wrappers/UserDashboardWrapper";
 
 export const metadata = {
-  title: "Student Dashboard | ReadGro - Education LMS Template",
-  description: "Student Dashboard | ReadGro - Education LMS Template",
+  title: "Student Dashboard | ReadGro - Learn and Earn",
+  description: "Student Dashboard | ReadGro - Learn and Earn",
 };
 
 const Student_Dashboard = () => {

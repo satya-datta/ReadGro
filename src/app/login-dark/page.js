@@ -3,8 +3,8 @@ import LoginMain from "@/components/layout/main/LoginMain";
 import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 
 export const metadata = {
-  title: "Login/Register - Dark | ReadGro - Education LMS Template",
-  description: "Login/Register - Dark | ReadGro - Education LMS Template",
+  title: "Login/Register - Dark | ReadGro - Learn and Earn",
+  description: "Login/Register - Dark | ReadGro - Learn and Earn",
 };
 const Login_Dark = () => {
   return (

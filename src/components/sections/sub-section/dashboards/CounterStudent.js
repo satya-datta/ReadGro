@@ -79,28 +79,33 @@ const CounterStudent = () => {
     return () => clearInterval(interval);
   }, [user?.userId]);
 
-  const counts = [
-    {
-      name: "Today’s Earnings",
-      image: earningsimage,
-      data: `₹${earnings.todayEarnings}`,
-    },
-    {
-      name: "Last 7 Days Earnings",
-      image: earningsimage,
-      data: `₹${earnings.last7DaysEarnings}`,
-    },
-    {
-      name: "Last 30 Days Earnings",
-      image: earningsimage,
-      data: `₹${earnings.last30DaysEarnings}`,
-    },
-    {
-      name: "Total Earnings",
-      image: earningsimage,
-      data: `₹${earnings.overallEarnings}`,
-    },
-  ];
+ const counts = [
+  {
+    name: "Today’s Earnings",
+    image: earningsimage,
+    data: earnings.todayEarnings,
+    symbol: "₹",
+  },
+  {
+    name: "Last 7 Days Earnings",
+    image: earningsimage,
+    data: earnings.last7DaysEarnings,
+    symbol: "₹",
+  },
+  {
+    name: "Last 30 Days Earnings",
+    image: earningsimage,
+    data: earnings.last30DaysEarnings,
+    symbol: "₹",
+  },
+  {
+    name: "Total Earnings",
+    image: earningsimage,
+    data: earnings.overallEarnings,
+    symbol: "₹",
+  },
+];
+
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 mt-0 w-full">

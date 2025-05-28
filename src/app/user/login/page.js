@@ -5,8 +5,8 @@ import LoginWrapper from "@/components/shared/wrappers/LoginWrapper";
 import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 import PlainWrapper from "@/components/shared/wrappers/PlainWrapper";
 export const metadata = {
-  title: "Login/Register | ReadGro - Education LMS Template",
-  description: "Login/Register | ReadGro - Education LMS Template",
+  title: "Login/Register | ReadGro - Learn and Earn",
+  description: "Login/Register | ReadGro - Learn and Earn",
 };
 const Login = () => {
   return (

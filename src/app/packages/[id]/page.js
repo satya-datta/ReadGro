@@ -5,8 +5,8 @@ import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 import courses from "@/../public/fakedata/courses.json";
 import { notFound } from "next/navigation";
 export const metadata = {
-  title: "Course Details | ReadGro - Education LMS Template",
-  description: "Course Details | ReadGro - Education LMS Template",
+  title: "Course Details | ReadGro - Learn and Earn",
+  description: "Course Details | ReadGro - Learn and Earn",
 };
 
 const Course_Details = async ({ params }) => {

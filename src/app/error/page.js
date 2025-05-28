@@ -3,8 +3,8 @@ import ErrorMain from "@/components/layout/main/ErrorMain";
 import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 
 export const metadata = {
-  title: "Error | ReadGro - Education LMS Template",
-  description: "Error | ReadGro - Education LMS Template",
+  title: "Error | ReadGro - Learn and Earn",
+  description: "Error | ReadGro - Learn and Earn",
 };
 
 const Error = async () => {

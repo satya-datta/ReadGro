@@ -1,8 +1,8 @@
 import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 import PackageMain from "@/components/layout/main/PackageMain";
 export const metadata = {
-  title: "Plans | ReadGro - Education LMS Template",
-  description: "Plans | ReadGro - Education LMS Template",
+  title: "Plans | ReadGro - Learn and Earn",
+  description: "Plans | ReadGro - Learn and Earn",
 };
 
 const Courses = async () => {

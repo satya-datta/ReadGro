@@ -1,7 +1,6 @@
-"use client"; // If you're using Next.js App Router
-
+"use client";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import CountUp from "react-countup";
 
 const gradientClasses = [
   "bg-gradient-to-br from-purple-500 to-rose-500",
@@ -40,9 +39,27 @@ const FloatingShapes = () => (
 
 const CountDashboard = ({ count, index }) => {
   const { name, data, image, symbol } = count;
+  const [displayedCount, setDisplayedCount] = useState(0);
 
-  // Extract numeric part of `data` (e.g., ₹200 => 200)
-  const numericValue = parseFloat(data.replace(/[^\d.-]/g, ""));
+  useEffect(() => {
+    const end = parseInt(data);
+    if (isNaN(end) || end <= 0) {
+      setDisplayedCount(0);
+      return;
+    }
+
+    const duration = 1000; // in ms
+    const stepTime = Math.max(10, duration / end);
+    let start = 0;
+
+    const interval = setInterval(() => {
+      start += 1;
+      setDisplayedCount(start);
+      if (start >= end) clearInterval(interval);
+    }, stepTime);
+
+    return () => clearInterval(interval);
+  }, [data]);
 
   return (
     <div
@@ -55,12 +72,11 @@ const CountDashboard = ({ count, index }) => {
       <div className="flex items-center justify-between z-10 relative">
         <div>
           <h3 className="text-2xl font-bold">
-            {symbol || "₹"}
-            <CountUp end={numericValue} duration={5} separator="," />
+            {symbol || ""}
+            {displayedCount}
           </h3>
 
           <div className="h-px w-full bg-white bg-opacity-40 my-3" />
-
           <p className="text-sm opacity-90">{name}</p>
         </div>
       </div>

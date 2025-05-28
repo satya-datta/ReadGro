@@ -1,6 +1,6 @@
 /*********************************************************************************
 
-	  Template Name: ReadGro - Education LMS Template
+	  Template Name: ReadGro - Learn and Earn
     Author: Kamrul Hasan
     Support: kamrulishasan34@gmail.com
     Description: ReadGro -  Education, online course, tailwind v3.0 and Next.js v14,.

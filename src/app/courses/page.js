@@ -3,8 +3,8 @@ import CoursesMain from "@/components/layout/main/CoursesMain";
 import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 
 export const metadata = {
-  title: "Courses | ReadGro - Education LMS Template",
-  description: "Courses | ReadGro - Education LMS Template",
+  title: "Courses | ReadGro - Learn and Earn",
+  description: "Courses | ReadGro - Learn and Earn",
 };
 
 const Courses = async () => {

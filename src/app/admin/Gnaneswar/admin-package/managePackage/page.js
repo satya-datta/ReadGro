@@ -5,8 +5,8 @@ import AdminWrapper from "@/components/shared/wrappers/AdminWrapper";
 import DsahboardWrapper from "@/components/shared/wrappers/DsahboardWrapper";
 import PageWrapper from "@/components/shared/wrappers/PageWrapper";
 export const metadata = {
-  title: "Admin Course | ReadGro - Education LMS Template",
-  description: "Admin Course | ReadGro - Education LMS Template",
+  title: "Admin Course | ReadGro - Learn and Earn",
+  description: "Admin Course | ReadGro - Learn and Earn",
 };
 const Admin_Course = () => {
   return (
