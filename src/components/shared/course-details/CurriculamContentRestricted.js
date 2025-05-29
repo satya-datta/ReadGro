@@ -63,16 +63,19 @@ const CurriculumContentRestricted = ({ id, hasPurchased }) => {
   };
 
   const handleVideoClick = (index, youtubeLink) => {
-    if (!hasPurchased && (index > 0 || topics.length < 4)) {
+    const isLocked = !hasPurchased && index !== 0;
+
+    if (isLocked) {
       setShowLockedPopup(true);
+      return;
+    }
+
+    const embedUrl = getEmbedUrl(youtubeLink);
+    if (embedUrl) {
+      setSelectedVideo(embedUrl);
+      setShowVideoModal(true);
     } else {
-      const embedUrl = getEmbedUrl(youtubeLink);
-      if (embedUrl) {
-        setSelectedVideo(embedUrl);
-        setShowVideoModal(true);
-      } else {
-        window.open(youtubeLink, "_blank");
-      }
+      window.open(youtubeLink, "_blank");
     }
   };
 
@@ -80,26 +83,27 @@ const CurriculumContentRestricted = ({ id, hasPurchased }) => {
     <div>
       <ul className="divide-y border rounded-lg">
         {topics.map((topic, index) => {
-          const isLocked = !hasPurchased && (index > 0 || topics.length < 4);
+          const isLocked = !hasPurchased && index !== 0;
 
           return (
             <li
               key={index}
-              className="flex items-center justify-between px-4 py-3 hover:bg-gray-50"
+              onClick={() => handleVideoClick(index, topic.video_url)}
+              className={`flex items-center justify-between px-4 py-3 hover:bg-gray-50 cursor-pointer ${
+                isLocked ? "opacity-70" : ""
+              }`}
             >
               <div className="flex items-center gap-3">
-                <button
-                  onClick={() => handleVideoClick(index, topic.video_url)}
-                  disabled={isLocked}
+                <div
                   className={`w-9 h-9 flex items-center justify-center border rounded-full 
-                    ${
-                      isLocked
-                        ? "border-gray-300 text-gray-400"
-                        : "border-blue-500 text-blue-600 hover:bg-blue-100"
-                    }`}
+        ${
+          isLocked
+            ? "border-gray-300 text-gray-400"
+            : "border-blue-500 text-blue-600 bg-white"
+        }`}
                 >
                   <i className="icofont-play-alt-2 text-sm"></i>
-                </button>
+                </div>
 
                 <span className="text-sm font-medium text-gray-800">
                   {topic.topic_name} : {index + 1}
@@ -169,7 +173,10 @@ const CurriculumContentRestricted = ({ id, hasPurchased }) => {
 
             <button
               className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 w-full"
-              onClick={() => router.push("/packages")}
+              onClick={() => {
+                setShowLockedPopup(false);
+                router.push("/packages");
+              }}
             >
               View Plans
             </button>

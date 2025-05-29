@@ -9,6 +9,7 @@ import TabContentWrapper from "@/components/shared/wrappers/TabContentWrapper";
 // import UserBankDetails from "./ADMINUserBankDetails";
 // import AdminPayouts from "./AdminPayouts";
 import AdminCreditedPayments from "./AdminCreditedPayments";
+import Adminpayin from "./Adminpayin";
 const AdminPayments = ({ userId }) => {
   const { currentIdx, handleTabClick } = useTab();
   const tabbuttons = [
@@ -16,10 +17,10 @@ const AdminPayments = ({ userId }) => {
       name: "Credited Payments",
       content: <AdminCreditedPayments />,
     },
-    // {
-    //   name: "Payouts",
-    //   content: <AdminPayouts />,
-    // },
+    {
+      name: "Payments details",
+      content: <Adminpayin />,
+    },
   ];
   console.log(userId);
   return (

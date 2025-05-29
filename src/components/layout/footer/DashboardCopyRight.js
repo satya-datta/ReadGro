@@ -54,7 +54,7 @@ const DashboardCopyRight = () => {
             </p>
           </div>
 
-          <div>
+          {/* <div>
             <ul className="flex gap-2 justify-center lg:justify-end text-gray-700 text-sm">
               <li>
                 <a
@@ -102,7 +102,7 @@ const DashboardCopyRight = () => {
                 </a>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
       )}
     </div>

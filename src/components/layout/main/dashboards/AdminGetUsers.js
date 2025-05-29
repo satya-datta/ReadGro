@@ -1,98 +1,118 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Link from "next/link"; // Import Link from next/link
-import ButtonPrimary from "@/components/shared/buttons/ButtonPrimary";
-
-const AdminGetUsers = () => {
+import axios from "axios";
+import { useRouter } from "next/navigation"; // App Router hook
+function AdminGetUsers() {
   const [users, setUsers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortOption, setSortOption] = useState("");
+  const router = useRouter();
 
-  // Fetch users on component mount
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch(
-          "https://readgro-backend.onrender.com/getallusers"
-        ); // API endpoint for fetching users
-        const data = await response.json();
-        if (response.ok) {
-          setUsers(data.users); // Update the state with fetched users
-        } else {
-          console.error("Failed to fetch users:", data.message);
-        }
-      } catch (error) {
+    axios
+      .get("https://readgro-backend.onrender.com/getallusers")
+      .then((response) => {
+        setUsers(response.data.users);
+      })
+      .catch((error) => {
         console.error("Error fetching users:", error);
-      }
-    };
-
-    fetchUsers();
+      });
   }, []);
 
+  const filteredUsers = users
+    .filter(
+      (user) =>
+        user.Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.generatedReferralCode
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => {
+      if (sortOption === "withdrawals") {
+        return b.withdrawalCount - a.withdrawalCount;
+      } else if (sortOption === "latest") {
+        return new Date(b.latestWithdrawal) - new Date(a.latestWithdrawal);
+      }
+      return 0;
+    });
+
+  const handleView = (userId) => {
+    router.push(`../Gnaneswar/admin-users/manageuser/${userId}`);
+  };
+
   return (
-    <div className="p-10px md:px-10 md:py-50px mb-30px bg-whiteColor dark:bg-whiteColor-dark shadow-accordion dark:shadow-accordion-dark rounded-5">
-      <div className="mb-6 pb-5 border-b-2 border-borderColor dark:border-borderColor-dark">
-        <h2 className="text-2xl font-bold text-blackColor dark:text-blackColor-dark">
-          Manage Users
-        </h2>
+    <div className="p-4">
+      <h1 className="text-xl font-bold mb-4">All Users</h1>
+
+      {/* Search & Sort */}
+      <div className="mb-4 flex flex-col md:flex-row justify-between items-center gap-4">
+        <input
+          type="text"
+          placeholder="Search by name or referral code"
+          className="border px-3 py-2 rounded w-full md:w-1/3"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <select
+          value={sortOption}
+          onChange={(e) => setSortOption(e.target.value)}
+          className="border px-3 py-2 rounded w-full md:w-1/4"
+        >
+          <option value="">Sort by</option>
+          <option value="withdrawals">Withdrawal Count</option>
+          <option value="latest">Latest Withdrawal</option>
+        </select>
       </div>
-      <div>
-        <div className="overflow-auto">
-          <table className="w-full text-left">
-            <thead className="text-sm md:text-base text-blackColor dark:text-blackColor-dark bg-lightGrey5 dark:bg-whiteColor-dark leading-1.8 md:leading-1.8">
-              <tr>
-                <th className="px-5px py-10px md:px-5">User Name</th>
-                <th className="px-5px py-10px md:px-5">User ID</th>
-                <th className="px-5px py-10px md:px-5">Referral Code</th>
-                <th className="px-5px py-10px md:px-5">Balance</th>
-                <th className="px-5px py-10px md:px-5">Actions</th>
+
+      {/* User Table */}
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+          <thead>
+            <tr className="bg-gray-100 text-left">
+              <th className="px-4 py-2 border">Name</th>
+              <th className="px-4 py-2 border">Referral Code</th>
+              <th className="px-4 py-2 border">Wallet Balance</th>
+              <th className="px-4 py-2 border">Withdrawals</th>
+              <th className="px-4 py-2 border">Latest Request</th>
+              <th className="px-4 py-2 border">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredUsers.map((user) => (
+              <tr key={user.userId} className="hover:bg-gray-50">
+                <td className="px-4 py-2 border">{user.Name}</td>
+                <td className="px-4 py-2 border">
+                  {user.generatedReferralCode}
+                </td>
+                <td className="px-4 py-2 border">₹{user.balance || 0}</td>
+                <td className="px-4 py-2 border">{user.withdrawalCount}</td>
+                <td className="px-4 py-2 border">
+                  {user.latestWithdrawal
+                    ? new Date(user.latestWithdrawal).toLocaleString()
+                    : "N/A"}
+                </td>
+                <td className="px-4 py-2 border">
+                  <button
+                    onClick={() => handleView(user.userId)}
+                    className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
+                  >
+                    View
+                  </button>
+                </td>
               </tr>
-            </thead>
-            <tbody className="text-size-13 md:text-base text-contentColor dark:text-contentColor-dark font-normal">
-              {users.map((user, index) => (
-                <tr key={index} className="leading-1.8 md:leading-1.8">
-                  <td className="px-5px py-10px md:px-5 font-normal">
-                    <p className="text-blackColor dark:text-blackColor-dark">
-                      {user.Name}
-                    </p>
-                  </td>
-                  <td className="px-5px py-10px md:px-5 font-normal">
-                    <p className="text-blackColor dark:text-blackColor-dark">
-                      {user.userId}
-                    </p>
-                  </td>
-                  <td className="px-5px py-10px md:px-5 font-normal">
-                    <p className="text-blackColor dark:text-blackColor-dark">
-                      {user.generatedReferralCode}
-                    </p>
-                  </td>
-                  <td className="px-5px py-10px md:px-5 font-normal">
-                    <p className="text-blackColor dark:text-blackColor-dark">
-                      {user.balance}
-                    </p>
-                  </td>
-                  <td className="px-5px py-10px md:px-5 font-normal">
-                    <div className="flex items-center space-x-3">
-                      <Link
-                        href={`../Gnaneswar/admin-users/manageuser/${user.userId}`}
-                        className="hover:text-primary"
-                      >
-                        <ButtonPrimary type="submit">View</ButtonPrimary>
-                      </Link>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-              {users.length === 0 && (
-                <tr>
-                  <td colSpan={5} className="text-center text-gray-500 py-5">
-                    No users available.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+            ))}
+            {filteredUsers.length === 0 && (
+              <tr>
+                <td colSpan="6" className="text-center py-4 text-gray-500">
+                  No users found.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );
-};
+}
+
 export default AdminGetUsers;

@@ -2,7 +2,7 @@ import About11 from "@/components/sections/abouts/About11";
 import CoursesFilter from "@/components/sections/courses/CoursesFilter";
 import Image from "next/image";
 import HeroPrimary from "@/components/sections/hero-banners/HeroPrimary";
-import charityImage from "@/assets/images/charity.jpeg";
+import charityImage from "@/assets/images/chairty.png";
 
 const AboutMain = () => {
   return (

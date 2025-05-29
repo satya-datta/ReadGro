@@ -59,15 +59,13 @@ const CurriculumContent = ({ id }) => {
         {topics.map((topic, index) => (
           <li
             key={index}
-            className="flex items-center justify-between px-4 py-3 hover:bg-gray-50"
+            onClick={() => handleVideoClick(topic.video_url)}
+            className="flex items-center justify-between px-4 py-3 hover:bg-gray-50 cursor-pointer"
           >
             <div className="flex items-center gap-3">
-              <button
-                onClick={() => handleVideoClick(topic.video_url)}
-                className="w-9 h-9 flex items-center justify-center border border-blue-500 text-blue-600 rounded-full hover:bg-blue-100"
-              >
+              <div className="w-9 h-9 flex items-center justify-center border border-blue-500 text-blue-600 rounded-full bg-white hover:bg-blue-100">
                 <i className="icofont-play-alt-2 text-sm"></i>
-              </button>
+              </div>
 
               <span className="text-sm font-medium text-gray-800">
                 {topic.topic_name} : {index + 1}

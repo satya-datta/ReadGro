@@ -101,7 +101,7 @@ const RGWithdrawlRequestInner = () => {
       );
 
       const data = await response.json();
-
+      console.log(data);
       if (response.ok) {
         alert("Withdrawal request submitted successfully!");
         setShowPopup(false);
@@ -212,6 +212,14 @@ const RGWithdrawlRequestInner = () => {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-96">
             <h2 className="text-xl font-bold mb-4">Add Withdrawal Request</h2>
+
+            {/* Bank details warning inside popup */}
+            {showBankPopup && (
+              <p className="text-red-500 mb-4">
+                Please fill in your bank details before proceeding.
+              </p>
+            )}
+
             <label className="block mb-2">Withdrawal Amount:</label>
             <input
               type="number"
@@ -222,7 +230,10 @@ const RGWithdrawlRequestInner = () => {
             />
             <div className="flex justify-end">
               <button
-                onClick={() => setShowPopup(false)}
+                onClick={() => {
+                  setShowPopup(false);
+                  setShowBankPopup(false); // clear bank popup on cancel
+                }}
                 className="px-4 py-2 bg-gray-300 rounded-md mr-2"
               >
                 Cancel
@@ -236,12 +247,6 @@ const RGWithdrawlRequestInner = () => {
             </div>
           </div>
         </div>
-      )}
-
-      {showBankPopup && (
-        <p className="text-red-500 text-center mt-4">
-          Please fill in your bank details before proceeding.
-        </p>
       )}
     </div>
   );
