@@ -201,7 +201,7 @@ const PackageDetailsPrimary = ({ type, id }) => {
           {/* Info Tag */}
           {packageDetails?.commission && (
             <div className="mb-6 p-4 rounded-lg bg-blue-50 border border-blue-200 text-blue-800 text-sm md:text-base font-medium">
-              On referring this course you can earn up to ₹
+              On referring this Package you can earn up to ₹
               {packageDetails.commission} on each referral.
             </div>
           )}
