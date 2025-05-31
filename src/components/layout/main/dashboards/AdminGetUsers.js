@@ -18,7 +18,7 @@ function AdminGetUsers() {
         console.error("Error fetching users:", error);
       });
   }, []);
-
+  console.log(users);
   const filteredUsers = users
     .filter(
       (user) =>
@@ -72,6 +72,7 @@ function AdminGetUsers() {
               <th className="px-4 py-2 border">Name</th>
               <th className="px-4 py-2 border">Referral Code</th>
               <th className="px-4 py-2 border">Wallet Balance</th>
+              <th className="px-4 py-2 border">Phone Number</th>
               <th className="px-4 py-2 border">Withdrawals</th>
               <th className="px-4 py-2 border">Latest Request</th>
               <th className="px-4 py-2 border">Action</th>
@@ -85,6 +86,7 @@ function AdminGetUsers() {
                   {user.generatedReferralCode}
                 </td>
                 <td className="px-4 py-2 border">₹{user.balance || 0}</td>
+                <td className="px-4 py-2 border">{user.Phone}</td>
                 <td className="px-4 py-2 border">{user.withdrawalCount}</td>
                 <td className="px-4 py-2 border">
                   {user.latestWithdrawal

@@ -7,6 +7,9 @@ const WithDrawlRequest = ({ userId }) => {
   const [showOtpModal, setShowOtpModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const [bankDetails, setBankDetails] = useState(null);
+  const [showBankModal, setShowBankModal] = useState(false);
+
   // 📌 Fetch Withdrawal Requests
   useEffect(() => {
     const fetchWithdrawRequests = async () => {
@@ -14,12 +17,10 @@ const WithDrawlRequest = ({ userId }) => {
         const response = await fetch(
           `https://readgro-backend.onrender.com/getwithdrawlrequests/${userId}`
         );
-        if (!response.ok) {
+        if (!response.ok)
           throw new Error("Failed to fetch withdrawal requests");
-        }
         const data = await response.json();
 
-        // Extracting the correct array from the response object
         if (data.withdrawalRequests && Array.isArray(data.withdrawalRequests)) {
           setWithdrawRequests(data.withdrawalRequests);
         } else {
@@ -36,7 +37,7 @@ const WithDrawlRequest = ({ userId }) => {
     fetchWithdrawRequests();
   }, [userId]);
 
-  // 📌 Handle Pay Button Click (Open OTP Modal)
+  // 📌 Send OTP & Show Modal
   const handlePayClick = async (request) => {
     setSelectedRequest(request);
     setShowOtpModal(true);
@@ -46,26 +47,24 @@ const WithDrawlRequest = ({ userId }) => {
         "https://readgro-backend.onrender.com/send-otp",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" }, // ✅ Ensure proper headers
-          body: JSON.stringify({}), // ✅ Even if empty, some servers require a body
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({}),
         }
       );
-      console.log(response.json());
-      if (!response.ok) {
-        throw new Error(`Failed to send OTP: ${response.statusText}`);
-      }
 
+      if (!response.ok)
+        throw new Error(`Failed to send OTP: ${response.statusText}`);
       console.log("OTP request sent successfully");
     } catch (error) {
       console.error("Error sending OTP:", error);
     }
   };
 
-  // 📌 Handle OTP Submission & Payout Processing
+  // 📌 Handle OTP Submit
   const handleOtpSubmit = async () => {
     if (!otp) return alert("Please enter OTP");
     setLoading(true);
-    console.log(selectedRequest);
+
     try {
       const response = await fetch(
         "https://readgro-backend.onrender.com/process-payout",
@@ -73,10 +72,10 @@ const WithDrawlRequest = ({ userId }) => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            userId: userId,
+            userId,
             amount: selectedRequest.amount,
             otp,
-            requestId: selectedRequest.id, // Include request ID
+            requestId: selectedRequest.id,
           }),
         }
       );
@@ -101,6 +100,29 @@ const WithDrawlRequest = ({ userId }) => {
     setLoading(false);
   };
 
+  // 📌 View User Bank Details
+  const handleViewBankDetails = async () => {
+    try {
+      const response = await fetch(
+        `https://readgro-backend.onrender.com/getuser_bank_details/${userId}`,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      if (!response.ok) throw new Error("Failed to fetch bank details");
+
+      const data = await response.json();
+      console.log(data);
+      setBankDetails(data.bank_details);
+      setShowBankModal(true);
+    } catch (error) {
+      console.error("Error fetching user bank details:", error);
+    }
+  };
+
   return (
     <div className="overflow-auto">
       <table className="w-full text-left">
@@ -110,7 +132,7 @@ const WithDrawlRequest = ({ userId }) => {
             <th className="px-5px py-10px">Amount</th>
             <th className="px-5px py-10px">Status</th>
             <th className="px-5px py-10px">Created Time</th>
-            <th className="px-5px py-10px">Action</th>
+            <th className="px-5px py-10px">Actions</th>
           </tr>
         </thead>
         <tbody className="text-size-13 md:text-base text-contentColor">
@@ -126,7 +148,7 @@ const WithDrawlRequest = ({ userId }) => {
                 <td className="px-5px py-10px">
                   {new Date(request.created_at).toLocaleString()}
                 </td>
-                <td className="px-5px py-10px">
+                <td className="px-5px py-10px flex gap-2">
                   {request.status.toLowerCase() === "pending" ? (
                     <button
                       className="bg-primaryColor text-white px-4 py-2 rounded"
@@ -142,6 +164,12 @@ const WithDrawlRequest = ({ userId }) => {
                       Paid
                     </button>
                   ) : null}
+                  <button
+                    className="bg-blue-500 text-white px-3 py-2 rounded"
+                    onClick={handleViewBankDetails}
+                  >
+                    View
+                  </button>
                 </td>
               </tr>
             ))
@@ -181,6 +209,46 @@ const WithDrawlRequest = ({ userId }) => {
                 onClick={() => setShowOtpModal(false)}
               >
                 Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Bank Details Modal */}
+      {showBankModal && (
+        <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-40">
+          <div className="bg-white p-5 rounded shadow-md w-96">
+            <h3 className="text-lg font-semibold mb-4">User Bank Details</h3>
+            {bankDetails ? (
+              <ul className="text-left space-y-2">
+                <li>
+                  <strong>Account Holder:</strong>{" "}
+                  {bankDetails[0].account_holder_name}
+                </li>
+                <li>
+                  <strong>Account Number:</strong>{" "}
+                  {bankDetails[0].account_number}
+                </li>
+                <li>
+                  <strong>Bank Name:</strong> {bankDetails[0].bank_name}
+                </li>
+                <li>
+                  <strong>IFSC Code:</strong> {bankDetails[0].ifsc_code}
+                </li>
+                <li>
+                  <strong>Upi Id:</strong> {bankDetails[0].upi_id}
+                </li>
+              </ul>
+            ) : (
+              <p>Loading...</p>
+            )}
+            <div className="text-right mt-4">
+              <button
+                onClick={() => setShowBankModal(false)}
+                className="bg-gray-500 text-white px-4 py-2 rounded"
+              >
+                Close
               </button>
             </div>
           </div>
