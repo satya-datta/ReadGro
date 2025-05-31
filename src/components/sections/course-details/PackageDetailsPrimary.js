@@ -199,13 +199,11 @@ const PackageDetailsPrimary = ({ type, id }) => {
       <section className="py-8 md:py-12 bg-white border-t border-gray-200">
         <div className="container mx-auto px-4">
           {/* Info Tag */}
-          {packageDetails?.commission && (
+         
             <div className="mb-6 p-4 rounded-lg bg-blue-50 border border-blue-200 text-blue-800 text-sm md:text-base font-medium">
-              On referring this Package you can earn up to ₹
-              {packageDetails.commission} on each referral.
+    Get up to ₹2,000 as a reward for your first referral during the bonus month, which occurs once every 2-3 years. Offer valid on any package.
             </div>
-          )}
-
+        
           <CoursesOfPackage id={packageDetails?.package_id} />
         </div>
       </section>
