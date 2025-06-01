@@ -25,7 +25,7 @@ const PricingPlans = () => {
       .then((data) => {
         const courseIds = data.map((course) => course.course_id);
         if (courseIds.length > 0) {
-          console.log("hi" ,courseIds);
+          console.log("hi", courseIds);
           fetch("https://readgro-backend.onrender.com/getcoursedetails", {
             method: "POST",
             headers: { "Content-Type": "application/json" },

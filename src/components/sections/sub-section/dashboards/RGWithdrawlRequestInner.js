@@ -183,7 +183,9 @@ const RGWithdrawlRequestInner = () => {
                       <span
                         className={`${
                           request.status === "approved"
-                            ? "bg-primaryColorcolor2"
+                            ? "bg-primaryColor"
+                            : request.status === "rejected"
+                            ? "bg-red-500"
                             : "bg-secondaryColor"
                         } h-22px inline-block px-7px leading-22px font-bold text-whiteColor rounded-md capitalize`}
                       >
