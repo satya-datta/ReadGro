@@ -1,11 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Testloader from "@/components/shared/others/loader";
 
 const PricingPlans = () => {
   const router = useRouter();
   const [packages, setPackages] = useState([]);
   const [courseNames, setCourseNames] = useState({});
+  const [loading, setLoading] = useState(true); // ✅ Loader state
 
   useEffect(() => {
     fetch("https://readgro-backend.onrender.com/getallpackages")
@@ -13,46 +15,63 @@ const PricingPlans = () => {
       .then((data) => {
         if (Array.isArray(data)) {
           setPackages(data);
-          data.forEach((pkg) => fetchCourseDetails(pkg.package_id));
+          const fetchAll = data.map((pkg) =>
+            fetchCourseDetails(pkg.package_id)
+          );
+          Promise.all(fetchAll).finally(() => setLoading(false)); // ✅ Wait for all fetches
+        } else {
+          setLoading(false);
         }
       })
-      .catch((error) => console.error("Error fetching packages:", error));
+      .catch((error) => {
+        console.error("Error fetching packages:", error);
+        setLoading(false);
+      });
   }, []);
 
-  const fetchCourseDetails = (packageId) => {
-    fetch(`https://readgro-backend.onrender.com/getcoursemappings/${packageId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        const courseIds = data.map((course) => course.course_id);
-        if (courseIds.length > 0) {
-          console.log("hi", courseIds);
-          fetch("https://readgro-backend.onrender.com/getcoursedetails", {
+  const fetchCourseDetails = async (packageId) => {
+    try {
+      const res = await fetch(
+        `https://readgro-backend.onrender.com/getcoursemappings/${packageId}`
+      );
+      const data = await res.json();
+      const courseIds = data.map((course) => course.course_id);
+
+      if (courseIds.length > 0) {
+        const courseRes = await fetch(
+          "https://readgro-backend.onrender.com/getcoursedetails",
+          {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ course_ids: courseIds }),
-          })
-            .then((res) => res.json())
-            .then((courseData) => {
-              if (Array.isArray(courseData.courses)) {
-                const names = courseData.courses.map((c) => c.name);
-                setCourseNames((prev) => ({
-                  ...prev,
-                  [packageId]: {
-                    names,
-                    total: names.length,
-                  },
-                }));
-              }
-            })
-            .catch((err) =>
-              console.error("Error fetching course details:", err)
-            );
+          }
+        );
+
+        const courseData = await courseRes.json();
+        if (Array.isArray(courseData.courses)) {
+          const names = courseData.courses.map((c) => c.name);
+          setCourseNames((prev) => ({
+            ...prev,
+            [packageId]: {
+              names,
+              total: names.length,
+            },
+          }));
         }
-      })
-      .catch((err) =>
-        console.error(`Error fetching course mapping for ${packageId}:`, err)
-      );
+      }
+    } catch (err) {
+      console.error(`Error fetching course details for ${packageId}:`, err);
+    }
   };
+
+  // ✅ Loader display
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-[300px]">
+        <Testloader />
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gray-100 min-h-screen py-10">
@@ -81,7 +100,7 @@ const PricingPlans = () => {
                   {pkg.package_name}
                 </h3>
 
-                {/* Pricing Section */}
+                {/* Pricing */}
                 <div className="text-center mb-4">
                   <p className="text-gray-500 line-through text-sm">
                     ₹{pkg.package_price}
@@ -91,7 +110,7 @@ const PricingPlans = () => {
                   </p>
                 </div>
 
-                {/* Course List */}
+                {/* Courses Preview */}
                 <div className="text-left text-sm mb-4 space-y-1 ml-2">
                   {names.slice(0, total > 3 ? 2 : 3).map((name, idx) => (
                     <p

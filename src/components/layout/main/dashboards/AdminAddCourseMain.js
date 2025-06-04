@@ -82,7 +82,10 @@ const AdminAddCourseMain = () => {
         }
       );
 
-      if (!courseResponse.ok) throw new Error("Error creating course");
+      if (!courseResponse.ok) {
+        console.log(courseResponse.json());
+        throw new Error("Error creating course");
+      }
 
       const courseResult = await courseResponse.json();
       console.log("Course created successfully:", courseResult);

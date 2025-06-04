@@ -144,7 +144,7 @@ const ProfileDetails = () => {
           credentials: "include",
         }
       );
-
+      console.log(response.json());
       if (response.ok) {
         alert("Profile updated successfully");
         setIsEditing(false);

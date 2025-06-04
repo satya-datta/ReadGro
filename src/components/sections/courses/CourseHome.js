@@ -6,10 +6,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import Testloader from "@/components/shared/others/loader";
 
 const CourseHome = () => {
   const [courses, setCourses] = useState([]);
   const [topicsCount, setTopicsCount] = useState({});
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -24,8 +26,12 @@ const CourseHome = () => {
         } else {
           console.error("Courses data is not an array", data);
         }
+        setLoading(false);
       })
-      .catch((error) => console.error("Error fetching courses:", error));
+      .catch((error) => {
+        console.error("Error fetching courses:", error);
+        setLoading(false);
+      });
   }, []);
 
   const fetchTopicsCount = (courseId) => {
@@ -48,6 +54,15 @@ const CourseHome = () => {
         console.error(`Error fetching topics for course ${courseId}:`, error)
       );
   };
+
+  // 👇 Show loader while loading
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-[300px]">
+        <Testloader />
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-12">
