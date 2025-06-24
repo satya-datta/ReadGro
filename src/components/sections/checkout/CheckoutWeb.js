@@ -3,16 +3,16 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useCartContext } from "@/contexts/CartContext";
-
 import { useUserContext } from "@/contexts/UserContext";
 import ButtonPrimary from "@/components/shared/buttons/ButtonPrimary";
-import Cookies from "js-cookie"; // Import the cookies library
-import { Eye, EyeOff } from "lucide-react"; // Import icons
+import Cookies from "js-cookie";
+import { Eye, EyeOff } from "lucide-react";
 import { createOrder, validatePayment } from "@/libs/PaymentOrder";
 import Testloader from "@/components/shared/others/loader";
 
 const CheckoutWeb = ({ packagename }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState(null); // 'success', 'processing', 'failed', null
   const { user } = useUserContext();
   const userId = user?.userId;
 
@@ -199,24 +199,26 @@ const CheckoutWeb = ({ packagename }) => {
 
   const handleRazorpayPayment = async () => {
     try {
-      const priceToPay = discountedPrice || packageDetails?.package_price; // Use discounted price if available
+      setPaymentStatus("processing"); // Show loading state
+      const priceToPay = discountedPrice || packageDetails?.package_price;
 
-      const orderData = await createOrder(priceToPay); // API call to get order ID from backend
+      const orderData = await createOrder(priceToPay);
       if (!orderData) {
+        setPaymentStatus("failed");
         alert("Failed to create Razorpay order. Try again.");
-        return false; // Return failure
+        return false;
       }
 
       return new Promise((resolve) => {
         const options = {
-          key: "rzp_live_BF04chKRoQcXXm", // Replace with your Razorpay Key ID
-          amount: priceToPay * 100, // Convert to paisa (INR subunit)
+          key: "rzp_live_BF04chKRoQcXXm",
+          amount: priceToPay * 100,
           currency: "INR",
           name: "Read Gro",
           description: "Payment for Upgrade",
-          order_id: orderData.order.id, // Order ID from backend
+          order_id: orderData.order.id,
           handler: async function (response) {
-            // Validate Payment after receiving response
+            setPaymentStatus("processing"); // Show processing again after payment
             const validationResponse = await validatePayment({
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
@@ -224,11 +226,14 @@ const CheckoutWeb = ({ packagename }) => {
             });
 
             if (validationResponse.success) {
-              alert("Payment Verified!");
-              resolve(true); // Payment successful
+              setPaymentStatus("success");
+              setTimeout(() => {
+                resolve(true);
+              }, 3000); // Show success message for 3 seconds before proceeding
             } else {
+              setPaymentStatus("failed");
               alert("Payment verification failed! Please try again.");
-              resolve(false); // Payment failed
+              resolve(false);
             }
           },
           prefill: {
@@ -244,12 +249,50 @@ const CheckoutWeb = ({ packagename }) => {
       });
     } catch (error) {
       console.error("Error in payment:", error);
-      return false; // Return failure if there's an error
+      setPaymentStatus("failed");
+      return false;
     }
   };
 
   return (
     <section>
+      {paymentStatus === "success" && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-8 rounded-lg max-w-md text-center">
+            <div className="text-green-500 text-5xl mb-4">✓</div>
+            <h3 className="text-2xl font-bold mb-2">Payment Successful!</h3>
+            <p className="mb-4">Please wait while we process your order...</p>
+            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900 mx-auto"></div>
+          </div>
+        </div>
+      )}
+
+      {paymentStatus === "processing" && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-8 rounded-lg max-w-md text-center">
+            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900 mx-auto mb-4"></div>
+            <h3 className="text-2xl font-bold mb-2">Processing Payment</h3>
+            <p>Please do not refresh or close this page...</p>
+          </div>
+        </div>
+      )}
+
+      {paymentStatus === "failed" && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-8 rounded-lg max-w-md text-center">
+            <div className="text-red-500 text-5xl mb-4">✗</div>
+            <h3 className="text-2xl font-bold mb-2">Payment Failed</h3>
+            <p className="mb-4">Please try again or contact support.</p>
+            <button
+              onClick={() => setPaymentStatus(null)}
+              className="px-4 py-2 bg-primaryColor text-white rounded"
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="container py-50px lg:py-60px 2xl:py-20 3xl:py-100px">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-30px">
           {/* Left Section */}
